@@ -1,0 +1,39 @@
+### Lokale/Eigene Build-Einstellungen für jeden Entwickler
+/developer_local_settings
+build.properties
+  
+### Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+ 
+### IntelliJ
+*.iml
+*.iws
+.idea/
+# IntelliJ erstellt dieses Verzeichnis in WAR-Modulen mit WAR-Dependencies
+overlays/
+ 
+ ### Eclipse
+.metadata
+.settings/
+.loadpath
+.project
+.classpath
+.externalToolBuilders/
+ 
+### Netbeans
+nbproject/
+ 
+### JVM Fatal Error logs
+hs_err_pid*.log
+ 
+### Files, die auf gar keinen Fall ignoriert werden duerfen
+!**/.gitkeep
+!**/.gitignore
+!**/.gitattributes
+!**/.editorconfig
+
