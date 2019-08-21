@@ -41,10 +41,10 @@ public class VerfuegungDTO implements Serializable {
 	private static final long serialVersionUID = 1339970917808014561L;
 
 	@Nonnull
-	private final @NotNull BetreuungsAngebot betreuungsArt;
+	private @NotNull Long id;
 
 	@Nonnull
-	private @NotNull Long id;
+	private @NotNull LocalDateTime availableSince;
 
 	@Nonnull
 	private @Size(min = 1) @NotNull String refnr;
@@ -65,6 +65,9 @@ public class VerfuegungDTO implements Serializable {
 	private @NotNull LocalDateTime verfuegtAm;
 
 	@Nonnull
+	private @NotNull BetreuungsAngebot betreuungsArt;
+
+	@Nonnull
 	private @NotNull @Valid KindDTO kind;
 
 	@Nonnull
@@ -78,38 +81,70 @@ public class VerfuegungDTO implements Serializable {
 
 	public VerfuegungDTO() {
 		this.id = -1L;
+		this.availableSince = LocalDateTime.MIN;
 		this.refnr = "";
 		this.institutionId = "";
 		this.von = LocalDate.MIN;
 		this.bis = LocalDate.MIN;
 		this.version = -1;
 		this.verfuegtAm = LocalDateTime.MIN;
+		this.betreuungsArt = BetreuungsAngebot.KITA;
 		this.kind = new KindDTO();
 		this.gesuchsteller = new GesuchstellerDTO();
-		this.betreuungsArt = BetreuungsAngebot.KITA;
 	}
 
 	public VerfuegungDTO(
 		@Nonnull Long id,
+		@Nonnull LocalDateTime availableSince,
 		@Nonnull String refnr,
 		@Nonnull String institutionId,
 		@Nonnull LocalDate von,
 		@Nonnull LocalDate bis,
 		@Nonnull Integer version,
 		@Nonnull LocalDateTime verfuegtAm,
+		@Nonnull BetreuungsAngebot betreuungsArt,
 		@Nonnull KindDTO kind,
-		@Nonnull GesuchstellerDTO gesuchsteller,
-		@Nonnull BetreuungsAngebot betreuungsArt) {
+		@Nonnull GesuchstellerDTO gesuchsteller) {
 		this.id = id;
+		this.availableSince = availableSince;
 		this.refnr = refnr;
 		this.institutionId = institutionId;
 		this.von = von;
 		this.bis = bis;
 		this.version = version;
 		this.verfuegtAm = verfuegtAm;
+		this.betreuungsArt = betreuungsArt;
 		this.kind = kind;
 		this.gesuchsteller = gesuchsteller;
+	}
+
+	public VerfuegungDTO(
+		@Nonnull Long id,
+		@Nonnull LocalDateTime availableSince,
+		@Nonnull String refnr,
+		@Nonnull String institutionId,
+		@Nonnull LocalDate von,
+		@Nonnull LocalDate bis,
+		@Nonnull Integer version,
+		@Nonnull LocalDateTime verfuegtAm,
+		@Nonnull BetreuungsAngebot betreuungsArt,
+		@Nonnull KindDTO kind,
+		@Nonnull GesuchstellerDTO gesuchsteller,
+		@Nonnull List<ZeitabschnittDTO> zeitabschnitte,
+		@Nonnull List<ZeitabschnittDTO> ignorierteZeitabschnitte) {
+		this.id = id;
+		this.availableSince = availableSince;
+		this.refnr = refnr;
+		this.institutionId = institutionId;
+		this.von = von;
+		this.bis = bis;
+		this.version = version;
+		this.verfuegtAm = verfuegtAm;
 		this.betreuungsArt = betreuungsArt;
+		this.kind = kind;
+		this.gesuchsteller = gesuchsteller;
+		this.zeitabschnitte = zeitabschnitte;
+		this.ignorierteZeitabschnitte = ignorierteZeitabschnitte;
 	}
 
 	@Override
@@ -171,17 +206,21 @@ public class VerfuegungDTO implements Serializable {
 	}
 
 	@Nonnull
-	public BetreuungsAngebot getBetreuungsArt() {
-		return betreuungsArt;
-	}
-
-	@Nonnull
 	public Long getId() {
 		return id;
 	}
 
 	public void setId(@Nonnull Long id) {
 		this.id = id;
+	}
+
+	@Nonnull
+	public LocalDateTime getAvailableSince() {
+		return availableSince;
+	}
+
+	public void setAvailableSince(@Nonnull LocalDateTime availableSince) {
+		this.availableSince = availableSince;
 	}
 
 	@Nonnull
@@ -236,6 +275,15 @@ public class VerfuegungDTO implements Serializable {
 
 	public void setVerfuegtAm(@Nonnull LocalDateTime verfuegtAm) {
 		this.verfuegtAm = verfuegtAm;
+	}
+
+	@Nonnull
+	public BetreuungsAngebot getBetreuungsArt() {
+		return betreuungsArt;
+	}
+
+	public void setBetreuungsArt(@Nonnull BetreuungsAngebot betreuungsArt) {
+		this.betreuungsArt = betreuungsArt;
 	}
 
 	@Nonnull
