@@ -19,20 +19,23 @@ package ch.dvbern.kibon.exchange.api.verfuegung;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.validation.constraints.Min;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 
 import ch.dvbern.kibon.exchange.api.verfuegung.model.ws.VerfuegungenDTO;
+import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
-@Path("/verfuegungen")
+@Path("/v1/verfuegungen")
+@RegisterRestClient
 public interface VerfuegungenResource {
 
 	@GET
 	@Nonnull
 	VerfuegungenDTO getAll(
 		@QueryParam("after_id") @Nullable Long afterId,
-		@QueryParam("limit") @Nullable Integer limit,
+		@Min(0) @QueryParam("limit") @Nullable Integer limit,
 		@QueryParam("$filter") @Nullable String filter
 	);
 }
