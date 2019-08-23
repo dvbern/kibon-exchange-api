@@ -60,6 +60,22 @@ public class InstitutionDTO implements Serializable {
 		this.adresse = adresse;
 	}
 
+		public InstitutionDTO(
+		@Nonnull String id,
+		@Nonnull String name,
+		@Nonnull String traegerschaft,
+		@Nonnull String strasse,
+		@Nullable String hausnummer,
+		@Nullable String adresszusatz,
+		@Nonnull String plz,
+		@Nonnull String ort,
+		@Nonnull String land) {
+		this.id = id;
+		this.name = name;
+		this.traegerschaft = traegerschaft;
+		this.adresse = new AdresseDTO(strasse, hausnummer, adresszusatz, plz, ort, land);
+	}
+
 	@Override
 	public boolean equals(@Nullable Object o) {
 		if (this == o) {
