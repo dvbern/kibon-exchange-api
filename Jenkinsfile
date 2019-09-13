@@ -48,7 +48,7 @@ node {
 			} else {
 				// notify the team
 				mail(to: emailRecipients,
-						subject: "Maven build failed for branch: " + branch,
+						subject: "${env.JOB_NAME} Maven build failed for branch: " + branch,
 						body: "last commits are: " + commitList().toString() + " (<${BUILD_URL}/console|Job>)")
 			}
 		}
@@ -60,7 +60,7 @@ node {
 
 		try {
 			withMaven(jdk: jdkVersion, maven: mvnVersion) {
-				genericSh 'mvn -U -Pdvbern.oss -Dmaven.test.failure.ignore=true clean ${verifyOrDeploy()}'
+				genericSh 'mvn -U -Pdvbern.oss -Dmaven.test.failure.ignore=true clean ' + verifyOrDeploy()
 			}
 			if (currentBuild.result == "UNSTABLE") {
 				handleFailures()
