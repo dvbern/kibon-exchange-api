@@ -1,6 +1,16 @@
 #!groovy​
 
-properties([[$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', numToKeepStr: '10']]])
+properties([
+		[$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', numToKeepStr: '10']],
+		parameters([
+				booleanParam(defaultValue: false, description: 'Do you want to perform a Release?', name:
+						'performRelease'),
+				string(defaultValue: '', description: 'This release version', name: 'releaseversion', trim:
+						true),
+				string(defaultValue: '', description: 'The next release version', name: 'nextreleaseversion',
+						trim: true)
+		])
+])
 
 def mvnVersion = "Maven_3.6.1"
 def jdkVersion = "JDK_1.8_221"
@@ -14,63 +24,104 @@ def releaseBranchPrefix = "release"
 def hotfixBranchPrefix = "hotfix"
 
 node {
-	stage('Checkout') {
-		checkout([
-				$class           : 'GitSCM',
-				branches         : scm.branches,
-				extensions       : scm.extensions + [[$class: 'LocalBranch', localBranch: '']],
-				userRemoteConfigs: scm.userRemoteConfigs
-		])
+	def isUnix = isUnix()
+
+	def genericSh = {cmd ->
+		if (Boolean.valueOf(isUnix)) {
+			sh cmd
+		} else {
+			bat cmd
+		}
 	}
 
-	String branch = env.BRANCH_NAME.toString()
-	currentBuild.displayName = "${branch}-${pomVersion()}-${env.BUILD_NUMBER}"
-	env.UNIX = isUnix()
+	if (params.performRelease) {
+		currentBuild.displayName = "Release-${params.releaseversion}-${env.BUILD_NUMBER}"
 
-	stage('Maven build') {
-		//returns a set of git revisions with the name of the committer
-		@NonCPS
-		def commitList = {
-			def changes = ""
-			currentBuild.changeSets.each {set ->
-				set.each {entry ->
-					changes += "${entry.commitId} - ${entry.msg} \n by ${entry.author.fullName}\n"
+		stage('Checkout') {
+			checkout([
+					$class           : 'GitSCM',
+					branches         : [[name: "${developBranchName}"]],
+					extensions       : [[$class: 'LocalBranch', localBranch: "${developBranchName}"]],
+					userRemoteConfigs: scm.userRemoteConfigs
+			])
+		}
+
+		stage('Release') {
+			try {
+				withMaven(jdk: jdkVersion, maven: mvnVersion) {
+					genericSh "mvn -Pdvbern.oss -B jgitflow:release-start -DreleaseVersion=${params.releaseversion} " +
+							"-DdevelopmentVersion=${params.nextreleaseversion}-SNAPSHOT jgitflow:release-finish"
+				}
+			} catch (Exception e) {
+				currentBuild.result = "FAILURE"
+				// notify the team
+				mail(to: emailRecipients, subject: "${env.JOB_NAME} Release failed", body: "See: " +
+						"(<${BUILD_URL}/console|Job>)")
+				throw e
+			}
+		}
+
+		stage('Trigger Master Build') {
+			build job: "./", wait: false
+		}
+	} else {
+		stage('Checkout') {
+			checkout([
+					$class           : 'GitSCM',
+					branches         : scm.branches,
+					extensions       : scm.extensions + [[$class: 'LocalBranch', localBranch: '']],
+					userRemoteConfigs: scm.userRemoteConfigs
+			])
+		}
+
+		String branch = env.BRANCH_NAME.toString()
+		currentBuild.displayName = "${branch}-${pomVersion()}-${env.BUILD_NUMBER}"
+
+		stage('Maven build') {
+			//returns a set of git revisions with the name of the committer
+			@NonCPS
+			def commitList = {
+				def changes = ""
+				currentBuild.changeSets.each {set ->
+					set.each {entry ->
+						changes += "${entry.commitId} - ${entry.msg} \n by ${entry.author.fullName}\n"
+					}
+				}
+				return changes
+			}
+
+			def handleFailures = {
+				if (branch.startsWith(featureBranchPrefix)) {
+					// feature branche failures should only notify the feature owner
+					step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: emailextrecipients([[$class:
+																													 'RequesterRecipientProvider']]), sendToIndividuals: true])
+
+				} else {
+					// notify the team
+					mail(to: emailRecipients,
+							subject: "${env.JOB_NAME} Maven build failed for branch: " + branch,
+							body: "last commits are: " + commitList().toString() + " (<${BUILD_URL}/console|Job>)")
 				}
 			}
-			return changes
-		}
 
-		def handleFailures = {
-			if (branch.startsWith(featureBranchPrefix)) {
-				// feature branche failures should only notify the feature owner
-				step([$class                  : 'Mailer',
-					  notifyEveryUnstableBuild: true,
-					  recipients              : emailextrecipients([[$class: 'RequesterRecipientProvider']]),
-					  sendToIndividuals       : true])
-			} else {
-				// notify the team
-				mail(to: emailRecipients,
-						subject: "${env.JOB_NAME} Maven build failed for branch: " + branch,
-						body: "last commits are: " + commitList().toString() + " (<${BUILD_URL}/console|Job>)")
+			// in develop and master branches attempt to deploy the artifacts, otherwise only run to the verify phase.
+			def verifyOrDeploy = {
+				return (branch.startsWith(masterBranchName) || branch.startsWith(developBranchName)) ? "deploy" :
+						"verify"
 			}
-		}
 
-		// in develop and master branches attempt to deploy the artifacts, otherwise only run to the verify phase.
-		def verifyOrDeploy = {
-			return (branch.startsWith(masterBranchName) || branch.startsWith(developBranchName)) ? "deploy" : "verify"
-		}
-
-		try {
-			withMaven(jdk: jdkVersion, maven: mvnVersion) {
-				genericSh 'mvn -U -Pdvbern.oss -Dmaven.test.failure.ignore=true clean ' + verifyOrDeploy()
-			}
-			if (currentBuild.result == "UNSTABLE") {
+			try {
+				withMaven(jdk: jdkVersion, maven: mvnVersion) {
+					genericSh 'mvn -U -Pdvbern.oss -Dmaven.test.failure.ignore=true clean ' + verifyOrDeploy()
+				}
+				if (currentBuild.result == "UNSTABLE") {
+					handleFailures()
+				}
+			} catch (Exception e) {
+				currentBuild.result = "FAILURE"
 				handleFailures()
+				throw e
 			}
-		} catch (Exception e) {
-			currentBuild.result = "FAILURE"
-			handleFailures()
-			throw e
 		}
 	}
 }
@@ -79,12 +130,4 @@ def pomVersion() {
 	def pom = readFile 'pom.xml'
 	def project = new XmlSlurper().parseText(pom)
 	return project.version.toString()
-}
-
-def genericSh(cmd) {
-	if (Boolean.valueOf(env.UNIX)) {
-		sh cmd
-	} else {
-		bat cmd
-	}
 }
