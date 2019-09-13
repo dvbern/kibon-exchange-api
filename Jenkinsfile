@@ -1,3 +1,5 @@
+#!groovy​
+
 properties([[$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', numToKeepStr: '10']]])
 
 def mvnVersion = "Maven_3.6.1"
