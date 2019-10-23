@@ -110,6 +110,6 @@ node {
 }
 
 def pomVersion() {
-	def pom = readMavenPom 'pom.xml'
+	def pom = readMavenPom file: 'pom.xml'
 	return pom.version
 }
