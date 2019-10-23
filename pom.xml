@@ -41,18 +41,6 @@
         </dependencies>
     </dependencyManagement>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>ch.dvbern.oss.maven.jgitflow</groupId>
-                <artifactId>jgitflow-maven-plugin</artifactId>
-                <configuration>
-                    <serverId>dvb.oss</serverId>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-
     <dependencies>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
