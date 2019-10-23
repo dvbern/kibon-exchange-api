@@ -1,5 +1,7 @@
 #!groovy​
 
+@Library('dvbern-ci') _
+
 properties([
 		[$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', numToKeepStr: '10']],
 		parameters([
@@ -13,7 +15,7 @@ properties([
 ])
 
 def mvnVersion = "Maven_3.6.1"
-def jdkVersion = "JDK_1.8_221"
+def jdkVersion = "OpenJDK_1.8_222"
 // comma separated list of email addresses of all team members (for notification)
 def emailRecipients = "fabio.heer@dvbern.ch"
 
@@ -60,10 +62,6 @@ node {
 				throw e
 			}
 		}
-
-		stage('Trigger Master Build') {
-			build job: "./", wait: false
-		}
 	} else {
 		stage('Checkout') {
 			checkout([
@@ -78,29 +76,14 @@ node {
 		currentBuild.displayName = "${branch}-${pomVersion()}-${env.BUILD_NUMBER}"
 
 		stage('Maven build') {
-			//returns a set of git revisions with the name of the committer
-			@NonCPS
-			def commitList = {
-				def changes = ""
-				currentBuild.changeSets.each {set ->
-					set.each {entry ->
-						changes += "${entry.commitId} - ${entry.msg} \n by ${entry.author.fullName}\n"
-					}
-				}
-				return changes
-			}
-
-			def handleFailures = {
+			def handleFailures = {error ->
 				if (branch.startsWith(featureBranchPrefix)) {
 					// feature branche failures should only notify the feature owner
 					step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: emailextrecipients([[$class:
 																													 'RequesterRecipientProvider']]), sendToIndividuals: true])
 
 				} else {
-					// notify the team
-					mail(to: emailRecipients,
-							subject: "${env.JOB_NAME} Maven build failed for branch: " + branch,
-							body: "last commits are: " + commitList().toString() + " (<${BUILD_URL}/console|Job>)")
+					dvbErrorHandling.sendMail(emailRecipients, currentBuild, error)
 				}
 			}
 
@@ -115,11 +98,11 @@ node {
 					genericSh 'mvn -U -Pdvbern.oss -Dmaven.test.failure.ignore=true clean ' + verifyOrDeploy()
 				}
 				if (currentBuild.result == "UNSTABLE") {
-					handleFailures()
+					handleFailures("build is unstable")
 				}
 			} catch (Exception e) {
 				currentBuild.result = "FAILURE"
-				handleFailures()
+				handleFailures(e)
 				throw e
 			}
 		}
@@ -127,7 +110,6 @@ node {
 }
 
 def pomVersion() {
-	def pom = readFile 'pom.xml'
-	def project = new XmlSlurper().parseText(pom)
-	return project.version.toString()
+	def pom = readMavenPom 'pom.xml'
+	return pom.version
 }
