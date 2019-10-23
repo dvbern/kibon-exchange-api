@@ -50,9 +50,17 @@ node {
 
 		stage('Release') {
 			try {
-				withMaven(jdk: jdkVersion, maven: mvnVersion) {
-					genericSh "mvn -Pdvbern.oss -B jgitflow:release-start -DreleaseVersion=${params.releaseversion} " +
-							"-DdevelopmentVersion=${params.nextreleaseversion}-SNAPSHOT jgitflow:release-finish"
+				withCredentials([usernamePassword(credentialsId: 'jenkins-github-token', passwordVariable: 'password',
+						usernameVariable: 'username')]) {
+					// some block
+					withMaven(jdk: jdkVersion, maven: mvnVersion) {
+						genericSh "mvn -Pdvbern.oss -B jgitflow:release-start " +
+								"-DreleaseVersion=${params.releaseversion} " +
+								"-DdevelopmentVersion=${params.nextreleaseversion}-SNAPSHOT " +
+								"-Dusername=${username} " +
+								"-Dpassword=${password} " +
+								"jgitflow:release-finish"
+					}
 				}
 			} catch (Exception e) {
 				currentBuild.result = "FAILURE"
