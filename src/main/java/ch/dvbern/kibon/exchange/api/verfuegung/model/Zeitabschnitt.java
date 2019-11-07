@@ -104,4 +104,36 @@ public interface Zeitabschnitt {
 	 */
 	@Nonnull
 	BigDecimal getVerguenstigung();
+
+	/**
+	 * Die Anzahl der Zeiteinheiten, die innerhalb der Periode dieses Zeitabschnitts belegt werden dürfen.
+	 * <br>
+	 * Nonnull in schema 2.1
+	 *
+	 * @since kiBon (schema 2.1)
+	 */
+	@Nullable
+	BigDecimal getVerfuegteAnzahlZeiteinheiten();
+
+	/**
+	 * Die Anzahl der Zeitenheiten, innerhalb der Periode dieses Zeitabschnitts für welche ein Anspruch besteht.
+	 * <br>
+	 * Nonnull in schema 2.1
+	 *
+	 * @since kiBon (schema 2.1)
+	 */
+	@Nullable
+	BigDecimal getAnspruchsberechtigteAnzahlZeiteinheiten();
+
+	/**
+	 * Je nach {@link BetreuungsAngebot} gelten unterschiedliche Zeitenheiten. Grundsätzlich wird die Anzahl
+	 * Betreuungs-Tage nach ASIV innerhalb der Periode verfügt. Bei TAGESFAMILIEN wird jedoch ein Gutschein für eine
+	 * bestimmte Anzahl Betreuungsstunden verfügt.
+	 * <br>
+	 * Nonnull in schema 2.1
+	 *
+	 * @since kiBon (schema 2.1)
+	 */
+	@Nullable
+	Zeiteinheit getZeiteinheit();
 }

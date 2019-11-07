@@ -68,6 +68,15 @@ public class ZeitabschnittDTO implements Serializable, Zeitabschnitt {
 	@Nonnull
 	private @NotNull @DecimalMin("0") BigDecimal verguenstigung;
 
+	@Nullable
+	private @DecimalMin("0") BigDecimal verfuegteAnzahlZeiteinheiten;
+
+	@Nullable
+	private @DecimalMin("0") BigDecimal anspruchsberechtigteAnzahlZeiteinheiten;
+
+	@Nullable
+	private Zeiteinheit zeiteinheit;
+
 	public ZeitabschnittDTO() {
 		this.von = LocalDate.MIN;
 		this.bis = LocalDate.MIN;
@@ -245,5 +254,36 @@ public class ZeitabschnittDTO implements Serializable, Zeitabschnitt {
 
 	public void setVerguenstigung(@Nonnull BigDecimal verguenstigung) {
 		this.verguenstigung = verguenstigung;
+	}
+
+	@Override
+	@Nullable
+	public BigDecimal getVerfuegteAnzahlZeiteinheiten() {
+		return verfuegteAnzahlZeiteinheiten;
+	}
+
+	public void setVerfuegteAnzahlZeiteinheiten(@Nullable BigDecimal verfuegteAnzahlZeiteinheiten) {
+		this.verfuegteAnzahlZeiteinheiten = verfuegteAnzahlZeiteinheiten;
+	}
+
+	@Override
+	@Nullable
+	public BigDecimal getAnspruchsberechtigteAnzahlZeiteinheiten() {
+		return anspruchsberechtigteAnzahlZeiteinheiten;
+	}
+
+	public void setAnspruchsberechtigteAnzahlZeiteinheiten(
+		@Nullable BigDecimal anspruchsberechtigteAnzahlZeiteinheiten) {
+		this.anspruchsberechtigteAnzahlZeiteinheiten = anspruchsberechtigteAnzahlZeiteinheiten;
+	}
+
+	@Override
+	@Nullable
+	public Zeiteinheit getZeiteinheit() {
+		return zeiteinheit;
+	}
+
+	public void setZeiteinheit(@Nullable Zeiteinheit zeiteinheit) {
+		this.zeiteinheit = zeiteinheit;
 	}
 }
