@@ -48,13 +48,13 @@ public class ZeitabschnittDTO implements Serializable, Zeitabschnitt {
 	private @Min(0) Integer verfuegungNr;
 
 	@Nonnull
-	private @NotNull @DecimalMin("0") @DecimalMax("100") BigDecimal effektiveBetreuungPct;
+	private @NotNull @DecimalMin("0") BigDecimal effektiveBetreuungPct;
 
 	@Nonnull
 	private @NotNull @Min(0) @Max(100) Integer anspruchPct;
 
 	@Nonnull
-	private @NotNull @DecimalMin("0") @DecimalMax("100") BigDecimal verguenstigtPct;
+	private @NotNull @DecimalMin("0") BigDecimal verguenstigtPct;
 
 	@Nonnull
 	private @NotNull @DecimalMin("0") BigDecimal vollkosten;

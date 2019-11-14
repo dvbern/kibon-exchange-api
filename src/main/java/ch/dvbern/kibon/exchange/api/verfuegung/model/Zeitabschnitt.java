@@ -57,6 +57,8 @@ public interface Zeitabschnitt {
 	/**
 	 * Bezeichnet das anspruchsberechtigte Betreuungspensum in %, d.h. das Betreuungspensum, das durch die Gemeinde
 	 * maximal durch einen Betreuungsgutschein vergünstigt würde.
+	 * <p>
+	 * {@code getVerguenstigtPct()} = MIN({@link #getEffektiveBetreuungPct()}, {@link #getAnspruchPct()})
 	 */
 	@Nonnull
 	BigDecimal getVerguenstigtPct();
