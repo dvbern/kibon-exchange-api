@@ -16,36 +16,7 @@
 
 package ch.dvbern.kibon.exchange.api.verfuegung.model;
 
-public enum BetreuungsAngebot {
-	KITA,
-
-	TAGESSCHULE,
-
-	/**
-	 * @deprecated only in schema < 2.0
-	 */
-	@Deprecated
-	TAGESELTERN_KLEINKIND,
-
-	/**
-	 * @deprecated only in schema < 2.0
-	 */
-	@Deprecated
-	TAGESELTERN_SCHULKIND,
-
-	/**
-	 * @deprecated only in schema < 2.0
-	 */
-	@Deprecated
-	TAGI,
-
-	/**
-	 * @since schema 2.0
-	 */
-	TAGESFAMILIEN,
-
-	/**
-	 * @since schema 2.0
-	 */
-	FERIENINSEL,
+public enum Zeiteinheit {
+	DAYS,
+	HOURS
 }

@@ -1,18 +1,17 @@
 /*
  * Copyright (C) 2019 DV Bern AG, Switzerland
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package ch.dvbern.kibon.exchange.api.verfuegung.model;
@@ -49,13 +48,13 @@ public class ZeitabschnittDTO implements Serializable, Zeitabschnitt {
 	private @Min(0) Integer verfuegungNr;
 
 	@Nonnull
-	private @NotNull @DecimalMin("0") @DecimalMax("100") BigDecimal effektiveBetreuungPct;
+	private @NotNull @DecimalMin("0") BigDecimal effektiveBetreuungPct;
 
 	@Nonnull
 	private @NotNull @Min(0) @Max(100) Integer anspruchPct;
 
 	@Nonnull
-	private @NotNull @DecimalMin("0") @DecimalMax("100") BigDecimal verguenstigtPct;
+	private @NotNull @DecimalMin("0") BigDecimal verguenstigtPct;
 
 	@Nonnull
 	private @NotNull @DecimalMin("0") BigDecimal vollkosten;
@@ -68,6 +67,15 @@ public class ZeitabschnittDTO implements Serializable, Zeitabschnitt {
 
 	@Nonnull
 	private @NotNull @DecimalMin("0") BigDecimal verguenstigung;
+
+	@Nullable
+	private @DecimalMin("0") BigDecimal verfuegteAnzahlZeiteinheiten;
+
+	@Nullable
+	private @DecimalMin("0") BigDecimal anspruchsberechtigteAnzahlZeiteinheiten;
+
+	@Nullable
+	private Zeiteinheit zeiteinheit;
 
 	public ZeitabschnittDTO() {
 		this.von = LocalDate.MIN;
@@ -246,5 +254,36 @@ public class ZeitabschnittDTO implements Serializable, Zeitabschnitt {
 
 	public void setVerguenstigung(@Nonnull BigDecimal verguenstigung) {
 		this.verguenstigung = verguenstigung;
+	}
+
+	@Override
+	@Nullable
+	public BigDecimal getVerfuegteAnzahlZeiteinheiten() {
+		return verfuegteAnzahlZeiteinheiten;
+	}
+
+	public void setVerfuegteAnzahlZeiteinheiten(@Nullable BigDecimal verfuegteAnzahlZeiteinheiten) {
+		this.verfuegteAnzahlZeiteinheiten = verfuegteAnzahlZeiteinheiten;
+	}
+
+	@Override
+	@Nullable
+	public BigDecimal getAnspruchsberechtigteAnzahlZeiteinheiten() {
+		return anspruchsberechtigteAnzahlZeiteinheiten;
+	}
+
+	public void setAnspruchsberechtigteAnzahlZeiteinheiten(
+		@Nullable BigDecimal anspruchsberechtigteAnzahlZeiteinheiten) {
+		this.anspruchsberechtigteAnzahlZeiteinheiten = anspruchsberechtigteAnzahlZeiteinheiten;
+	}
+
+	@Override
+	@Nullable
+	public Zeiteinheit getZeiteinheit() {
+		return zeiteinheit;
+	}
+
+	public void setZeiteinheit(@Nullable Zeiteinheit zeiteinheit) {
+		this.zeiteinheit = zeiteinheit;
 	}
 }
