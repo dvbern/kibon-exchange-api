@@ -153,9 +153,11 @@ public class VerfuegungDTO implements Serializable {
 			getBis().equals(that.getBis()) &&
 			getVersion().equals(that.getVersion()) &&
 			getVerfuegtAm().equals(that.getVerfuegtAm()) &&
+			getBetreuungsArt() == that.getBetreuungsArt() &&
+			getGemeindeBfsNr().equals(that.getGemeindeBfsNr()) &&
+			getGemeindeName().equals(that.getGemeindeName()) &&
 			getKind().equals(that.getKind()) &&
 			getGesuchsteller().equals(that.getGesuchsteller()) &&
-			getBetreuungsArt() == that.getBetreuungsArt() &&
 			getZeitabschnitte().equals(that.getZeitabschnitte()) &&
 			getIgnorierteZeitabschnitte().equals(that.getIgnorierteZeitabschnitte());
 	}
@@ -170,9 +172,11 @@ public class VerfuegungDTO implements Serializable {
 			getBis(),
 			getVersion(),
 			getVerfuegtAm(),
+			getBetreuungsArt(),
+			getGemeindeBfsNr(),
+			getGemeindeName(),
 			getKind(),
 			getGesuchsteller(),
-			getBetreuungsArt(),
 			getZeitabschnitte(),
 			getIgnorierteZeitabschnitte());
 	}
