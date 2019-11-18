@@ -67,7 +67,7 @@ public class VerfuegungDTO implements Serializable {
 	private @NotNull BetreuungsAngebot betreuungsArt;
 
 	@Nonnull
-	private @NotNull Long bfsNummer;
+	private @NotNull Long gemeindeBfsNr;
 
 	@Nonnull
 	private @NotNull String gemeindeName;
@@ -94,7 +94,7 @@ public class VerfuegungDTO implements Serializable {
 		this.version = -1;
 		this.verfuegtAm = LocalDateTime.MIN;
 		this.betreuungsArt = BetreuungsAngebot.KITA;
-		this.bfsNummer = -1L;
+		this.gemeindeBfsNr = -1L;
 		this.gemeindeName = "";
 		this.kind = new KindDTO();
 		this.gesuchsteller = new GesuchstellerDTO();
@@ -110,7 +110,7 @@ public class VerfuegungDTO implements Serializable {
 		@Nonnull Integer version,
 		@Nonnull LocalDateTime verfuegtAm,
 		@Nonnull BetreuungsAngebot betreuungsArt,
-		@Nonnull Long bfsNummer,
+		@Nonnull Long gemeindeBfsNr,
 		@Nonnull String gemeindeName,
 		@Nonnull KindDTO kind,
 		@Nonnull GesuchstellerDTO gesuchsteller,
@@ -125,7 +125,7 @@ public class VerfuegungDTO implements Serializable {
 		this.version = version;
 		this.verfuegtAm = verfuegtAm;
 		this.betreuungsArt = betreuungsArt;
-		this.bfsNummer = bfsNummer;
+		this.gemeindeBfsNr = gemeindeBfsNr;
 		this.gemeindeName = gemeindeName;
 		this.kind = kind;
 		this.gesuchsteller = gesuchsteller;
@@ -188,7 +188,7 @@ public class VerfuegungDTO implements Serializable {
 			.add("bis=" + bis)
 			.add("version=" + version)
 			.add("verfuegtAm=" + verfuegtAm)
-			.add("bfsNummer=" + bfsNummer)
+			.add("bfsNummer=" + gemeindeBfsNr)
 			.toString();
 	}
 
@@ -274,12 +274,12 @@ public class VerfuegungDTO implements Serializable {
 	}
 
 	@Nonnull
-	public Long getBfsNummer() {
-		return bfsNummer;
+	public Long getGemeindeBfsNr() {
+		return gemeindeBfsNr;
 	}
 
-	public void setBfsNummer(@Nonnull Long bfsNummer) {
-		this.bfsNummer = bfsNummer;
+	public void setGemeindeBfsNr(@Nonnull Long gemeindeBfsNr) {
+		this.gemeindeBfsNr = gemeindeBfsNr;
 	}
 
 	@Nonnull
