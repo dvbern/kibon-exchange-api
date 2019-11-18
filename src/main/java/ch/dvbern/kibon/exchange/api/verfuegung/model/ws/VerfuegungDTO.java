@@ -67,6 +67,12 @@ public class VerfuegungDTO implements Serializable {
 	private @NotNull BetreuungsAngebot betreuungsArt;
 
 	@Nonnull
+	private @NotNull Long gemeindeBfsNr;
+
+	@Nonnull
+	private @NotNull String gemeindeName;
+
+	@Nonnull
 	private @NotNull @Valid KindDTO kind;
 
 	@Nonnull
@@ -88,6 +94,8 @@ public class VerfuegungDTO implements Serializable {
 		this.version = -1;
 		this.verfuegtAm = LocalDateTime.MIN;
 		this.betreuungsArt = BetreuungsAngebot.KITA;
+		this.gemeindeBfsNr = -1L;
+		this.gemeindeName = "";
 		this.kind = new KindDTO();
 		this.gesuchsteller = new GesuchstellerDTO();
 	}
@@ -102,31 +110,8 @@ public class VerfuegungDTO implements Serializable {
 		@Nonnull Integer version,
 		@Nonnull LocalDateTime verfuegtAm,
 		@Nonnull BetreuungsAngebot betreuungsArt,
-		@Nonnull KindDTO kind,
-		@Nonnull GesuchstellerDTO gesuchsteller) {
-		this.id = id;
-		this.availableSince = availableSince;
-		this.refnr = refnr;
-		this.institutionId = institutionId;
-		this.von = von;
-		this.bis = bis;
-		this.version = version;
-		this.verfuegtAm = verfuegtAm;
-		this.betreuungsArt = betreuungsArt;
-		this.kind = kind;
-		this.gesuchsteller = gesuchsteller;
-	}
-
-	public VerfuegungDTO(
-		@Nonnull Long id,
-		@Nonnull LocalDateTime availableSince,
-		@Nonnull String refnr,
-		@Nonnull String institutionId,
-		@Nonnull LocalDate von,
-		@Nonnull LocalDate bis,
-		@Nonnull Integer version,
-		@Nonnull LocalDateTime verfuegtAm,
-		@Nonnull BetreuungsAngebot betreuungsArt,
+		@Nonnull Long gemeindeBfsNr,
+		@Nonnull String gemeindeName,
 		@Nonnull KindDTO kind,
 		@Nonnull GesuchstellerDTO gesuchsteller,
 		@Nonnull List<ZeitabschnittDTO> zeitabschnitte,
@@ -140,6 +125,8 @@ public class VerfuegungDTO implements Serializable {
 		this.version = version;
 		this.verfuegtAm = verfuegtAm;
 		this.betreuungsArt = betreuungsArt;
+		this.gemeindeBfsNr = gemeindeBfsNr;
+		this.gemeindeName = gemeindeName;
 		this.kind = kind;
 		this.gesuchsteller = gesuchsteller;
 		this.zeitabschnitte = zeitabschnitte;
@@ -201,6 +188,7 @@ public class VerfuegungDTO implements Serializable {
 			.add("bis=" + bis)
 			.add("version=" + version)
 			.add("verfuegtAm=" + verfuegtAm)
+			.add("bfsNummer=" + gemeindeBfsNr)
 			.toString();
 	}
 
@@ -283,6 +271,24 @@ public class VerfuegungDTO implements Serializable {
 
 	public void setBetreuungsArt(@Nonnull BetreuungsAngebot betreuungsArt) {
 		this.betreuungsArt = betreuungsArt;
+	}
+
+	@Nonnull
+	public Long getGemeindeBfsNr() {
+		return gemeindeBfsNr;
+	}
+
+	public void setGemeindeBfsNr(@Nonnull Long gemeindeBfsNr) {
+		this.gemeindeBfsNr = gemeindeBfsNr;
+	}
+
+	@Nonnull
+	public String getGemeindeName() {
+		return gemeindeName;
+	}
+
+	public void setGemeindeName(@Nonnull String gemeindeName) {
+		this.gemeindeName = gemeindeName;
 	}
 
 	@Nonnull
