@@ -33,7 +33,6 @@ import javax.validation.constraints.Size;
 import ch.dvbern.kibon.exchange.api.verfuegung.model.GesuchstellerDTO;
 import ch.dvbern.kibon.exchange.api.verfuegung.model.KindDTO;
 import ch.dvbern.kibon.exchange.api.verfuegung.model.ZeitabschnittDTO;
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class FileVerfuegungDTO implements Serializable {
 
@@ -51,7 +50,6 @@ public class FileVerfuegungDTO implements Serializable {
 	@Nonnull
 	private @NotNull Integer version;
 
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm")
 	@Nonnull
 	private @NotNull LocalDateTime verfuegtAm;
 

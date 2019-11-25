@@ -66,7 +66,6 @@ node {
 			try {
 				withCredentials([usernamePassword(credentialsId: 'jenkins-github-token', passwordVariable: 'password',
 						usernameVariable: 'username')]) {
-					// some block
 					withMaven(jdk: jdkVersion, maven: mvnVersion) {
 						genericSh "mvn -Pdvbern.oss -B jgitflow:release-start " +
 								"-DreleaseVersion=${params.releaseversion} " +
