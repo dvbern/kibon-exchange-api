@@ -25,7 +25,6 @@ import java.util.StringJoiner;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -77,6 +76,9 @@ public class ZeitabschnittDTO implements Serializable, Zeitabschnitt {
 	@Nullable
 	private Zeiteinheit zeiteinheit;
 
+	@Nonnull
+	private @NotNull Regelwerk regelwerk;
+
 	public ZeitabschnittDTO() {
 		this.von = LocalDate.MIN;
 		this.bis = LocalDate.MIN;
@@ -85,6 +87,7 @@ public class ZeitabschnittDTO implements Serializable, Zeitabschnitt {
 		this.verguenstigtPct = BigDecimal.ZERO;
 		this.vollkosten = BigDecimal.ZERO;
 		this.verguenstigung = BigDecimal.ZERO;
+		this.regelwerk = Regelwerk.ASIV;
 	}
 
 	public ZeitabschnittDTO(
@@ -285,5 +288,14 @@ public class ZeitabschnittDTO implements Serializable, Zeitabschnitt {
 
 	public void setZeiteinheit(@Nullable Zeiteinheit zeiteinheit) {
 		this.zeiteinheit = zeiteinheit;
+	}
+
+	@Nonnull
+	public Regelwerk getRegelwerk() {
+		return regelwerk;
+	}
+
+	public void setRegelwerk(@Nonnull Regelwerk regelwerk) {
+		this.regelwerk = regelwerk;
 	}
 }
