@@ -77,7 +77,7 @@ public class ZeitabschnittDTO implements Serializable, Zeitabschnitt {
 	private Zeiteinheit zeiteinheit;
 
 	@Nonnull
-	private @NotNull Regelwerk regelwerk;
+	private @NotNull Regelwerk regelwerk = Regelwerk.ASIV;
 
 	public ZeitabschnittDTO() {
 		this.von = LocalDate.MIN;
@@ -87,7 +87,6 @@ public class ZeitabschnittDTO implements Serializable, Zeitabschnitt {
 		this.verguenstigtPct = BigDecimal.ZERO;
 		this.vollkosten = BigDecimal.ZERO;
 		this.verguenstigung = BigDecimal.ZERO;
-		this.regelwerk = Regelwerk.ASIV;
 	}
 
 	public ZeitabschnittDTO(
@@ -290,6 +289,7 @@ public class ZeitabschnittDTO implements Serializable, Zeitabschnitt {
 		this.zeiteinheit = zeiteinheit;
 	}
 
+	@Override
 	@Nonnull
 	public Regelwerk getRegelwerk() {
 		return regelwerk;
