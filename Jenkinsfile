@@ -28,7 +28,7 @@ properties([
 		])
 ])
 
-def mvnVersion = "Maven_3.6.1"
+def mvnVersion = "Maven_3.6.3"
 def jdkVersion = "OpenJDK_1.8_222"
 // comma separated list of email addresses of all team members (for notification)
 def emailRecipients = "fabio.heer@dvbern.ch"
@@ -39,51 +39,20 @@ def featureBranchPrefix = "feature"
 def releaseBranchPrefix = "release"
 def hotfixBranchPrefix = "hotfix"
 
-node {
-	def isUnix = isUnix()
+if (params.performRelease) {
+	// see https://issues.jenkins-ci.org/browse/JENKINS-53512
+	def releaseVersion = params.releaseversion
+	def nextReleaseVersion = params.nextreleaseversion
 
-	def genericSh = {cmd ->
-		if (Boolean.valueOf(isUnix)) {
-			sh cmd
-		} else {
-			bat cmd
-		}
+	dvbJGitFlowRelease {
+		releaseversion = releaseVersion
+		nextreleaseversion = nextReleaseVersion
+		emailRecipients
+		jdkVersion
+		credentialsId = 'jenkins-github-token'
 	}
-
-	if (params.performRelease) {
-		currentBuild.displayName = "Release-${params.releaseversion}-${env.BUILD_NUMBER}"
-
-		stage('Checkout') {
-			checkout([
-					$class           : 'GitSCM',
-					branches         : [[name: "${developBranchName}"]],
-					extensions       : [[$class: 'LocalBranch', localBranch: "${developBranchName}"]],
-					userRemoteConfigs: scm.userRemoteConfigs
-			])
-		}
-
-		stage('Release') {
-			try {
-				withCredentials([usernamePassword(credentialsId: 'jenkins-github-token', passwordVariable: 'password',
-						usernameVariable: 'username')]) {
-					withMaven(jdk: jdkVersion, maven: mvnVersion) {
-						genericSh "mvn -Pdvbern.oss -B jgitflow:release-start " +
-								"-DreleaseVersion=${params.releaseversion} " +
-								"-DdevelopmentVersion=${params.nextreleaseversion}-SNAPSHOT " +
-								"-Dusername=${username} " +
-								"-Dpassword=${password} " +
-								"jgitflow:release-finish"
-					}
-				}
-			} catch (Exception e) {
-				currentBuild.result = "FAILURE"
-				// notify the team
-				mail(to: emailRecipients, subject: "${env.JOB_NAME} Release failed", body: "See: " +
-						"(<${BUILD_URL}/console|Job>)")
-				throw e
-			}
-		}
-	} else {
+} else {
+	node {
 		stage('Checkout') {
 			checkout([
 					$class           : 'GitSCM',
@@ -94,7 +63,7 @@ node {
 		}
 
 		String branch = env.BRANCH_NAME.toString()
-		currentBuild.displayName = "${branch}-${pomVersion()}-${env.BUILD_NUMBER}"
+		currentBuild.displayName = "${branch}-${dvbMaven.pomVersion()}-${env.BUILD_NUMBER}"
 
 		stage('Maven build') {
 			def handleFailures = {error ->
@@ -116,7 +85,7 @@ node {
 
 			try {
 				withMaven(jdk: jdkVersion, maven: mvnVersion) {
-					genericSh 'mvn -U -Pdvbern.oss -Dmaven.test.failure.ignore=true clean ' + verifyOrDeploy()
+					dvbUtil.genericSh 'mvn -U -Pdvbern.oss -Dmaven.test.failure.ignore=true clean ' + verifyOrDeploy()
 				}
 				if (currentBuild.result == "UNSTABLE") {
 					handleFailures("build is unstable")
@@ -128,9 +97,4 @@ node {
 			}
 		}
 	}
-}
-
-def pomVersion() {
-	def pom = readMavenPom file: 'pom.xml'
-	return pom.version
 }
