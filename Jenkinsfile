@@ -28,10 +28,11 @@ properties([
 		])
 ])
 
-def mvnVersion = "Maven_3.6.3"
-def jdkVersion = "OpenJDK_1.8_222"
-// comma separated list of email addresses of all team members (for notification)
-def emailRecipients = "fabio.heer@dvbern.ch"
+def conf = {
+	mvnVersion = "Maven_3.6.3"
+	jdkVersion = "OpenJDK_1.8_222"
+	emailRecipients = "fabio.heer@dvbern.ch"
+}
 
 def masterBranchName = "master"
 def developBranchName = "develop"
@@ -47,8 +48,8 @@ if (params.performRelease) {
 	dvbJGitFlowRelease {
 		releaseversion = releaseVersion
 		nextreleaseversion = nextReleaseVersion
-		emailRecipients
-		jdkVersion
+		emailRecipients = conf.emailRecipients
+		jdkVersion = conf.jdkVersion
 		credentialsId = 'jenkins-github-token'
 	}
 } else {
@@ -73,7 +74,7 @@ if (params.performRelease) {
 																													 'RequesterRecipientProvider']]), sendToIndividuals: true])
 
 				} else {
-					dvbErrorHandling.sendMail(emailRecipients, currentBuild, error)
+					dvbErrorHandling.sendMail(dev.emailRecipients, currentBuild, error)
 				}
 			}
 
@@ -84,7 +85,7 @@ if (params.performRelease) {
 			}
 
 			try {
-				withMaven(jdk: jdkVersion, maven: mvnVersion) {
+				withMaven(jdk: conf.jdkVersion, maven: conf.mvnVersion) {
 					dvbUtil.genericSh 'mvn -U -Pdvbern.oss -Dmaven.test.failure.ignore=true clean ' + verifyOrDeploy()
 				}
 				if (currentBuild.result == "UNSTABLE") {
