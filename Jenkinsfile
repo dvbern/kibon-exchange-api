@@ -28,11 +28,11 @@ properties([
 		])
 ])
 
-def conf = {
-	mvnVersion = "Maven_3.6.3"
-	jdkVersion = "OpenJDK_1.8_222"
-	emailRecipients = "fabio.heer@dvbern.ch"
-}
+def conf = [
+	mvnVersion: "Maven_3.6.3",
+	jdkVersion: "OpenJDK_1.8_222",
+	emailRecipients: "fabio.heer@dvbern.ch"
+]
 
 def masterBranchName = "master"
 def developBranchName = "develop"
