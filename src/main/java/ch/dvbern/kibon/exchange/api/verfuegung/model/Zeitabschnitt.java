@@ -138,4 +138,14 @@ public interface Zeitabschnitt {
 	 */
 	@Nullable
 	Zeiteinheit getZeiteinheit();
+
+	/**
+	 * ki-Tax rules apply when Regelwerk is "FEBR", otherwise the normal kiBon rules were used
+	 * <br>
+	 * Nonnull in schema 2.2
+	 *
+	 * @since kiBon (schema 2.2)
+	 */
+	@Nonnull
+	Regelwerk getRegelwerk();
 }
