@@ -43,12 +43,13 @@ if (params.performRelease) {
 	// see https://issues.jenkins-ci.org/browse/JENKINS-53512
 	def releaseVersion = params.releaseversion
 	def nextReleaseVersion = params.nextreleaseversion
+	def credentials = "jenkins-github-token"
 
 	dvbJGitFlowRelease {
 		releaseversion = releaseVersion
 		nextreleaseversion = nextReleaseVersion
 		emailRecipients = recipients
-		credentialsId = 'jenkins-github-token'
+		credentialsId = credentials
 	}
 } else {
 	node {
