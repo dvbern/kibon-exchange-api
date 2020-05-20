@@ -69,8 +69,11 @@ if (params.performRelease) {
 			def handleFailures = {error ->
 				if (branch.startsWith(featureBranchPrefix)) {
 					// feature branche failures should only notify the feature owner
-					step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: emailextrecipients([[$class:
-																													 'RequesterRecipientProvider']]), sendToIndividuals: true])
+					step([
+							$class                  : 'Mailer',
+							notifyEveryUnstableBuild: true,
+							recipients              : emailextrecipients([[$class: 'RequesterRecipientProvider']]),
+							sendToIndividuals       : true])
 
 				} else {
 					dvbErrorHandling.sendMail(recipients, currentBuild, error)
