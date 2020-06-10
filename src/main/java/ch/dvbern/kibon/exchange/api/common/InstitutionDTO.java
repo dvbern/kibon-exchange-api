@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ch.dvbern.kibon.exchange.api.institution.model;
+package ch.dvbern.kibon.exchange.api.common;
 
 import java.io.Serializable;
 import java.util.Objects;

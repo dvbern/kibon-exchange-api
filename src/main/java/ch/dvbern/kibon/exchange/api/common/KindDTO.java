@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ch.dvbern.kibon.exchange.api.verfuegung.model;
+package ch.dvbern.kibon.exchange.api.common;
 
 import java.io.Serializable;
 import java.time.LocalDate;

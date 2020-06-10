@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ch.dvbern.kibon.exchange.api.verfuegung.model.ws;
+package ch.dvbern.kibon.exchange.api.common;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -23,8 +23,6 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-
-import ch.dvbern.kibon.exchange.api.institution.model.InstitutionDTO;
 
 public class VerfuegungenDTO implements Serializable {
 

@@ -23,7 +23,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 
-import ch.dvbern.kibon.exchange.api.verfuegung.model.ws.VerfuegungenDTO;
+import ch.dvbern.kibon.exchange.api.common.VerfuegungenDTO;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 @Path("/v1/verfuegungen")

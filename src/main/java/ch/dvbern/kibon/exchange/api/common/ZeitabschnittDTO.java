@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ch.dvbern.kibon.exchange.api.verfuegung.model;
+package ch.dvbern.kibon.exchange.api.common;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -29,6 +29,10 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+
+import ch.dvbern.kibon.exchange.api.model.Regelwerk;
+import ch.dvbern.kibon.exchange.api.model.Zeitabschnitt;
+import ch.dvbern.kibon.exchange.api.model.Zeiteinheit;
 
 public class ZeitabschnittDTO implements Serializable, Zeitabschnitt {
 

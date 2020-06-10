@@ -1,4 +1,4 @@
-package ch.dvbern.kibon.exchange.api.verfuegung.model;
+package ch.dvbern.kibon.exchange.api.model;
 
 public enum Regelwerk {
 	ASIV,

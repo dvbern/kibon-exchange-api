@@ -14,9 +14,11 @@
  * limitations under the License.
  */
 
-package ch.dvbern.kibon.exchange.api.verfuegung.model.fileexport;
+package ch.dvbern.kibon.exchange.api.common;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
 
@@ -25,8 +27,7 @@ import javax.annotation.Nullable;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-import ch.dvbern.kibon.exchange.api.institution.model.InstitutionDTO;
-import ch.dvbern.kibon.exchange.api.verfuegung.model.BetreuungsAngebot;
+import ch.dvbern.kibon.exchange.api.model.BetreuungsAngebot;
 
 public class BetreuungDTO implements Serializable {
 
@@ -38,14 +39,37 @@ public class BetreuungDTO implements Serializable {
 	@Nonnull
 	private @NotNull @Valid InstitutionDTO institution;
 
+	@Nonnull
+	private String referenznummer;
+
+	private boolean ausserordentlicherBetreuungsaufwand;
+
+	private boolean betreuungErfolgtInGemeinde;
+
+	@Nonnull
+	private List<BetreuungZeitabschnittDTO> zeitabschnitte;
+
 	public BetreuungDTO() {
 		this.betreuungsArt = BetreuungsAngebot.KITA;
 		this.institution = new InstitutionDTO();
+		this.referenznummer = "";
+		ausserordentlicherBetreuungsaufwand = false;
+		betreuungErfolgtInGemeinde = false;
+		zeitabschnitte = new ArrayList<>();
 	}
 
-	public BetreuungDTO(@Nonnull BetreuungsAngebot betreuungsArt, @Nonnull InstitutionDTO institution) {
+	public BetreuungDTO(@Nonnull BetreuungsAngebot betreuungsArt,
+		@Nonnull InstitutionDTO institution,
+		@Nonnull String referenznummer,
+		boolean ausserordentlicherBetreuungsaufwand,
+		boolean betreuungErfolgtInGemeinde,
+		@Nonnull List<BetreuungZeitabschnittDTO> zeitabschnitte) {
 		this.betreuungsArt = betreuungsArt;
 		this.institution = institution;
+		this.referenznummer = referenznummer;
+		this.ausserordentlicherBetreuungsaufwand = ausserordentlicherBetreuungsaufwand;
+		this.betreuungErfolgtInGemeinde = betreuungErfolgtInGemeinde;
+		this.zeitabschnitte = zeitabschnitte;
 	}
 
 	@Override
@@ -75,6 +99,9 @@ public class BetreuungDTO implements Serializable {
 		return new StringJoiner(", ", BetreuungDTO.class.getSimpleName() + '[', "]")
 			.add("betreuungsArt=" + betreuungsArt)
 			.add("institution=" + institution)
+			.add("referenzNummer=" + referenznummer)
+			.add("ausserordentlicherBetreuungsaufwand=" + ausserordentlicherBetreuungsaufwand)
+			.add("betreuungErfolgtInGemeinde=" + betreuungErfolgtInGemeinde)
 			.toString();
 	}
 
@@ -94,5 +121,39 @@ public class BetreuungDTO implements Serializable {
 
 	public void setInstitution(@Nonnull InstitutionDTO institution) {
 		this.institution = institution;
+	}
+
+	@Nonnull
+	public String getReferenznummer() {
+		return referenznummer;
+	}
+
+	public void setReferenznummer(@Nonnull String referenznummer) {
+		this.referenznummer = referenznummer;
+	}
+
+	public boolean isAusserordentlicherBetreuungsaufwand() {
+		return ausserordentlicherBetreuungsaufwand;
+	}
+
+	public void setAusserordentlicherBetreuungsaufwand(boolean ausserordentlicherBetreuungsaufwand) {
+		this.ausserordentlicherBetreuungsaufwand = ausserordentlicherBetreuungsaufwand;
+	}
+
+	public boolean isBetreuungErfolgtInGemeinde() {
+		return betreuungErfolgtInGemeinde;
+	}
+
+	public void setBetreuungErfolgtInGemeinde(boolean betreuungErfolgtInGemeinde) {
+		this.betreuungErfolgtInGemeinde = betreuungErfolgtInGemeinde;
+	}
+
+	@Nonnull
+	public List<BetreuungZeitabschnittDTO> getZeitabschnitte() {
+		return zeitabschnitte;
+	}
+
+	public void setZeitabschnitte(@Nonnull List<BetreuungZeitabschnittDTO> zeitabschnitte) {
+		this.zeitabschnitte = zeitabschnitte;
 	}
 }
