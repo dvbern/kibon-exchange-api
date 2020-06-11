@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-package ch.dvbern.kibon.exchange.api.common;
+package ch.dvbern.kibon.exchange.api.common.shared;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.Objects;
 import java.util.StringJoiner;
 
@@ -26,9 +25,9 @@ import javax.annotation.Nullable;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-public class KindDTO implements Serializable {
+public class GesuchstellerDTO implements Serializable {
 
-	private static final long serialVersionUID = 1600984319369985504L;
+	private static final long serialVersionUID = 34206637279247377L;
 
 	@Nonnull
 	private @Size(min = 1) @NotNull String vorname;
@@ -36,19 +35,18 @@ public class KindDTO implements Serializable {
 	@Nonnull
 	private @Size(min = 1) @NotNull String nachname;
 
-	@Nonnull
-	private @NotNull LocalDate geburtsdatum;
+	@Nullable
+	private String email;
 
-	public KindDTO() {
+	public GesuchstellerDTO() {
 		this.vorname = "";
 		this.nachname = "";
-		this.geburtsdatum = LocalDate.MIN;
 	}
 
-	public KindDTO(@Nonnull String vorname, @Nonnull String nachname, @Nonnull LocalDate geburtsdatum) {
+	public GesuchstellerDTO(@Nonnull String vorname, @Nonnull String nachname, @Nullable String email) {
 		this.vorname = vorname;
 		this.nachname = nachname;
-		this.geburtsdatum = geburtsdatum;
+		this.email = email;
 	}
 
 	@Override
@@ -61,25 +59,25 @@ public class KindDTO implements Serializable {
 			return false;
 		}
 
-		KindDTO kind = (KindDTO) o;
+		GesuchstellerDTO that = (GesuchstellerDTO) o;
 
-		return getVorname().equals(kind.getVorname()) &&
-			getNachname().equals(kind.getNachname()) &&
-			getGeburtsdatum().equals(kind.getGeburtsdatum());
+		return getVorname().equals(that.getVorname()) &&
+			getNachname().equals(that.getNachname()) &&
+			Objects.equals(getEmail(), that.getEmail());
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getVorname(), getNachname(), getGeburtsdatum());
+		return Objects.hash(getVorname(), getNachname(), getEmail());
 	}
 
 	@Override
 	@Nonnull
 	public String toString() {
-		return new StringJoiner(", ", KindDTO.class.getSimpleName() + '[', "]")
+		return new StringJoiner(", ", GesuchstellerDTO.class.getSimpleName() + '[', "]")
 			.add("vorname='" + vorname + '\'')
 			.add("nachname='" + nachname + '\'')
-			.add("geburtsdatum=" + geburtsdatum)
+			.add("email='" + email + '\'')
 			.toString();
 	}
 
@@ -101,12 +99,12 @@ public class KindDTO implements Serializable {
 		this.nachname = nachname;
 	}
 
-	@Nonnull
-	public LocalDate getGeburtsdatum() {
-		return geburtsdatum;
+	@Nullable
+	public String getEmail() {
+		return email;
 	}
 
-	public void setGeburtsdatum(@Nonnull LocalDate geburtsdatum) {
-		this.geburtsdatum = geburtsdatum;
+	public void setEmail(@Nullable String email) {
+		this.email = email;
 	}
 }

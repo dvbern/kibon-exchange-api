@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 DV Bern AG, Switzerland
+ * Copyright (C) 2020 DV Bern AG, Switzerland
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 
-import ch.dvbern.kibon.exchange.api.common.VerfuegungenDTO;
+import ch.dvbern.kibon.exchange.api.common.verfuegung.VerfuegungenDTO;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 @Path("/v1/verfuegungen")

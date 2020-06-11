@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 DV Bern AG, Switzerland
+ * Copyright (C) 2020 DV Bern AG, Switzerland
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,13 +14,15 @@
  * limitations under the License.
  */
 
-package ch.dvbern.kibon.exchange.api.model;
+package ch.dvbern.kibon.exchange.api.common.verfuegung;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
+import ch.dvbern.kibon.exchange.api.common.shared.Zeiteinheit;
 
 public interface Zeitabschnitt {
 

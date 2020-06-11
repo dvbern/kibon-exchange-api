@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 DV Bern AG, Switzerland
+ * Copyright (C) 2020 DV Bern AG, Switzerland
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ch.dvbern.kibon.exchange.api.common;
+package ch.dvbern.kibon.exchange.api.common.verfuegung;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -29,6 +29,10 @@ import javax.annotation.Nullable;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import ch.dvbern.kibon.exchange.api.common.shared.BetreuungDTO;
+import ch.dvbern.kibon.exchange.api.common.shared.GesuchstellerDTO;
+import ch.dvbern.kibon.exchange.api.common.shared.KindDTO;
 
 public class FileVerfuegungDTO implements Serializable {
 

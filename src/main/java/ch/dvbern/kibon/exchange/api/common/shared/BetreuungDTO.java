@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 DV Bern AG, Switzerland
+ * Copyright (C) 2020 DV Bern AG, Switzerland
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ch.dvbern.kibon.exchange.api.common;
+package ch.dvbern.kibon.exchange.api.common.shared;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -26,25 +26,36 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
-import ch.dvbern.kibon.exchange.api.model.BetreuungsAngebot;
+import ch.dvbern.kibon.exchange.api.common.institution.InstitutionDTO;
+import ch.dvbern.kibon.exchange.api.common.platzbestaetigung.BetreuungZeitabschnittDTO;
+import ch.dvbern.kibon.exchange.api.common.verfuegung.BetreuungsAngebot;
 
 public class BetreuungDTO implements Serializable {
 
 	private static final long serialVersionUID = -806547086175525904L;
 
-	@Nonnull
-	private @NotNull BetreuungsAngebot betreuungsArt;
+	/**
+	 * Older (maybe unused) fields of the DTO have been made Nullable for now.
+	 * Can be removed, if not in use
+	 */
+	@Nullable
+	private BetreuungsAngebot betreuungsArt;
+
+	@Nullable
+	private @Valid InstitutionDTO institution;
 
 	@Nonnull
-	private @NotNull @Valid InstitutionDTO institution;
-
-	@Nonnull
-	private String referenznummer;
+	private @Size(min = 1) @NotNull String referenznummer;
 
 	private boolean ausserordentlicherBetreuungsaufwand;
 
-	private boolean betreuungErfolgtInGemeinde;
+	@Nullable
+	private List<Long> gemeindeBfsNrs;
+
+	@Nullable
+	private List<String> gemeindeNamen;
 
 	@Nonnull
 	private List<BetreuungZeitabschnittDTO> zeitabschnitte;
@@ -54,21 +65,25 @@ public class BetreuungDTO implements Serializable {
 		this.institution = new InstitutionDTO();
 		this.referenznummer = "";
 		ausserordentlicherBetreuungsaufwand = false;
-		betreuungErfolgtInGemeinde = false;
+		gemeindeBfsNrs = null;
+		gemeindeNamen = null;
 		zeitabschnitte = new ArrayList<>();
 	}
 
-	public BetreuungDTO(@Nonnull BetreuungsAngebot betreuungsArt,
-		@Nonnull InstitutionDTO institution,
+	public BetreuungDTO(
+		@Nullable BetreuungsAngebot betreuungsArt,
+		@Nullable InstitutionDTO institution,
 		@Nonnull String referenznummer,
 		boolean ausserordentlicherBetreuungsaufwand,
-		boolean betreuungErfolgtInGemeinde,
-		@Nonnull List<BetreuungZeitabschnittDTO> zeitabschnitte) {
+		@Nonnull List<BetreuungZeitabschnittDTO> zeitabschnitte,
+		@Nullable List<Long> gemeindeBfsNrs,
+		@Nullable List<String> gemeindeNamen) {
 		this.betreuungsArt = betreuungsArt;
 		this.institution = institution;
 		this.referenznummer = referenznummer;
 		this.ausserordentlicherBetreuungsaufwand = ausserordentlicherBetreuungsaufwand;
-		this.betreuungErfolgtInGemeinde = betreuungErfolgtInGemeinde;
+		this.gemeindeBfsNrs = gemeindeBfsNrs;
+		this.gemeindeNamen = gemeindeNamen;
 		this.zeitabschnitte = zeitabschnitte;
 	}
 
@@ -82,10 +97,14 @@ public class BetreuungDTO implements Serializable {
 			return false;
 		}
 
-		BetreuungDTO betreuung = (BetreuungDTO) o;
+		BetreuungDTO that = (BetreuungDTO) o;
 
-		return getBetreuungsArt() == betreuung.getBetreuungsArt() &&
-			getInstitution().equals(betreuung.getInstitution());
+		return getBetreuungsArt() == that.getBetreuungsArt() &&
+			Objects.equals(getInstitution(), that.getInstitution()) &&
+			getReferenznummer().equals(that.getReferenznummer()) &&
+			getZeitabschnitte().equals(that.getZeitabschnitte()) &&
+			Objects.equals(getGemeindeBfsNrs(), that.getGemeindeBfsNrs()) &&
+			Objects.equals(getGemeindeNamen(), that.getGemeindeNamen());
 	}
 
 	@Override
@@ -101,25 +120,24 @@ public class BetreuungDTO implements Serializable {
 			.add("institution=" + institution)
 			.add("referenzNummer=" + referenznummer)
 			.add("ausserordentlicherBetreuungsaufwand=" + ausserordentlicherBetreuungsaufwand)
-			.add("betreuungErfolgtInGemeinde=" + betreuungErfolgtInGemeinde)
 			.toString();
 	}
 
-	@Nonnull
+	@Nullable
 	public BetreuungsAngebot getBetreuungsArt() {
 		return betreuungsArt;
 	}
 
-	public void setBetreuungsArt(@Nonnull BetreuungsAngebot betreuungsArt) {
+	public void setBetreuungsArt(@Nullable BetreuungsAngebot betreuungsArt) {
 		this.betreuungsArt = betreuungsArt;
 	}
 
-	@Nonnull
+	@Nullable
 	public InstitutionDTO getInstitution() {
 		return institution;
 	}
 
-	public void setInstitution(@Nonnull InstitutionDTO institution) {
+	public void setInstitution(@Nullable InstitutionDTO institution) {
 		this.institution = institution;
 	}
 
@@ -140,12 +158,22 @@ public class BetreuungDTO implements Serializable {
 		this.ausserordentlicherBetreuungsaufwand = ausserordentlicherBetreuungsaufwand;
 	}
 
-	public boolean isBetreuungErfolgtInGemeinde() {
-		return betreuungErfolgtInGemeinde;
+	@Nullable
+	public List<Long> getGemeindeBfsNrs() {
+		return gemeindeBfsNrs;
 	}
 
-	public void setBetreuungErfolgtInGemeinde(boolean betreuungErfolgtInGemeinde) {
-		this.betreuungErfolgtInGemeinde = betreuungErfolgtInGemeinde;
+	public void setGemeindeBfsNrs(@Nullable List<Long> gemeindeBfsNrs) {
+		this.gemeindeBfsNrs = gemeindeBfsNrs;
+	}
+
+	@Nullable
+	public List<String> getGemeindeNamen() {
+		return gemeindeNamen;
+	}
+
+	public void setGemeindeNamen(@Nullable List<String> gemeindeNamen) {
+		this.gemeindeNamen = gemeindeNamen;
 	}
 
 	@Nonnull
