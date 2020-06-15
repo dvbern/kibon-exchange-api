@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 DV Bern AG, Switzerland
+ * Copyright (C) 2020 DV Bern AG, Switzerland
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package ch.dvbern.kibon.exchange.api.verfuegung.model;
+package ch.dvbern.kibon.exchange.api.common.verfuegung;
 
-public enum Zeiteinheit {
-	DAYS,
-	HOURS
+public enum Regelwerk {
+	ASIV,
+	FEBR, // "altes" Regelwerk der Stadt Bern (Ki-Tax)
 }

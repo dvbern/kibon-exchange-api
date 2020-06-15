@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 DV Bern AG, Switzerland
+ * Copyright (C) 2020 DV Bern AG, Switzerland
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ch.dvbern.kibon.exchange.api.verfuegung.model.fileexport;
+package ch.dvbern.kibon.exchange.api.common.fileexport;
 
 import java.io.Serializable;
 import java.util.ArrayList;
