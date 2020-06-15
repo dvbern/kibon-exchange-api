@@ -49,8 +49,8 @@ public class BetreuungDTO implements Serializable {
 	private boolean ausserordentlicherBetreuungsaufwand;
 
 	public BetreuungDTO() {
-		this.institutionId = "";
-		this.refnr = "";
+		institutionId = "";
+		refnr = "";
 		zeitabschnitte = new ArrayList<>();
 		gemeindeBfsNr = null;
 		gemeindeName = null;
@@ -94,17 +94,22 @@ public class BetreuungDTO implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getRefnr(), getZeitabschnitte(), getGemeindeBfsNr(), getGemeindeName(),
-			getInstitutionId());
+		return Objects.hash(
+			getInstitutionId(),
+			getRefnr(),
+			getZeitabschnitte(),
+			getGemeindeBfsNr(),
+			getGemeindeName(),
+			getInstitutionId(),
+			isAusserordentlicherBetreuungsaufwand());
 	}
 
 	@Override
 	@Nonnull
 	public String toString() {
 		return new StringJoiner(", ", BetreuungDTO.class.getSimpleName() + '[', "]")
-			.add("institutionId=" + getInstitutionId())
+			.add("institutionId=" + institutionId)
 			.add("refnr=" + refnr)
-			.add("zeitabschnitte=" + getZeitabschnitte().toString())
 			.add("ausserordentlicherBetreuungsaufwand=" + ausserordentlicherBetreuungsaufwand)
 			.toString();
 	}

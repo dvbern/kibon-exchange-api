@@ -92,10 +92,10 @@ public class BetreuungAnfrageDTO implements Serializable {
 	@Nonnull
 	public String toString() {
 		return new StringJoiner(", ", BetreuungAnfrageDTO.class.getSimpleName() + '[', "]")
-			.add("refnrbetreuung='" + refnr + '\'')
+			.add("refnr='" + refnr + '\'')
 			.add("periodeVon=" + periodeVon)
 			.add("periodeBis=" + periodeBis)
-			.add("intitutionID=" + institutionId)
+			.add("intitutionId=" + institutionId)
 			.add("gesuchsteller=" + gesuchsteller.toString())
 			.add("kind=" + kind.toString())
 			.add("betreuungsArt=" + betreuungsArt.toString())

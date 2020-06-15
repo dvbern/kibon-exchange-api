@@ -98,9 +98,11 @@ public class BetreuungZeitabschnittDTO implements Serializable {
 		if (this == o) {
 			return true;
 		}
+
 		if (o == null || !getClass().equals(o.getClass())) {
 			return false;
 		}
+
 		BetreuungZeitabschnittDTO that = (BetreuungZeitabschnittDTO) o;
 
 		return getVon().equals(that.getVon()) &&
