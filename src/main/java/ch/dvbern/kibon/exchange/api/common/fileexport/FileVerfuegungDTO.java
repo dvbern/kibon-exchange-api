@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ch.dvbern.kibon.exchange.api.common.verfuegung;
+package ch.dvbern.kibon.exchange.api.common.fileexport;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -30,9 +30,9 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import ch.dvbern.kibon.exchange.api.common.shared.BetreuungDTO;
 import ch.dvbern.kibon.exchange.api.common.shared.GesuchstellerDTO;
 import ch.dvbern.kibon.exchange.api.common.shared.KindDTO;
+import ch.dvbern.kibon.exchange.api.common.verfuegung.ZeitabschnittDTO;
 
 public class FileVerfuegungDTO implements Serializable {
 
@@ -60,7 +60,7 @@ public class FileVerfuegungDTO implements Serializable {
 	private @NotNull @Valid GesuchstellerDTO gesuchsteller;
 
 	@Nonnull
-	private @NotNull @Valid BetreuungDTO betreuung;
+	private @NotNull @Valid FileBetreuungDTO betreuung;
 
 	@Nonnull
 	private @NotNull @Valid List<ZeitabschnittDTO> zeitabschnitte = new ArrayList<>();
@@ -76,7 +76,7 @@ public class FileVerfuegungDTO implements Serializable {
 		this.verfuegtAm = LocalDateTime.MIN;
 		this.kind = new KindDTO();
 		this.gesuchsteller = new GesuchstellerDTO();
-		this.betreuung = new BetreuungDTO();
+		this.betreuung = new FileBetreuungDTO();
 	}
 
 	public FileVerfuegungDTO(
@@ -87,7 +87,7 @@ public class FileVerfuegungDTO implements Serializable {
 		@Nonnull LocalDateTime verfuegtAm,
 		@Nonnull KindDTO kind,
 		@Nonnull GesuchstellerDTO gesuchsteller,
-		@Nonnull BetreuungDTO betreuung) {
+		@Nonnull FileBetreuungDTO betreuung) {
 		this.refnr = refnr;
 		this.von = von;
 		this.bis = bis;
@@ -213,11 +213,11 @@ public class FileVerfuegungDTO implements Serializable {
 	}
 
 	@Nonnull
-	public BetreuungDTO getBetreuung() {
+	public FileBetreuungDTO getBetreuung() {
 		return betreuung;
 	}
 
-	public void setBetreuung(@Nonnull BetreuungDTO betreuung) {
+	public void setBetreuung(@Nonnull FileBetreuungDTO betreuung) {
 		this.betreuung = betreuung;
 	}
 

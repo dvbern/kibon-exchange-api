@@ -19,6 +19,7 @@ package ch.dvbern.kibon.exchange.api.common.platzbestaetigung;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Objects;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -110,6 +111,19 @@ public class BetreuungZeitabschnittDTO implements Serializable {
 			getAnzahlMonatlicheHauptmahlzeiten().equals(that.getAnzahlMonatlicheHauptmahlzeiten()) &&
 			getAnzahlMonatlicheNebenmahlzeiten().equals(that.getAnzahlMonatlicheNebenmahlzeiten());
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(
+			getVon(),
+			getBis(),
+			getPensumUnit(),
+			getBetreuungskosten(),
+			getBetreuungspensum(),
+			getAnzahlMonatlicheHauptmahlzeiten(),
+			getAnzahlMonatlicheNebenmahlzeiten());
+	}
+
 	@Nonnull
 	public BigDecimal getBetreuungskosten() {
 		return betreuungskosten;

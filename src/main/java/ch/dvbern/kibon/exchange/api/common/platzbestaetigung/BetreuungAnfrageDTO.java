@@ -18,22 +18,25 @@ package ch.dvbern.kibon.exchange.api.common.platzbestaetigung;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.StringJoiner;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import ch.dvbern.kibon.exchange.api.common.shared.GesuchstellerDTO;
 import ch.dvbern.kibon.exchange.api.common.shared.KindDTO;
+import ch.dvbern.kibon.exchange.api.common.verfuegung.BetreuungsAngebot;
 
 public class BetreuungAnfrageDTO implements Serializable {
 
 	private static final long serialVersionUID = 6738640790684355946L;
 
 	@Nonnull
-	private @Size(min = 1) @NotNull String betreuungsReferenzNr;
+	private @Size(min = 1) @NotNull String refnr;
 
 	@Nonnull
 	private @NotNull LocalDate periodeVon;
@@ -42,7 +45,7 @@ public class BetreuungAnfrageDTO implements Serializable {
 	private @NotNull LocalDate periodeBis;
 
 	@Nonnull
-	private @Size(min = 1) @NotNull String institutionID;
+	private @Size(min = 1) @NotNull String institutionId;
 
 	@Nonnull
 	private @NotNull @Valid GesuchstellerDTO gesuchsteller;
@@ -50,56 +53,96 @@ public class BetreuungAnfrageDTO implements Serializable {
 	@Nonnull
 	private @NotNull @Valid KindDTO kind;
 
+	@Nonnull
+	private @NotNull BetreuungsAngebot betreuungsArt;
+
 	private boolean abgelehntVonGesuchsteller;
 
 	public BetreuungAnfrageDTO() {
-		this.betreuungsReferenzNr = "";
+		this.refnr = "";
 		this.periodeVon = LocalDate.MIN;
 		this.periodeBis = LocalDate.MAX;
-		this.institutionID = "";
+		this.institutionId = "";
 		this.gesuchsteller = new GesuchstellerDTO();
 		this.kind = new KindDTO();
 		this.abgelehntVonGesuchsteller = false;
+		this.betreuungsArt = BetreuungsAngebot.KITA;
 	}
 
 	public BetreuungAnfrageDTO(
-		@Nonnull String betreuungsReferenzNr,
+		@Nonnull String refnr,
 		@Nonnull LocalDate periodeVon,
 		@Nonnull LocalDate periodeBis,
-		@Nonnull String institutionID,
+		@Nonnull String institutionId,
 		@Nonnull GesuchstellerDTO gesuchsteller,
 		@Nonnull KindDTO kind,
+		@Nonnull BetreuungsAngebot betreuungsArt,
 		boolean abgelehntVonGesuchsteller) {
-		this.betreuungsReferenzNr = betreuungsReferenzNr;
+		this.refnr = refnr;
 		this.periodeVon = periodeVon;
 		this.periodeBis = periodeBis;
-		this.institutionID = institutionID;
+		this.institutionId = institutionId;
 		this.gesuchsteller = gesuchsteller;
 		this.kind = kind;
 		this.abgelehntVonGesuchsteller = abgelehntVonGesuchsteller;
+		this.betreuungsArt = betreuungsArt;
 	}
 
 	@Override
 	@Nonnull
 	public String toString() {
 		return new StringJoiner(", ", BetreuungAnfrageDTO.class.getSimpleName() + '[', "]")
-			.add("refnrbetreuung='" + betreuungsReferenzNr + '\'')
+			.add("refnrbetreuung='" + refnr + '\'')
 			.add("periodeVon=" + periodeVon)
 			.add("periodeBis=" + periodeBis)
-			.add("intitutionID=" + institutionID)
+			.add("intitutionID=" + institutionId)
 			.add("gesuchsteller=" + gesuchsteller.toString())
 			.add("kind=" + kind.toString())
+			.add("betreuungsArt=" + betreuungsArt.toString())
 			.add("abgelehntVonGesuchsteller=" + abgelehntVonGesuchsteller)
 			.toString();
 	}
 
-	@Nonnull
-	public String getBetreuungsReferenzNr() {
-		return betreuungsReferenzNr;
+	@Override
+	public boolean equals(@Nullable Object o) {
+		if (this == o) {
+			return true;
+		}
+
+		if (o == null || !getClass().equals(o.getClass())) {
+			return false;
+		}
+
+		BetreuungAnfrageDTO that = (BetreuungAnfrageDTO) o;
+
+		return getRefnr().equals(that.getRefnr()) &&
+			getBetreuungsArt() == that.getBetreuungsArt() &&
+			getGesuchsteller().equals(that.getGesuchsteller()) &&
+			getInstitutionId().equals(that.getInstitutionId()) &&
+			getKind().equals(that.getKind()) &&
+			getPeriodeVon().equals(that.getPeriodeVon()) &&
+			getPeriodeBis().equals(that.getPeriodeBis());
 	}
 
-	public void setBetreuungsReferenzNr(@Nonnull String betreuungsReferenzNr) {
-		this.betreuungsReferenzNr = betreuungsReferenzNr;
+	@Override
+	public int hashCode() {
+		return Objects.hash(
+			getRefnr(),
+			getBetreuungsArt(),
+			getGesuchsteller(),
+			getInstitutionId(),
+			getKind(),
+			getPeriodeVon(),
+			getPeriodeBis());
+	}
+
+	@Nonnull
+	public String getRefnr() {
+		return refnr;
+	}
+
+	public void setRefnr(@Nonnull String refnr) {
+		this.refnr = refnr;
 	}
 
 	@Nonnull
@@ -121,12 +164,12 @@ public class BetreuungAnfrageDTO implements Serializable {
 	}
 
 	@Nonnull
-	public String getInstitutionID() {
-		return institutionID;
+	public String getInstitutionId() {
+		return institutionId;
 	}
 
-	public void setInstitutionID(@Nonnull String institutionID) {
-		this.institutionID = institutionID;
+	public void setInstitutionId(@Nonnull String institutionId) {
+		this.institutionId = institutionId;
 	}
 
 	@Nonnull
@@ -153,5 +196,14 @@ public class BetreuungAnfrageDTO implements Serializable {
 
 	public void setAbgelehntVonGesuchsteller(boolean abgelehntVonGesuchsteller) {
 		this.abgelehntVonGesuchsteller = abgelehntVonGesuchsteller;
+	}
+
+	@Nonnull
+	public BetreuungsAngebot getBetreuungsArt() {
+		return betreuungsArt;
+	}
+
+	public void setBetreuungsArt(@Nonnull BetreuungsAngebot betreuungsArt) {
+		this.betreuungsArt = betreuungsArt;
 	}
 }

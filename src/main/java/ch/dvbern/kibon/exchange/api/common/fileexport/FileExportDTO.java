@@ -28,8 +28,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import ch.dvbern.kibon.exchange.api.common.verfuegung.FileVerfuegungDTO;
-
 public class FileExportDTO implements Serializable {
 
 	private static final long serialVersionUID = -5782035964234678821L;
