@@ -36,6 +36,9 @@ public class BetreuungAnfrageDTO implements Serializable {
 	private static final long serialVersionUID = 6738640790684355946L;
 
 	@Nonnull
+	private @NotNull Long id;
+
+	@Nonnull
 	private @Size(min = 1) @NotNull String refnr;
 
 	@Nonnull
@@ -59,6 +62,7 @@ public class BetreuungAnfrageDTO implements Serializable {
 	private boolean abgelehntVonGesuchsteller;
 
 	public BetreuungAnfrageDTO() {
+		this.id = -1L;
 		this.refnr = "";
 		this.periodeVon = LocalDate.MIN;
 		this.periodeBis = LocalDate.MAX;
@@ -70,6 +74,7 @@ public class BetreuungAnfrageDTO implements Serializable {
 	}
 
 	public BetreuungAnfrageDTO(
+		@Nonnull Long id,
 		@Nonnull String refnr,
 		@Nonnull LocalDate periodeVon,
 		@Nonnull LocalDate periodeBis,
@@ -78,6 +83,7 @@ public class BetreuungAnfrageDTO implements Serializable {
 		@Nonnull KindDTO kind,
 		@Nonnull BetreuungsAngebot betreuungsArt,
 		boolean abgelehntVonGesuchsteller) {
+		this.id = id;
 		this.refnr = refnr;
 		this.periodeVon = periodeVon;
 		this.periodeBis = periodeBis;
@@ -92,6 +98,7 @@ public class BetreuungAnfrageDTO implements Serializable {
 	@Nonnull
 	public String toString() {
 		return new StringJoiner(", ", BetreuungAnfrageDTO.class.getSimpleName() + '[', "]")
+			.add("id='" + id + '\'')
 			.add("refnr='" + refnr + '\'')
 			.add("periodeVon=" + periodeVon)
 			.add("periodeBis=" + periodeBis)
@@ -115,7 +122,8 @@ public class BetreuungAnfrageDTO implements Serializable {
 
 		BetreuungAnfrageDTO that = (BetreuungAnfrageDTO) o;
 
-		return getRefnr().equals(that.getRefnr()) &&
+		return getId().equals(that.getId()) &&
+			getRefnr().equals(that.getRefnr()) &&
 			getBetreuungsArt() == that.getBetreuungsArt() &&
 			getGesuchsteller().equals(that.getGesuchsteller()) &&
 			getInstitutionId().equals(that.getInstitutionId()) &&
@@ -127,6 +135,7 @@ public class BetreuungAnfrageDTO implements Serializable {
 	@Override
 	public int hashCode() {
 		return Objects.hash(
+			getId(),
 			getRefnr(),
 			getBetreuungsArt(),
 			getGesuchsteller(),
@@ -134,6 +143,15 @@ public class BetreuungAnfrageDTO implements Serializable {
 			getKind(),
 			getPeriodeVon(),
 			getPeriodeBis());
+	}
+
+	@Nonnull
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(@Nonnull Long id) {
+		this.id = id;
 	}
 
 	@Nonnull
