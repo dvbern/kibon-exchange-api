@@ -17,24 +17,17 @@
 package ch.dvbern.kibon.exchange.api.verfuegung;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.validation.constraints.Min;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 
-import ch.dvbern.kibon.exchange.api.common.verfuegung.VerfuegungenDTO;
+import ch.dvbern.kibon.exchange.api.common.institution.InstitutionDTO;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
-@Path("/verfuegungen")
+@Path("/institutions")
 @RegisterRestClient
-public interface VerfuegungenResource {
-
+public interface InstitutionsResource {
 	@GET
 	@Nonnull
-	VerfuegungenDTO getAll(
-		@QueryParam("after_id") @Nullable Long afterId,
-		@Min(0) @QueryParam("limit") @Nullable Integer limit,
-		@QueryParam("$filter") @Nullable String filter
-	);
+	InstitutionDTO getInstitutionById(@QueryParam("institution_id") @Nonnull String institutionId);
 }
