@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 DV Bern AG, Switzerland
+ * Copyright (C) 2020 DV Bern AG, Switzerland
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ch.dvbern.kibon.exchange.api.verfuegung.model.fileexport;
+package ch.dvbern.kibon.exchange.api.common.fileexport;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -25,12 +25,11 @@ import javax.annotation.Nullable;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-import ch.dvbern.kibon.exchange.api.institution.model.InstitutionDTO;
-import ch.dvbern.kibon.exchange.api.verfuegung.model.BetreuungsAngebot;
+import ch.dvbern.kibon.exchange.api.common.institution.InstitutionDTO;
+import ch.dvbern.kibon.exchange.api.common.verfuegung.BetreuungsAngebot;
 
-public class BetreuungDTO implements Serializable {
-
-	private static final long serialVersionUID = -806547086175525904L;
+public class FileBetreuungDTO implements Serializable {
+	private static final long serialVersionUID = 5848170812429419674L;
 
 	@Nonnull
 	private @NotNull BetreuungsAngebot betreuungsArt;
@@ -38,12 +37,12 @@ public class BetreuungDTO implements Serializable {
 	@Nonnull
 	private @NotNull @Valid InstitutionDTO institution;
 
-	public BetreuungDTO() {
+	public FileBetreuungDTO() {
 		this.betreuungsArt = BetreuungsAngebot.KITA;
 		this.institution = new InstitutionDTO();
 	}
 
-	public BetreuungDTO(@Nonnull BetreuungsAngebot betreuungsArt, @Nonnull InstitutionDTO institution) {
+	public FileBetreuungDTO(@Nonnull BetreuungsAngebot betreuungsArt, @Nonnull InstitutionDTO institution) {
 		this.betreuungsArt = betreuungsArt;
 		this.institution = institution;
 	}
@@ -58,7 +57,7 @@ public class BetreuungDTO implements Serializable {
 			return false;
 		}
 
-		BetreuungDTO betreuung = (BetreuungDTO) o;
+		FileBetreuungDTO betreuung = (FileBetreuungDTO) o;
 
 		return getBetreuungsArt() == betreuung.getBetreuungsArt() &&
 			getInstitution().equals(betreuung.getInstitution());
@@ -72,7 +71,7 @@ public class BetreuungDTO implements Serializable {
 	@Override
 	@Nonnull
 	public String toString() {
-		return new StringJoiner(", ", BetreuungDTO.class.getSimpleName() + '[', "]")
+		return new StringJoiner(", ", FileBetreuungDTO.class.getSimpleName() + '[', "]")
 			.add("betreuungsArt=" + betreuungsArt)
 			.add("institution=" + institution)
 			.toString();
@@ -96,3 +95,4 @@ public class BetreuungDTO implements Serializable {
 		this.institution = institution;
 	}
 }
+

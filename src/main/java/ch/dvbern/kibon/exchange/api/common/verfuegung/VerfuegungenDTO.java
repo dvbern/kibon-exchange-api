@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 DV Bern AG, Switzerland
+ * Copyright (C) 2020 DV Bern AG, Switzerland
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ch.dvbern.kibon.exchange.api.verfuegung.model.ws;
+package ch.dvbern.kibon.exchange.api.common.verfuegung;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ import javax.annotation.Nonnull;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-import ch.dvbern.kibon.exchange.api.institution.model.InstitutionDTO;
+import ch.dvbern.kibon.exchange.api.common.institution.InstitutionDTO;
 
 public class VerfuegungenDTO implements Serializable {
 

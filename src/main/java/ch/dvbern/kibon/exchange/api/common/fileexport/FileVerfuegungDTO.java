@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 DV Bern AG, Switzerland
+ * Copyright (C) 2020 DV Bern AG, Switzerland
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ch.dvbern.kibon.exchange.api.verfuegung.model.ws;
+package ch.dvbern.kibon.exchange.api.common.fileexport;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -30,26 +30,16 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import ch.dvbern.kibon.exchange.api.verfuegung.model.BetreuungsAngebot;
-import ch.dvbern.kibon.exchange.api.verfuegung.model.GesuchstellerDTO;
-import ch.dvbern.kibon.exchange.api.verfuegung.model.KindDTO;
-import ch.dvbern.kibon.exchange.api.verfuegung.model.ZeitabschnittDTO;
+import ch.dvbern.kibon.exchange.api.common.shared.GesuchstellerDTO;
+import ch.dvbern.kibon.exchange.api.common.shared.KindDTO;
+import ch.dvbern.kibon.exchange.api.common.verfuegung.ZeitabschnittDTO;
 
-public class VerfuegungDTO implements Serializable {
+public class FileVerfuegungDTO implements Serializable {
 
 	private static final long serialVersionUID = 1339970917808014561L;
 
 	@Nonnull
-	private @NotNull Long id;
-
-	@Nonnull
-	private @NotNull LocalDateTime availableSince;
-
-	@Nonnull
 	private @Size(min = 1) @NotNull String refnr;
-
-	@Nonnull
-	private @Size(min = 1) @NotNull String institutionId;
 
 	@Nonnull
 	private @NotNull LocalDate von;
@@ -64,19 +54,13 @@ public class VerfuegungDTO implements Serializable {
 	private @NotNull LocalDateTime verfuegtAm;
 
 	@Nonnull
-	private @NotNull BetreuungsAngebot betreuungsArt;
-
-	@Nonnull
-	private @NotNull Long gemeindeBfsNr;
-
-	@Nonnull
-	private @NotNull String gemeindeName;
-
-	@Nonnull
 	private @NotNull @Valid KindDTO kind;
 
 	@Nonnull
 	private @NotNull @Valid GesuchstellerDTO gesuchsteller;
+
+	@Nonnull
+	private @NotNull @Valid FileBetreuungDTO betreuung;
 
 	@Nonnull
 	private @NotNull @Valid List<ZeitabschnittDTO> zeitabschnitte = new ArrayList<>();
@@ -84,53 +68,34 @@ public class VerfuegungDTO implements Serializable {
 	@Nonnull
 	private @NotNull @Valid List<ZeitabschnittDTO> ignorierteZeitabschnitte = new ArrayList<>();
 
-	public VerfuegungDTO() {
-		this.id = -1L;
-		this.availableSince = LocalDateTime.MIN;
+	public FileVerfuegungDTO() {
 		this.refnr = "";
-		this.institutionId = "";
 		this.von = LocalDate.MIN;
 		this.bis = LocalDate.MIN;
 		this.version = -1;
 		this.verfuegtAm = LocalDateTime.MIN;
-		this.betreuungsArt = BetreuungsAngebot.KITA;
-		this.gemeindeBfsNr = -1L;
-		this.gemeindeName = "";
 		this.kind = new KindDTO();
 		this.gesuchsteller = new GesuchstellerDTO();
+		this.betreuung = new FileBetreuungDTO();
 	}
 
-	public VerfuegungDTO(
-		@Nonnull Long id,
-		@Nonnull LocalDateTime availableSince,
+	public FileVerfuegungDTO(
 		@Nonnull String refnr,
-		@Nonnull String institutionId,
 		@Nonnull LocalDate von,
 		@Nonnull LocalDate bis,
 		@Nonnull Integer version,
 		@Nonnull LocalDateTime verfuegtAm,
-		@Nonnull BetreuungsAngebot betreuungsArt,
-		@Nonnull Long gemeindeBfsNr,
-		@Nonnull String gemeindeName,
 		@Nonnull KindDTO kind,
 		@Nonnull GesuchstellerDTO gesuchsteller,
-		@Nonnull List<ZeitabschnittDTO> zeitabschnitte,
-		@Nonnull List<ZeitabschnittDTO> ignorierteZeitabschnitte) {
-		this.id = id;
-		this.availableSince = availableSince;
+		@Nonnull FileBetreuungDTO betreuung) {
 		this.refnr = refnr;
-		this.institutionId = institutionId;
 		this.von = von;
 		this.bis = bis;
 		this.version = version;
 		this.verfuegtAm = verfuegtAm;
-		this.betreuungsArt = betreuungsArt;
-		this.gemeindeBfsNr = gemeindeBfsNr;
-		this.gemeindeName = gemeindeName;
 		this.kind = kind;
 		this.gesuchsteller = gesuchsteller;
-		this.zeitabschnitte = zeitabschnitte;
-		this.ignorierteZeitabschnitte = ignorierteZeitabschnitte;
+		this.betreuung = betreuung;
 	}
 
 	@Override
@@ -143,21 +108,16 @@ public class VerfuegungDTO implements Serializable {
 			return false;
 		}
 
-		VerfuegungDTO
-			that = (VerfuegungDTO) o;
+		FileVerfuegungDTO that = (FileVerfuegungDTO) o;
 
-		return getId().equals(that.getId()) &&
-			getRefnr().equals(that.getRefnr()) &&
-			getInstitutionId().equals(that.getInstitutionId()) &&
+		return getRefnr().equals(that.getRefnr()) &&
 			getVon().equals(that.getVon()) &&
 			getBis().equals(that.getBis()) &&
 			getVersion().equals(that.getVersion()) &&
 			getVerfuegtAm().equals(that.getVerfuegtAm()) &&
-			getBetreuungsArt() == that.getBetreuungsArt() &&
-			getGemeindeBfsNr().equals(that.getGemeindeBfsNr()) &&
-			getGemeindeName().equals(that.getGemeindeName()) &&
 			getKind().equals(that.getKind()) &&
 			getGesuchsteller().equals(that.getGesuchsteller()) &&
+			getBetreuung().equals(that.getBetreuung()) &&
 			getZeitabschnitte().equals(that.getZeitabschnitte()) &&
 			getIgnorierteZeitabschnitte().equals(that.getIgnorierteZeitabschnitte());
 	}
@@ -165,18 +125,14 @@ public class VerfuegungDTO implements Serializable {
 	@Override
 	public int hashCode() {
 		return Objects.hash(
-			getId(),
 			getRefnr(),
-			getInstitutionId(),
 			getVon(),
 			getBis(),
 			getVersion(),
 			getVerfuegtAm(),
-			getBetreuungsArt(),
-			getGemeindeBfsNr(),
-			getGemeindeName(),
 			getKind(),
 			getGesuchsteller(),
+			getBetreuung(),
 			getZeitabschnitte(),
 			getIgnorierteZeitabschnitte());
 	}
@@ -184,34 +140,13 @@ public class VerfuegungDTO implements Serializable {
 	@Override
 	@Nonnull
 	public String toString() {
-		return new StringJoiner(", ", VerfuegungDTO.class.getSimpleName() + '[', "]")
-			.add("id='" + id + '\'')
+		return new StringJoiner(", ", FileVerfuegungDTO.class.getSimpleName() + '[', "]")
 			.add("refnr='" + refnr + '\'')
-			.add("institutionId='" + institutionId + '\'')
 			.add("von=" + von)
 			.add("bis=" + bis)
 			.add("version=" + version)
 			.add("verfuegtAm=" + verfuegtAm)
-			.add("bfsNummer=" + gemeindeBfsNr)
 			.toString();
-	}
-
-	@Nonnull
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(@Nonnull Long id) {
-		this.id = id;
-	}
-
-	@Nonnull
-	public LocalDateTime getAvailableSince() {
-		return availableSince;
-	}
-
-	public void setAvailableSince(@Nonnull LocalDateTime availableSince) {
-		this.availableSince = availableSince;
 	}
 
 	@Nonnull
@@ -221,15 +156,6 @@ public class VerfuegungDTO implements Serializable {
 
 	public void setRefnr(@Nonnull String refnr) {
 		this.refnr = refnr;
-	}
-
-	@Nonnull
-	public String getInstitutionId() {
-		return institutionId;
-	}
-
-	public void setInstitutionId(@Nonnull String institutionId) {
-		this.institutionId = institutionId;
 	}
 
 	@Nonnull
@@ -269,33 +195,6 @@ public class VerfuegungDTO implements Serializable {
 	}
 
 	@Nonnull
-	public BetreuungsAngebot getBetreuungsArt() {
-		return betreuungsArt;
-	}
-
-	public void setBetreuungsArt(@Nonnull BetreuungsAngebot betreuungsArt) {
-		this.betreuungsArt = betreuungsArt;
-	}
-
-	@Nonnull
-	public Long getGemeindeBfsNr() {
-		return gemeindeBfsNr;
-	}
-
-	public void setGemeindeBfsNr(@Nonnull Long gemeindeBfsNr) {
-		this.gemeindeBfsNr = gemeindeBfsNr;
-	}
-
-	@Nonnull
-	public String getGemeindeName() {
-		return gemeindeName;
-	}
-
-	public void setGemeindeName(@Nonnull String gemeindeName) {
-		this.gemeindeName = gemeindeName;
-	}
-
-	@Nonnull
 	public KindDTO getKind() {
 		return kind;
 	}
@@ -311,6 +210,15 @@ public class VerfuegungDTO implements Serializable {
 
 	public void setGesuchsteller(@Nonnull GesuchstellerDTO gesuchsteller) {
 		this.gesuchsteller = gesuchsteller;
+	}
+
+	@Nonnull
+	public FileBetreuungDTO getBetreuung() {
+		return betreuung;
+	}
+
+	public void setBetreuung(@Nonnull FileBetreuungDTO betreuung) {
+		this.betreuung = betreuung;
 	}
 
 	@Nonnull

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 DV Bern AG, Switzerland
+ * Copyright (C) 2020 DV Bern AG, Switzerland
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package ch.dvbern.kibon.exchange.api.verfuegung.model;
+package ch.dvbern.kibon.exchange.api.common.shared;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Objects;
 import java.util.StringJoiner;
 
@@ -25,9 +26,9 @@ import javax.annotation.Nullable;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-public class GesuchstellerDTO implements Serializable {
+public class KindDTO implements Serializable {
 
-	private static final long serialVersionUID = 34206637279247377L;
+	private static final long serialVersionUID = 1600984319369985504L;
 
 	@Nonnull
 	private @Size(min = 1) @NotNull String vorname;
@@ -35,18 +36,19 @@ public class GesuchstellerDTO implements Serializable {
 	@Nonnull
 	private @Size(min = 1) @NotNull String nachname;
 
-	@Nullable
-	private String email;
+	@Nonnull
+	private @NotNull LocalDate geburtsdatum;
 
-	public GesuchstellerDTO() {
+	public KindDTO() {
 		this.vorname = "";
 		this.nachname = "";
+		this.geburtsdatum = LocalDate.MIN;
 	}
 
-	public GesuchstellerDTO(@Nonnull String vorname, @Nonnull String nachname, @Nullable String email) {
+	public KindDTO(@Nonnull String vorname, @Nonnull String nachname, @Nonnull LocalDate geburtsdatum) {
 		this.vorname = vorname;
 		this.nachname = nachname;
-		this.email = email;
+		this.geburtsdatum = geburtsdatum;
 	}
 
 	@Override
@@ -59,25 +61,25 @@ public class GesuchstellerDTO implements Serializable {
 			return false;
 		}
 
-		GesuchstellerDTO that = (GesuchstellerDTO) o;
+		KindDTO kind = (KindDTO) o;
 
-		return getVorname().equals(that.getVorname()) &&
-			getNachname().equals(that.getNachname()) &&
-			Objects.equals(getEmail(), that.getEmail());
+		return getVorname().equals(kind.getVorname()) &&
+			getNachname().equals(kind.getNachname()) &&
+			getGeburtsdatum().equals(kind.getGeburtsdatum());
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getVorname(), getNachname(), getEmail());
+		return Objects.hash(getVorname(), getNachname(), getGeburtsdatum());
 	}
 
 	@Override
 	@Nonnull
 	public String toString() {
-		return new StringJoiner(", ", GesuchstellerDTO.class.getSimpleName() + '[', "]")
+		return new StringJoiner(", ", KindDTO.class.getSimpleName() + '[', "]")
 			.add("vorname='" + vorname + '\'')
 			.add("nachname='" + nachname + '\'')
-			.add("email='" + email + '\'')
+			.add("geburtsdatum=" + geburtsdatum)
 			.toString();
 	}
 
@@ -99,12 +101,12 @@ public class GesuchstellerDTO implements Serializable {
 		this.nachname = nachname;
 	}
 
-	@Nullable
-	public String getEmail() {
-		return email;
+	@Nonnull
+	public LocalDate getGeburtsdatum() {
+		return geburtsdatum;
 	}
 
-	public void setEmail(@Nullable String email) {
-		this.email = email;
+	public void setGeburtsdatum(@Nonnull LocalDate geburtsdatum) {
+		this.geburtsdatum = geburtsdatum;
 	}
 }
