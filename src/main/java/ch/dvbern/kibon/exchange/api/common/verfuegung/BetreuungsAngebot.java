@@ -16,6 +16,8 @@
 
 package ch.dvbern.kibon.exchange.api.common.verfuegung;
 
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+
 public enum BetreuungsAngebot {
 	KITA,
 
@@ -25,18 +27,21 @@ public enum BetreuungsAngebot {
 	 * @deprecated only in schema < 2.0
 	 */
 	@Deprecated
+	@Schema(hidden = true, deprecated = true)
 	TAGESELTERN_KLEINKIND,
 
 	/**
 	 * @deprecated only in schema < 2.0
 	 */
 	@Deprecated
+	@Schema(hidden = true, deprecated = true)
 	TAGESELTERN_SCHULKIND,
 
 	/**
 	 * @deprecated only in schema < 2.0
 	 */
 	@Deprecated
+	@Schema(hidden = true, deprecated = true)
 	TAGI,
 
 	/**

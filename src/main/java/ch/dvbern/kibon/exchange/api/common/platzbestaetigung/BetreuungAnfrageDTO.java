@@ -30,14 +30,18 @@ import javax.validation.constraints.Size;
 import ch.dvbern.kibon.exchange.api.common.shared.GesuchstellerDTO;
 import ch.dvbern.kibon.exchange.api.common.shared.KindDTO;
 import ch.dvbern.kibon.exchange.api.common.verfuegung.BetreuungsAngebot;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 public class BetreuungAnfrageDTO implements Serializable {
 
 	private static final long serialVersionUID = 6738640790684355946L;
 
+	@Schema(description = "Strikt monoton steigende ID\n\nKann für Filterung mit dem `after_id` Parameter verwendet "
+		+ "werden.")
 	@Nonnull
 	private @NotNull Long id;
 
+	@Schema(description = "kiBon Referenz Nummmer\n\nSetzt sich zusammen aus JAHR.FALL.GEMEINDE.KIND.BETREUUNG")
 	@Nonnull
 	private @Size(min = 1) @NotNull String refnr;
 
@@ -50,15 +54,20 @@ public class BetreuungAnfrageDTO implements Serializable {
 	@Nonnull
 	private @Size(min = 1) @NotNull String institutionId;
 
+	@Schema(description = "Person, welche das Gesuch auf kiBon eingereicht und damit die BetreuungAnfrage ausgelöst "
+		+ "hat.")
 	@Nonnull
 	private @NotNull @Valid GesuchstellerDTO gesuchsteller;
 
+	@Schema(description = "Für dieses Kind soll ein Betreuungsplatz bestätigt werden.")
 	@Nonnull
 	private @NotNull @Valid KindDTO kind;
 
 	@Nonnull
 	private @NotNull BetreuungsAngebot betreuungsArt;
 
+	@Schema(description = "TRUE, falls eine frühere Platzbestätigung von der Gesuch-stellenden Person abgelehnt "
+		+ "wurde.")
 	private boolean abgelehntVonGesuchsteller;
 
 	public BetreuungAnfrageDTO() {

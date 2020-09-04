@@ -24,28 +24,41 @@ import java.util.StringJoiner;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+
+@Schema(description = "Meldung eines Betreuungs-Platzes.\n\nKann für eine Platzbestätigung oder auch für eine "
+	+ "Mutationsmeldung verwendet werden.")
 public class BetreuungDTO implements Serializable {
 
 	private static final long serialVersionUID = -806547086175525904L;
 
+	@Schema(description = "kiBon ID der Institution, in welcher das Kind eine Betreuung hat.")
 	@Nonnull
 	private @Size(min = 1) @NotNull String institutionId;
 
+	@Schema(description = "kiBon Referenz Nummmer\n\nSetzt sich zusammen aus JAHR.FALL.GEMEINDE.KIND.BETREUUNG")
 	@Nonnull
 	private @Size(min = 1) @NotNull String refnr;
 
+	@Schema(description = "Sollte alle Betreuungszeiträume innerhalb der Gesuchs-Periode beinhalten.")
 	@Nonnull
-	private List<BetreuungZeitabschnittDTO> zeitabschnitte;
+	private @NotNull @Valid List<BetreuungZeitabschnittDTO> zeitabschnitte;
 
+	@Schema(description = "Entspricht der Gemeinde BFS Nummer, in welcher das Kind betreuut wird.")
 	@Nullable
 	private Long gemeindeBfsNr;
 
+	@Schema(description = "Entspricht dem Gemeinde Namen, in welcher das Kind betreuut wird.")
 	@Nullable
 	private String gemeindeName;
 
+	@Schema(description =
+		"TRUE, falls für ein Kind einen ausserordentlichen Betreuungsaufwand gemäss BGSDV, Artikel 11 - 15 "
+			+ "in Rechnung gestellt wird.\n")
 	private boolean ausserordentlicherBetreuungsaufwand;
 
 	public BetreuungDTO() {

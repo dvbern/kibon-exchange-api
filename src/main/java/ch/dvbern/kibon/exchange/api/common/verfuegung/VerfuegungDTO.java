@@ -32,11 +32,14 @@ import javax.validation.constraints.Size;
 
 import ch.dvbern.kibon.exchange.api.common.shared.GesuchstellerDTO;
 import ch.dvbern.kibon.exchange.api.common.shared.KindDTO;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 public class VerfuegungDTO implements Serializable {
 
 	private static final long serialVersionUID = 1339970917808014561L;
 
+	@Schema(description = "Strikt monoton steigende ID\n\n"
+		+ "Kann für Filterung mit dem `after_id` Parameter verwendet werden.")
 	@Nonnull
 	private @NotNull Long id;
 

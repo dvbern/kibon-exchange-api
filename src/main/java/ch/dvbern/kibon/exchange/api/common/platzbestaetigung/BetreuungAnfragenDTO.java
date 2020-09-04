@@ -14,27 +14,29 @@
  * limitations under the License.
  */
 
-package ch.dvbern.kibon.exchange.api.verfuegung;
+package ch.dvbern.kibon.exchange.api.common.platzbestaetigung;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.validation.constraints.Min;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.QueryParam;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
-import ch.dvbern.kibon.exchange.api.common.verfuegung.VerfuegungenDTO;
-import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
+public class BetreuungAnfragenDTO implements Serializable {
 
-@Path("/v1/verfuegungen")
-@RegisterRestClient
-public interface VerfuegungenResource {
+	private static final long serialVersionUID = 1308687485969915943L;
 
-	@GET
 	@Nonnull
-	VerfuegungenDTO getAll(
-		@QueryParam("after_id") @Nullable Long afterId,
-		@Min(0) @QueryParam("limit") @Nullable Integer limit,
-		@QueryParam("$filter") @Nullable String filter
-	);
+	private @NotNull @Valid List<BetreuungAnfrageDTO> anfragen = new ArrayList<>();
+
+	@Nonnull
+	public List<BetreuungAnfrageDTO> getAnfragen() {
+		return anfragen;
+	}
+
+	public void setAnfragen(@Nonnull List<BetreuungAnfrageDTO> anfragen) {
+		this.anfragen = anfragen;
+	}
 }
