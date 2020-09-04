@@ -16,7 +16,13 @@
 
 package ch.dvbern.kibon.exchange.api.common.verfuegung;
 
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+
+@Schema(description = "Beschreibt, ob die Berechnung der Verfügung auf den kantonalen ASIV Regeln beruht, oder auf "
+	+ "dem bisherigen Regelwerk der Stadt Bern (FEBR).")
 public enum Regelwerk {
+	@Schema(description = "Regelwerk Kanton Bern")
 	ASIV,
+	@Schema(description = "Bisheriges Regelwerk Stadt Bern (Ki-Tax)")
 	FEBR, // "altes" Regelwerk der Stadt Bern (Ki-Tax)
 }

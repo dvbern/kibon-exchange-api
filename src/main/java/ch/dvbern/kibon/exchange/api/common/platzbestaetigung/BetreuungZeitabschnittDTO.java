@@ -28,14 +28,30 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import ch.dvbern.kibon.exchange.api.common.shared.Zeiteinheit;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
+@Schema(description = "Beschreibt die monatlichen Betreuungsangaben\n\n."
+	+ "Falls sich eine der Angaben innerhalb eines Monats ändern, soll dafür ein neuer Zeitabschnitt übermittelt "
+	+ "werden.")
 public class BetreuungZeitabschnittDTO implements Serializable {
 
 	private static final long serialVersionUID = 5776618318243644061L;
 
+	@Schema(description = "Die monatlichen Betreuungskosten (ohne Verpflegungskosten)\n\n"
+		+ "Auch bei untermonatlichen Eintritten müssen die monatlichen Kosten erfasst werden.")
 	@Nonnull
 	private @NotNull @DecimalMin("0") BigDecimal betreuungskosten;
 
+	@Schema(description = "Das monatliche Pensum in Prozent oder Tage resp. Stunden bei Tagesfamilien.\n\n"
+		+ "Beachten Sie dabei die Bestimmungen zur Berechnung der Betreuungseinheit in Art. 17 bzw. 18 "
+		+ "BGSDV. Dort ist festgelegt, wie das vergünstigte Betreuungspensum in Prozent je nach Spanne der nutzbaren "
+		+ "Kinderbetreuung berechnet wird.\n\n"
+		+ "Buchen die Eltern Betreuungsmodule, muss eine allfällige Kindergartenzeit in Abzug gebracht werden. "
+		+ "(Beispiel: Eine Familie hat in einer Kita das Betreuungsmodul von 7:00-12:00 gebucht (5h). Das Kind besucht"
+		+ " aber während 3.5 h den Kindergarten. Dies ergibt eine Betreuungsdauer von 5h-3.5h = 1.5h. Gem. Art. 17. "
+		+ "der BGSDV entsprechen die 1.5h einem Betreuungspensum von 5%).\n\n"
+		+ "Die Angabe in Stunden erfolgt Dezimal, d.h 1.5 entspricht 1 Stunde 30 Minuten.\n\n"
+		+ "Auch bei untermonatlichen Eintritten müssen die Stunden für einen ganzen Monat erfasst werden.")
 	@Nonnull
 	private @NotNull @DecimalMin("0") BigDecimal betreuungspensum;
 
@@ -45,18 +61,32 @@ public class BetreuungZeitabschnittDTO implements Serializable {
 	@Nonnull
 	private @NotNull LocalDate bis;
 
+	@Schema(description = "Beschreibt, ob das Pensum in Prozent, Tagen oder Stunden gemeldet wird.")
 	@Nonnull
-	private Zeiteinheit pensumUnit;
+	private @NotNull Zeiteinheit pensumUnit;
 
+	@Schema(description = "Die Anzahl Mittagessen/Abendessen, die für diese Betreuung tatsächlich verrechnet wird.\n\n"
+		+ "Auch bei untermonatlichen Eintritten muss die Anzahl Mittagessen für einen ganzen Monat erfasst werden.")
 	@Nonnull
 	private @NotNull @Min(0) Integer anzahlMonatlicheHauptmahlzeiten;
 
+	@Schema(description = "Die Nebenmahlzeiten, die für diese Betreuung tatsächlich verrechnet werden.\n\n"
+		+ "Dies betrifft nur Institutioen, welche die Kosten für die Nebenmahlzeiten, zusätzlich zu der "
+		+ "Mittagessenpauschale, vertraglich festhalten und diese auch in Rechnung stellen.\n\n"
+		+ "Auch bei untermonatlichen Eintritten muss die Anzahl Nebenmahlzeiten für einen ganzen Monat erfasst "
+		+ "werden.")
 	@Nonnull
 	private @NotNull @Min(0) Integer anzahlMonatlicheNebenmahlzeiten;
 
+	@Schema(description = "Der Tarif für ein Mittagessen/Abendessen.\n\n"
+		+ "Werden alle Mahlzeiten in einer Pauschale verrechnen, soll die Pauschale gesetzt werden.\n\n"
+		+ "Werden keine Verpflegungskosten verrechnet, soll \"0\" übergeben werden.")
 	@Nullable
 	private BigDecimal tarifProHauptmahlzeiten;
 
+	@Schema(description = "Der Tarif für Nebenmahlzeiten, welche explizit als solche in Rechnung gestellt werden.\n\n"
+		+ "Werden alle Mahlzeiten in einer Pauschale verrechnen, soll die Pauschale gesetzt werden.\n\n"
+		+ "Werden keine Verpflegungskosten verrechnet, soll \"0\" übergeben werden.")
 	@Nullable
 	private BigDecimal tarifProNebenmahlzeiten;
 

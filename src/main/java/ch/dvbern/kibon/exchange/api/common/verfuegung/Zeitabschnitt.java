@@ -77,8 +77,7 @@ public interface Zeitabschnitt {
 
 	/**
 	 * Der berechnete Gutschein in CHF bezeichnet die Vergünstigung, welche aufgrund des vergünstigten Pensums und
-	 * des
-	 * für die Berechnung des Gutscheins massgebenden Einkommens resultiert.
+	 * des für die Berechnung des Gutscheins massgebenden Einkommens resultiert.
 	 * <p>
 	 * Falls der berechnete Gutschein höher ist als die Betreuungskosten, wird der berechnete Gutschein gekürzt, so
 	 * dass der Gutschein die betreuungskosten nicht übersteigt.
@@ -102,7 +101,7 @@ public interface Zeitabschnitt {
 	BigDecimal getMinimalerElternbeitrag();
 
 	/**
-	 * Bezeichnet den Betrag in CHF, der an die Kita überwiesen wird. Dieser entspricht dem Betreuungsgutschein
+	 * Bezeichnet den Betrag in CHF, der an die Institution überwiesen wird. Dieser entspricht dem Betreuungsgutschein
 	 * abzüglich eines allfälligen minimalen Elternbeitrags (den die Kita bzw. die Tagesfamilienorganisation den
 	 * Eltern in Rechnung stellen würde).
 	 */

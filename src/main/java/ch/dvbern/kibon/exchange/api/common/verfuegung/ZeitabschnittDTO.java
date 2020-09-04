@@ -31,6 +31,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import ch.dvbern.kibon.exchange.api.common.shared.Zeiteinheit;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 public class ZeitabschnittDTO implements Serializable, Zeitabschnitt {
 
@@ -45,36 +46,67 @@ public class ZeitabschnittDTO implements Serializable, Zeitabschnitt {
 	@Nonnull
 	private @NotNull LocalDate bis;
 
+	@Schema(description = "Laufnummber der Verfügung, die dieser Zeitabschnitt referenziert.\n\n"
+		+ "Entspricht der Version der Verfügung.")
 	@Nullable
 	private @Min(0) Integer verfuegungNr;
 
+	@Schema(description = "Bezeichnet das mit der Betreuungsinstitution vereinbarte Betreuungspensum in %.")
 	@Nonnull
 	private @NotNull @DecimalMin("0") BigDecimal effektiveBetreuungPct;
 
+	@Schema(description = "Bezeichnet das anspruchsberechtigte Betreuungspensum in %, d.h. das Betreuungspensum, das "
+		+ "durch die Gemeinde maximal durch einen Betreuungsgutschein vergünstigt würde.")
 	@Nonnull
 	private @NotNull @Min(0) @Max(100) Integer anspruchPct;
 
+	@Schema(description = "Bezeichnet das anspruchsberechtigte Betreuungspensum in %, d.h. das Betreuungspensum, das "
+		+ "durch die Gemeinde maximal durch einen Betreuungsgutschein vergünstigt würde.\n\n"
+		+ "`verguenstigtPct = min(effektiveBetreuungPct, anspruchPct)`")
 	@Nonnull
 	private @NotNull @DecimalMin("0") BigDecimal verguenstigtPct;
 
+	@Schema(description = "Bezeichnet die Betreuungskosten in CHF der Institution für das vergünstigte Pensum.\n\n"
+		+ "Kosten für Mahlzeiten und allfällige Zusatzleistungen wie Windeln etc. sind in diesem Betrag nicht "
+		+ "enthalten.")
 	@Nonnull
 	private @NotNull @DecimalMin("0") BigDecimal vollkosten;
 
+	@Schema(description = "Der berechnete Gutschein in CHF bezeichnet die Vergünstigung, welche aufgrund des "
+		+ "vergünstigten Pensums und des für die Berechnung des Gutscheins massgebenden Einkommens resultiert.\n\n"
+		+ "Falls der berechnete Gutschein höher ist als die Betreuungskosten, wird der berechnete Gutschein gekürzt, "
+		+ "so dass der Gutschein die betreuungskosten nicht übersteigt.")
 	@Nullable
 	private @DecimalMin("0") BigDecimal betreuungsgutschein;
 
+	@Schema(description = "Die Eltern müssen einen minimalen Elternbeitrag leisten. Falls dies noch nicht der Fall "
+		+ "ist, weil die Kosten vollständig oder fast vollständig durch den Betreuungsgutschein gedeckt werden, muss "
+		+ "die Kita oder Tagesfamilienorganisation den Eltern den (fehlenden) minimalen Elternbeitrag in Rechnung "
+		+ "stellen.\n\n"
+		+ "Der minimale Elternbeitrag beträgt 7 Franken pro Betreuungstag (20% Pensum pro Woche) in einer Kita und 70 "
+		+ "Rappen pro Betreuungsstunde bei Tagesfamilien.")
 	@Nullable
 	private @DecimalMin("0") BigDecimal minimalerElternbeitrag;
 
+	@Schema(description = "Bezeichnet den Betrag in CHF, der an die Institution überwiesen wird. Dieser entspricht "
+		+ "dem Betreuungsgutschein abzüglich eines allfälligen minimalen Elternbeitrags (den die Kita bzw. die "
+		+ "Tagesfamilienorganisation  den Eltern in Rechnung stellen würde).")
 	@Nonnull
 	private @NotNull @DecimalMin("0") BigDecimal verguenstigung;
 
+	@Schema(description = "Die Anzahl der Zeiteinheiten, die innerhalb der Periode dieses Zeitabschnitts belegt werden"
+		+ " dürfen.")
 	@Nullable
 	private @DecimalMin("0") BigDecimal verfuegteAnzahlZeiteinheiten;
 
+	@Schema(description = "Die Anzahl der Zeitenheiten, innerhalb der Periode dieses Zeitabschnitts für welche ein "
+		+ "Anspruch besteht.")
 	@Nullable
 	private @DecimalMin("0") BigDecimal anspruchsberechtigteAnzahlZeiteinheiten;
 
+	@Schema(description = "Je nach BetreuungsAngebot gelten unterschiedliche Zeitenheiten. Grundsätzlich wird die "
+		+ "Anzahl Betreuungs-Tage nach ASIV innerhalb der Periode verfügt. Bei TAGESFAMILIEN wird jedoch ein Gutschein"
+		+ " für eine bestimmte Anzahl Betreuungsstunden verfügt.")
 	@Nullable
 	private Zeiteinheit zeiteinheit;
 
