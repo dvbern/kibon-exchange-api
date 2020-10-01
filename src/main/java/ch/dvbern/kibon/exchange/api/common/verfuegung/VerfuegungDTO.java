@@ -46,6 +46,7 @@ public class VerfuegungDTO implements Serializable {
 	@Nonnull
 	private @NotNull LocalDateTime availableSince;
 
+	@Schema(description = "Eindeutige kiBon Referenz Nummmer\n\nSetzt sich zusammen aus JAHR.FALL.GEMEINDE.KIND.BETREUUNG")
 	@Nonnull
 	private @Size(min = 1) @NotNull String refnr;
 
@@ -58,6 +59,7 @@ public class VerfuegungDTO implements Serializable {
 	@Nonnull
 	private @NotNull LocalDate bis;
 
+	@Schema(description = "Die Version der Verfügung. Wird eine Verfügung mutiert, steigt die Version. Eine höhere Version ersetzt eine niedrigere Version mit identischer \"refnr\"")
 	@Nonnull
 	private @NotNull Integer version;
 

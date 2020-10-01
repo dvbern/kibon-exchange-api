@@ -41,7 +41,7 @@ public class BetreuungAnfrageDTO implements Serializable {
 	@Nonnull
 	private @NotNull Long id;
 
-	@Schema(description = "kiBon Referenz Nummmer\n\nSetzt sich zusammen aus JAHR.FALL.GEMEINDE.KIND.BETREUUNG")
+	@Schema(description = "Eindeutige kiBon Referenz Nummmer\n\nSetzt sich zusammen aus JAHR.FALL.GEMEINDE.KIND.BETREUUNG")
 	@Nonnull
 	private @Size(min = 1) @NotNull String refnr;
 
@@ -66,7 +66,7 @@ public class BetreuungAnfrageDTO implements Serializable {
 	@Nonnull
 	private @NotNull BetreuungsAngebot betreuungsArt;
 
-	@Schema(description = "TRUE, falls eine frühere Platzbestätigung von der Gesuch-stellenden Person abgelehnt "
+	@Schema(description = "`true`, falls eine frühere Platzbestätigung von der Gesuch-stellenden Person abgelehnt "
 		+ "wurde.")
 	private boolean abgelehntVonGesuchsteller;
 

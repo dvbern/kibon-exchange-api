@@ -80,13 +80,13 @@ public class BetreuungZeitabschnittDTO implements Serializable {
 
 	@Schema(description = "Der Tarif für ein Mittagessen/Abendessen.\n\n"
 		+ "Werden alle Mahlzeiten in einer Pauschale verrechnen, soll die Pauschale gesetzt werden.\n\n"
-		+ "Werden keine Verpflegungskosten verrechnet, soll \"0\" übergeben werden.")
+		+ "Werden keine Verpflegungskosten verrechnet, soll `0` übergeben werden.")
 	@Nullable
 	private BigDecimal tarifProHauptmahlzeiten;
 
 	@Schema(description = "Der Tarif für Nebenmahlzeiten, welche explizit als solche in Rechnung gestellt werden.\n\n"
 		+ "Werden alle Mahlzeiten in einer Pauschale verrechnen, soll die Pauschale gesetzt werden.\n\n"
-		+ "Werden keine Verpflegungskosten verrechnet, soll \"0\" übergeben werden.")
+		+ "Werden keine Verpflegungskosten verrechnet, soll `0` übergeben werden.")
 	@Nullable
 	private BigDecimal tarifProNebenmahlzeiten;
 
