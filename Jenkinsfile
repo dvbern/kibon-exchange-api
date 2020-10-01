@@ -99,10 +99,5 @@ if (params.performRelease) {
 				throw e
 			}
 		}
-
-		stage('Dependency Check') {
-			dependencyCheck additionalArguments: '', odcInstallation: 'latest'
-			dependencyCheckPublisher pattern: ''
-		}
 	}
 }
