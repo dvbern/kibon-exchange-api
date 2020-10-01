@@ -40,7 +40,7 @@ public class BetreuungDTO implements Serializable {
 	@Nonnull
 	private @Size(min = 1) @NotNull String institutionId;
 
-	@Schema(description = "kiBon Referenz Nummmer\n\nSetzt sich zusammen aus JAHR.FALL.GEMEINDE.KIND.BETREUUNG")
+	@Schema(description = "Eindeutige kiBon Referenz Nummmer\n\nSetzt sich zusammen aus JAHR.FALL.GEMEINDE.KIND.BETREUUNG")
 	@Nonnull
 	private @Size(min = 1) @NotNull String refnr;
 
@@ -57,7 +57,7 @@ public class BetreuungDTO implements Serializable {
 	private String gemeindeName;
 
 	@Schema(description =
-		"TRUE, falls für ein Kind einen ausserordentlichen Betreuungsaufwand gemäss BGSDV, Artikel 11 - 15 "
+		"`true`, falls für ein Kind einen ausserordentlichen Betreuungsaufwand gemäss BGSDV, Artikel 11 - 15 "
 			+ "in Rechnung gestellt wird.\n")
 	private boolean ausserordentlicherBetreuungsaufwand;
 
