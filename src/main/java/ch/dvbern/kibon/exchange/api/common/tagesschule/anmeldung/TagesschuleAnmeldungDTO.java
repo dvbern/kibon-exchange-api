@@ -18,6 +18,7 @@ package ch.dvbern.kibon.exchange.api.common.tagesschule.anmeldung;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -36,6 +37,12 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 public class TagesschuleAnmeldungDTO implements Serializable {
 
 	private static final long serialVersionUID = 5301362613765275883L;
+
+	@Schema(description = "Strikt monoton steigende ID\n\nKann für Filterung mit dem `after_id` Parameter verwendet "
+		+ "werden.")
+	@NotNull
+	@Nonnull
+	private Long id = -1L;
 
 	@Schema(description = "Die ID der Institution, für welche die Anmeldung erstellt wurde.")
 	@Size(min = 1)
@@ -56,6 +63,11 @@ public class TagesschuleAnmeldungDTO implements Serializable {
 	@Min(0)
 	@Nonnull
 	private Integer version = 0;
+
+	@Schema(description = "Zeitpunkt, an welchem die Anmeldung freigegeben wurde.")
+	@NotNull
+	@Nonnull
+	private LocalDateTime eventTimestamp = LocalDateTime.MIN;
 
 	@Schema(description = "Start des Schuljahr Periode, e.g. 2020-08-01")
 	@NotNull
@@ -121,6 +133,7 @@ public class TagesschuleAnmeldungDTO implements Serializable {
 	@Nonnull
 	public String toString() {
 		return new StringJoiner(", ", TagesschuleAnmeldungDTO.class.getSimpleName() + '[', "]")
+			.add("id='" + id + '\'')
 			.add("institutionId='" + institutionId + '\'')
 			.add("refnr='" + refnr + '\'')
 			.add("version=" + version)
@@ -142,9 +155,11 @@ public class TagesschuleAnmeldungDTO implements Serializable {
 
 		TagesschuleAnmeldungDTO that = (TagesschuleAnmeldungDTO) o;
 
-		return getInstitutionId().equals(that.getInstitutionId()) &&
+		return getId().equals(that.getId()) &&
+			getInstitutionId().equals(that.getInstitutionId()) &&
 			getRefnr().equals(that.getRefnr()) &&
 			getVersion().equals(that.getVersion()) &&
+			getEventTimestamp().equals(that.getEventTimestamp()) &&
 			getPeriodeVon().equals(that.getPeriodeVon()) &&
 			getPeriodeBis().equals(that.getPeriodeBis()) &&
 			getEintrittsdatum().equals(that.getEintrittsdatum()) &&
@@ -161,9 +176,11 @@ public class TagesschuleAnmeldungDTO implements Serializable {
 	@Override
 	public int hashCode() {
 		return Objects.hash(
+			getId(),
 			getInstitutionId(),
 			getRefnr(),
 			getVersion(),
+			getEventTimestamp(),
 			getPeriodeVon(),
 			getPeriodeBis(),
 			getEintrittsdatum(),
@@ -175,6 +192,15 @@ public class TagesschuleAnmeldungDTO implements Serializable {
 			getAntragsteller(),
 			getModule(),
 			isAnmeldungZurueckgezogen());
+	}
+
+	@Nonnull
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(@Nonnull Long id) {
+		this.id = id;
 	}
 
 	@Nonnull
@@ -202,6 +228,15 @@ public class TagesschuleAnmeldungDTO implements Serializable {
 
 	public void setVersion(@Nonnull Integer version) {
 		this.version = version;
+	}
+
+	@Nonnull
+	public LocalDateTime getEventTimestamp() {
+		return eventTimestamp;
+	}
+
+	public void setEventTimestamp(@Nonnull LocalDateTime eventTimestamp) {
+		this.eventTimestamp = eventTimestamp;
 	}
 
 	@Nonnull
