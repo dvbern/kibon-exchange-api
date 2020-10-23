@@ -68,7 +68,7 @@ public class BetreuungZeitabschnittDTO implements Serializable {
 	@Schema(description = "Die Anzahl Mittagessen/Abendessen, die für diese Betreuung tatsächlich verrechnet wird.\n\n"
 		+ "Auch bei untermonatlichen Eintritten muss die Anzahl Mittagessen für einen ganzen Monat erfasst werden.")
 	@Nonnull
-	private @NotNull @Min(0) Integer anzahlMonatlicheHauptmahlzeiten;
+	private @NotNull @Min(0) BigDecimal anzahlMonatlicheHauptmahlzeiten;
 
 	@Schema(description = "Die Nebenmahlzeiten, die für diese Betreuung tatsächlich verrechnet werden.\n\n"
 		+ "Dies betrifft nur Institutioen, welche die Kosten für die Nebenmahlzeiten, zusätzlich zu der "
@@ -76,7 +76,7 @@ public class BetreuungZeitabschnittDTO implements Serializable {
 		+ "Auch bei untermonatlichen Eintritten muss die Anzahl Nebenmahlzeiten für einen ganzen Monat erfasst "
 		+ "werden.")
 	@Nonnull
-	private @NotNull @Min(0) Integer anzahlMonatlicheNebenmahlzeiten;
+	private @NotNull @Min(0) BigDecimal anzahlMonatlicheNebenmahlzeiten;
 
 	@Schema(description = "Der Tarif für ein Mittagessen/Abendessen.\n\n"
 		+ "Werden alle Mahlzeiten in einer Pauschale verrechnen, soll die Pauschale gesetzt werden.\n\n"
@@ -96,8 +96,8 @@ public class BetreuungZeitabschnittDTO implements Serializable {
 		this.von = LocalDate.MIN;
 		this.bis = LocalDate.MAX;
 		this.pensumUnit = Zeiteinheit.DAYS;
-		this.anzahlMonatlicheHauptmahlzeiten = 0;
-		this.anzahlMonatlicheNebenmahlzeiten = 0;
+		this.anzahlMonatlicheHauptmahlzeiten = BigDecimal.ZERO;
+		this.anzahlMonatlicheNebenmahlzeiten = BigDecimal.ZERO;
 		this.tarifProHauptmahlzeiten = null;
 		this.tarifProNebenmahlzeiten = null;
 	}
@@ -108,8 +108,8 @@ public class BetreuungZeitabschnittDTO implements Serializable {
 		@Nonnull LocalDate von,
 		@Nonnull LocalDate bis,
 		@Nonnull Zeiteinheit pensumUnit,
-		@Nonnull Integer anzahlMonatlicheHauptmahlzeiten,
-		@Nonnull Integer anzahlMonatlicheNebenmahlzeiten,
+		@Nonnull BigDecimal anzahlMonatlicheHauptmahlzeiten,
+		@Nonnull BigDecimal anzahlMonatlicheNebenmahlzeiten,
 		@Nullable BigDecimal tarifProHauptmahlzeiten,
 		@Nullable BigDecimal tarifProNebenmahlzeiten) {
 		this.betreuungskosten = betreuungskosten;
@@ -202,20 +202,20 @@ public class BetreuungZeitabschnittDTO implements Serializable {
 	}
 
 	@Nonnull
-	public Integer getAnzahlMonatlicheHauptmahlzeiten() {
+	public BigDecimal getAnzahlMonatlicheHauptmahlzeiten() {
 		return anzahlMonatlicheHauptmahlzeiten;
 	}
 
-	public void setAnzahlMonatlicheHauptmahlzeiten(@Nonnull Integer anzahlMonatlicheHauptmahlzeiten) {
+	public void setAnzahlMonatlicheHauptmahlzeiten(@Nonnull BigDecimal anzahlMonatlicheHauptmahlzeiten) {
 		this.anzahlMonatlicheHauptmahlzeiten = anzahlMonatlicheHauptmahlzeiten;
 	}
 
 	@Nonnull
-	public Integer getAnzahlMonatlicheNebenmahlzeiten() {
+	public BigDecimal getAnzahlMonatlicheNebenmahlzeiten() {
 		return anzahlMonatlicheNebenmahlzeiten;
 	}
 
-	public void setAnzahlMonatlicheNebenmahlzeiten(@Nonnull Integer anzahlMonatlicheNebenmahlzeiten) {
+	public void setAnzahlMonatlicheNebenmahlzeiten(@Nonnull BigDecimal anzahlMonatlicheNebenmahlzeiten) {
 		this.anzahlMonatlicheNebenmahlzeiten = anzahlMonatlicheNebenmahlzeiten;
 	}
 
