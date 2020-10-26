@@ -18,6 +18,7 @@ package ch.dvbern.kibon.exchange.api.common.platzbestaetigung;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.StringJoiner;
 
@@ -70,6 +71,11 @@ public class BetreuungAnfrageDTO implements Serializable {
 		+ "wurde.")
 	private boolean abgelehntVonGesuchsteller;
 
+	@Schema(description = "Zeitpunkt, an welchem die BetreuungAnfrage ausgelöst wurde.")
+	@NotNull
+	@Nonnull
+	private LocalDateTime eventTimestamp;
+
 	public BetreuungAnfrageDTO() {
 		this.id = -1L;
 		this.refnr = "";
@@ -80,6 +86,7 @@ public class BetreuungAnfrageDTO implements Serializable {
 		this.kind = new KindDTO();
 		this.abgelehntVonGesuchsteller = false;
 		this.betreuungsArt = BetreuungsAngebot.KITA;
+		this.eventTimestamp = LocalDateTime.now();
 	}
 
 	public BetreuungAnfrageDTO(
@@ -91,7 +98,8 @@ public class BetreuungAnfrageDTO implements Serializable {
 		@Nonnull GesuchstellerDTO gesuchsteller,
 		@Nonnull KindDTO kind,
 		@Nonnull BetreuungsAngebot betreuungsArt,
-		boolean abgelehntVonGesuchsteller) {
+		boolean abgelehntVonGesuchsteller,
+		@Nonnull LocalDateTime eventTimestamp) {
 		this.id = id;
 		this.refnr = refnr;
 		this.periodeVon = periodeVon;
@@ -101,6 +109,7 @@ public class BetreuungAnfrageDTO implements Serializable {
 		this.kind = kind;
 		this.abgelehntVonGesuchsteller = abgelehntVonGesuchsteller;
 		this.betreuungsArt = betreuungsArt;
+		this.eventTimestamp = eventTimestamp;
 	}
 
 	@Override
@@ -116,6 +125,7 @@ public class BetreuungAnfrageDTO implements Serializable {
 			.add("kind=" + kind.toString())
 			.add("betreuungsArt=" + betreuungsArt.toString())
 			.add("abgelehntVonGesuchsteller=" + abgelehntVonGesuchsteller)
+			.add("eventTimestamp=" + eventTimestamp)
 			.toString();
 	}
 
@@ -138,7 +148,8 @@ public class BetreuungAnfrageDTO implements Serializable {
 			getInstitutionId().equals(that.getInstitutionId()) &&
 			getKind().equals(that.getKind()) &&
 			getPeriodeVon().equals(that.getPeriodeVon()) &&
-			getPeriodeBis().equals(that.getPeriodeBis());
+			getPeriodeBis().equals(that.getPeriodeBis()) &&
+			getEventTimestamp().equals(that.getEventTimestamp());
 	}
 
 	@Override
@@ -151,7 +162,8 @@ public class BetreuungAnfrageDTO implements Serializable {
 			getInstitutionId(),
 			getKind(),
 			getPeriodeVon(),
-			getPeriodeBis());
+			getPeriodeBis(),
+			getEventTimestamp());
 	}
 
 	@Nonnull
@@ -232,5 +244,14 @@ public class BetreuungAnfrageDTO implements Serializable {
 
 	public void setBetreuungsArt(@Nonnull BetreuungsAngebot betreuungsArt) {
 		this.betreuungsArt = betreuungsArt;
+	}
+
+	@Nonnull
+	public LocalDateTime getEventTimestamp() {
+		return eventTimestamp;
+	}
+
+	public void setEventTimestamp(@Nonnull LocalDateTime eventTimestamp) {
+		this.eventTimestamp = eventTimestamp;
 	}
 }
