@@ -71,7 +71,7 @@ public class BetreuungZeitabschnittDTO implements Serializable {
 	private @NotNull @Min(0) BigDecimal anzahlHauptmahlzeiten;
 
 	@Schema(description = "Die Nebenmahlzeiten, die für diese Betreuung tatsächlich verrechnet werden.\n\n"
-		+ "Dies betrifft nur Institutioen, welche die Kosten für die Nebenmahlzeiten, zusätzlich zu der "
+		+ "Dies betrifft nur Institutionen, welche die Kosten für die Nebenmahlzeiten, zusätzlich zu der "
 		+ "Mittagessenpauschale, vertraglich festhalten und diese auch in Rechnung stellen.\n\n"
 		+ "Auch bei untermonatlichen Eintritten muss die Anzahl Nebenmahlzeiten für einen ganzen Monat erfasst "
 		+ "werden.")
