@@ -23,32 +23,45 @@ import java.util.StringJoiner;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 public class BetreuungStornierungAnfrageDTO implements Serializable {
 
 	private static final long serialVersionUID = 4875118415422697381L;
 
+	@Schema(description = "Eindeutige kiBon Referenz Nummmer\n\nSetzt sich zusammen aus JAHR.FALL.GEMEINDE.KIND.BETREUUNG")
 	@Nonnull
-	private final String fallNummer;
+	private @Size(min = 1) @NotNull String refnr;
 
 	@Nonnull
-	private final String institutionId;
+	private @Size(min = 1) @NotNull String institutionId;
 
 	public BetreuungStornierungAnfrageDTO(
-		@Nonnull String fallNummer,
+		@Nonnull String refNr,
 		@Nonnull String institutionId
 	) {
-		this.fallNummer = fallNummer;
+		this.refnr = refNr;
 		this.institutionId = institutionId;
 	}
 
 	@Nonnull
-	public String getFallNummer() {
-		return this.fallNummer;
+	public String getRefnr() {
+		return this.refnr;
+	}
+
+	public void setRefnr(@Nonnull String refnr) {
+		this.refnr = refnr;
 	}
 
 	@Nonnull
 	public String getInstitutionId() { return this.institutionId; }
+
+	public void setInstitutionId(@Nonnull String institutionId) {
+		this.institutionId = institutionId;
+	}
 
 	@Override
 	public boolean equals(@Nullable Object o) {
@@ -62,21 +75,21 @@ public class BetreuungStornierungAnfrageDTO implements Serializable {
 
 		BetreuungStornierungAnfrageDTO adresse = (BetreuungStornierungAnfrageDTO) o;
 
-		return getFallNummer().equals(adresse.getFallNummer()) &&
+		return getRefnr().equals(adresse.getRefnr()) &&
 			getInstitutionId().equals(adresse.getInstitutionId());
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getFallNummer(), getInstitutionId());
+		return Objects.hash(getRefnr(), getInstitutionId());
 	}
 
 	@Override
 	@Nonnull
 	public String toString() {
 		return new StringJoiner(", ", BetreuungStornierungAnfrageDTO.class.getSimpleName() + '[', "]")
-			.add("fallNummer='" + fallNummer + '\'')
-			.add("hausnummer='" + institutionId + '\'')
+			.add("fallNummer='" + refnr + '\'')
+			.add("institutionId='" + institutionId + '\'')
 			.toString();
 	}
 
