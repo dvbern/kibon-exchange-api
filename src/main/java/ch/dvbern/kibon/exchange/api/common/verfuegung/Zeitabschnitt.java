@@ -22,6 +22,7 @@ import java.time.LocalDate;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import ch.dvbern.kibon.exchange.api.common.betreuung.BetreuungsAngebot;
 import ch.dvbern.kibon.exchange.api.common.shared.Zeiteinheit;
 
 public interface Zeitabschnitt {
