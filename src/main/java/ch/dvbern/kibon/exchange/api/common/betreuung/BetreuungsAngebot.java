@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ch.dvbern.kibon.exchange.api.common.verfuegung;
+package ch.dvbern.kibon.exchange.api.common.betreuung;
 
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 

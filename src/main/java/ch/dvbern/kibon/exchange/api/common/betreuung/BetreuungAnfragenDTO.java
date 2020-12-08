@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ch.dvbern.kibon.exchange.api.common.platzbestaetigung;
+package ch.dvbern.kibon.exchange.api.common.betreuung;
 
 import java.io.Serializable;
 import java.util.ArrayList;

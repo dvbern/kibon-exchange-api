@@ -30,6 +30,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import ch.dvbern.kibon.exchange.api.common.betreuung.BetreuungsAngebot;
 import ch.dvbern.kibon.exchange.api.common.shared.GesuchstellerDTO;
 import ch.dvbern.kibon.exchange.api.common.shared.KindDTO;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
