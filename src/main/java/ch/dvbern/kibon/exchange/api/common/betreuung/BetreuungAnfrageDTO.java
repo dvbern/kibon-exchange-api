@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ch.dvbern.kibon.exchange.api.common.platzbestaetigung;
+package ch.dvbern.kibon.exchange.api.common.betreuung;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -30,7 +30,6 @@ import javax.validation.constraints.Size;
 
 import ch.dvbern.kibon.exchange.api.common.shared.GesuchstellerDTO;
 import ch.dvbern.kibon.exchange.api.common.shared.KindDTO;
-import ch.dvbern.kibon.exchange.api.common.verfuegung.BetreuungsAngebot;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 public class BetreuungAnfrageDTO implements Serializable {

@@ -26,7 +26,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import ch.dvbern.kibon.exchange.api.common.institution.InstitutionDTO;
-import ch.dvbern.kibon.exchange.api.common.verfuegung.BetreuungsAngebot;
+import ch.dvbern.kibon.exchange.api.common.betreuung.BetreuungsAngebot;
 
 public class FileBetreuungDTO implements Serializable {
 	private static final long serialVersionUID = 5848170812429419674L;
