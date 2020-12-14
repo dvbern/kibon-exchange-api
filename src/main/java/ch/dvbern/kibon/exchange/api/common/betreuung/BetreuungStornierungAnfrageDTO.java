@@ -39,6 +39,12 @@ public class BetreuungStornierungAnfrageDTO implements Serializable {
 	@Nonnull
 	private @Size(min = 1) @NotNull String institutionId;
 
+
+	public BetreuungStornierungAnfrageDTO() {
+		this.institutionId = "";
+		this.refnr = "";
+	}
+
 	public BetreuungStornierungAnfrageDTO(
 		@Nonnull String refNr,
 		@Nonnull String institutionId
