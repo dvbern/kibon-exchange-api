@@ -76,4 +76,40 @@ public class TagesschuleAntragstellerDTO extends GesuchstellerDTO {
 	public String getEmail() {
 		return requireNonNull(super.getEmail());
 	}
+
+	@Nonnull
+	public Geschlecht getGeschlecht() {
+		return geschlecht;
+	}
+
+	public void setGeschlecht(@Nonnull Geschlecht geschlecht) {
+		this.geschlecht = geschlecht;
+	}
+
+	@Nonnull
+	public LocalDate getGeburtsdatum() {
+		return geburtsdatum;
+	}
+
+	public void setGeburtsdatum(@Nonnull LocalDate geburtsdatum) {
+		this.geburtsdatum = geburtsdatum;
+	}
+
+	@Nullable
+	public String getTelefon() {
+		return telefon;
+	}
+
+	public void setTelefon(@Nullable String telefon) {
+		this.telefon = telefon;
+	}
+
+	@Nonnull
+	public AdresseDTO getAdresse() {
+		return adresse;
+	}
+
+	public void setAdresse(@Nonnull AdresseDTO adresse) {
+		this.adresse = adresse;
+	}
 }
