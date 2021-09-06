@@ -26,8 +26,6 @@ import javax.validation.constraints.NotNull;
 import ch.dvbern.kibon.exchange.api.common.institution.AdresseDTO;
 import ch.dvbern.kibon.exchange.api.common.shared.GesuchstellerDTO;
 
-import static java.util.Objects.requireNonNull;
-
 public class TagesschuleAntragstellerDTO extends GesuchstellerDTO {
 
 	private static final long serialVersionUID = 3493241283544795993L;
@@ -58,7 +56,7 @@ public class TagesschuleAntragstellerDTO extends GesuchstellerDTO {
 	public TagesschuleAntragstellerDTO(
 		@Nonnull String vorname,
 		@Nonnull String nachname,
-		@Nonnull String email,
+		@Nullable String email,
 		@Nonnull Geschlecht geschlecht,
 		@Nonnull LocalDate geburtsdatum,
 		@Nullable String telefon,
@@ -68,13 +66,6 @@ public class TagesschuleAntragstellerDTO extends GesuchstellerDTO {
 		this.geburtsdatum = geburtsdatum;
 		this.telefon = telefon;
 		this.adresse = adresse;
-	}
-
-	@Nonnull
-	@NotNull
-	@Override
-	public String getEmail() {
-		return requireNonNull(super.getEmail());
 	}
 
 	@Nonnull
