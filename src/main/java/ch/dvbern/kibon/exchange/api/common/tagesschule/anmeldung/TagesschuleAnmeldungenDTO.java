@@ -35,12 +35,6 @@ public class TagesschuleAnmeldungenDTO implements Serializable {
 	@Nonnull
 	private List<TagesschuleAnmeldungDTO> anmeldungen = new ArrayList<>();
 
-	@Schema(description = "Alle Module, welche in den anmeldungen referenziert werden.")
-	@Valid
-	@NotNull
-	@Nonnull
-	private List<ModulDTO> module = new ArrayList<>();
-
 	@Nonnull
 	public List<TagesschuleAnmeldungDTO> getAnmeldungen() {
 		return anmeldungen;
@@ -48,14 +42,5 @@ public class TagesschuleAnmeldungenDTO implements Serializable {
 
 	public void setAnmeldungen(@Nonnull List<TagesschuleAnmeldungDTO> anmeldungen) {
 		this.anmeldungen = anmeldungen;
-	}
-
-	@Nonnull
-	public List<ModulDTO> getModule() {
-		return module;
-	}
-
-	public void setModule(@Nonnull List<ModulDTO> module) {
-		this.module = module;
 	}
 }

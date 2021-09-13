@@ -17,7 +17,6 @@
 package ch.dvbern.kibon.exchange.api.common.tagesschule.tarife;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -51,36 +50,28 @@ public class TagesschuleTarifeDTO implements Serializable {
 	@Nonnull
 	private List<TarifDTO> tarifeNichtPaedagogisch;
 
-	@Schema(description = "Gibt an, ob die finanzielle Situation bereits von der Gemeinde akzeptiert wurde. Falls "
-		+ "nicht, wird jeweils der Maximaltarif ausgegeben.")
+	@Schema(description = "Gibt an, ob die Tarife definitiv von der Gemeinde akzeptiert wurde oder nicht. Falls "
+		+ "nicht, wird der Maximaltarif ausgegeben.")
 	@NotNull
 	@Nonnull
-	private Boolean finanzielleSituationAkzeptiert;
-
-	@Schema(description = "Zeitpunkt, an welchem die Tarife verfügt wurden.")
-	@NotNull
-	@Nonnull
-	private LocalDateTime eventTimestamp;
+	private Boolean tarifeDefinitivAkzeptiert;
 
 	public TagesschuleTarifeDTO() {
 		this.refnr = "";
 		this.tarifePaedagogisch = new ArrayList<>();
 		this.tarifeNichtPaedagogisch = new ArrayList<>();
-		this.finanzielleSituationAkzeptiert = false;
-		this.eventTimestamp = LocalDateTime.MIN;
+		this.tarifeDefinitivAkzeptiert = false;
 	}
 
 	public TagesschuleTarifeDTO(
 		@Nonnull String refnr,
 		@Nonnull List<TarifDTO> tarifePaedagogisch,
 		@Nonnull List<TarifDTO> tarifeNichtPaedagogisch,
-		@Nonnull Boolean finanzielleSituationAkzeptiert,
-		@Nonnull LocalDateTime eventTimestamp) {
+		@Nonnull Boolean tarifeDefinitivAkzeptiert) {
 		this.refnr = refnr;
 		this.tarifePaedagogisch = tarifePaedagogisch;
 		this.tarifeNichtPaedagogisch = tarifeNichtPaedagogisch;
-		this.finanzielleSituationAkzeptiert = finanzielleSituationAkzeptiert;
-		this.eventTimestamp = eventTimestamp;
+		this.tarifeDefinitivAkzeptiert = tarifeDefinitivAkzeptiert;
 	}
 
 	@Override
@@ -90,8 +81,7 @@ public class TagesschuleTarifeDTO implements Serializable {
 			.add("refnr='" + refnr + '\'')
 			.add("tarifePaedagogisch=" + tarifePaedagogisch)
 			.add("tarifeNichtPaedagogisch=" + tarifeNichtPaedagogisch)
-			.add("finanzielleSituationAkzeptiert=" + finanzielleSituationAkzeptiert)
-			.add("eventTimestamp=" + eventTimestamp)
+			.add("tarifeDefinitivAkzeptiert=" + tarifeDefinitivAkzeptiert)
 			.toString();
 	}
 
@@ -110,8 +100,7 @@ public class TagesschuleTarifeDTO implements Serializable {
 		return getRefnr().equals(that.getRefnr()) &&
 			getTarifePaedagogisch().equals(that.getTarifePaedagogisch()) &&
 			getTarifeNichtPaedagogisch().equals(that.getTarifeNichtPaedagogisch()) &&
-			getFinanzielleSituationAkzeptiert().equals(that.getFinanzielleSituationAkzeptiert()) &&
-			getEventTimestamp().equals(that.getEventTimestamp());
+			getTarifeDefinitivAkzeptiert().equals(that.getTarifeDefinitivAkzeptiert());
 	}
 
 	@Override
@@ -120,8 +109,7 @@ public class TagesschuleTarifeDTO implements Serializable {
 			getRefnr(),
 			getTarifePaedagogisch(),
 			getTarifeNichtPaedagogisch(),
-			getFinanzielleSituationAkzeptiert(),
-			getEventTimestamp());
+			getTarifeDefinitivAkzeptiert());
 	}
 
 	@Nonnull
@@ -152,20 +140,11 @@ public class TagesschuleTarifeDTO implements Serializable {
 	}
 
 	@Nonnull
-	public Boolean getFinanzielleSituationAkzeptiert() {
-		return finanzielleSituationAkzeptiert;
+	public Boolean getTarifeDefinitivAkzeptiert() {
+		return tarifeDefinitivAkzeptiert;
 	}
 
-	public void setFinanzielleSituationAkzeptiert(@Nonnull Boolean finanzielleSituationAkzeptiert) {
-		this.finanzielleSituationAkzeptiert = finanzielleSituationAkzeptiert;
-	}
-
-	@Nonnull
-	public LocalDateTime getEventTimestamp() {
-		return eventTimestamp;
-	}
-
-	public void setEventTimestamp(@Nonnull LocalDateTime eventTimestamp) {
-		this.eventTimestamp = eventTimestamp;
+	public void setTarifeDefinitivAkzeptiert(@Nonnull Boolean tarifeDefinitivAkzeptiert) {
+		this.tarifeDefinitivAkzeptiert = tarifeDefinitivAkzeptiert;
 	}
 }
