@@ -64,6 +64,11 @@ public class TagesschuleAnmeldungDTO implements Serializable {
 	@Nonnull
 	private Integer version = 0;
 
+	@Schema(description = "Status der Anmeldung.")
+	@NotNull
+	@Nonnull
+	private TagesschuleAnmeldungStatus status;
+
 	@Schema(description = "Zeitpunkt, an welchem die Anmeldung freigegeben wurde.")
 	@NotNull
 	@Nonnull
@@ -142,6 +147,7 @@ public class TagesschuleAnmeldungDTO implements Serializable {
 			.add("institutionId='" + institutionId + '\'')
 			.add("refnr='" + refnr + '\'')
 			.add("version=" + version)
+			.add("status=" + status)
 			.add("periodeVon=" + periodeVon)
 			.add("periodeBis=" + periodeBis)
 			.add("kind=" + kind)
@@ -164,6 +170,7 @@ public class TagesschuleAnmeldungDTO implements Serializable {
 			getInstitutionId().equals(that.getInstitutionId()) &&
 			getRefnr().equals(that.getRefnr()) &&
 			getVersion().equals(that.getVersion()) &&
+			getStatus() == that.getStatus() &&
 			getEventTimestamp().equals(that.getEventTimestamp()) &&
 			getPeriodeVon().equals(that.getPeriodeVon()) &&
 			getPeriodeBis().equals(that.getPeriodeBis()) &&
@@ -186,6 +193,7 @@ public class TagesschuleAnmeldungDTO implements Serializable {
 			getInstitutionId(),
 			getRefnr(),
 			getVersion(),
+			getStatus(),
 			getEventTimestamp(),
 			getPeriodeVon(),
 			getPeriodeBis(),
@@ -235,6 +243,15 @@ public class TagesschuleAnmeldungDTO implements Serializable {
 
 	public void setVersion(@Nonnull Integer version) {
 		this.version = version;
+	}
+
+	@Nonnull
+	public TagesschuleAnmeldungStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(@Nonnull TagesschuleAnmeldungStatus status) {
+		this.status = status;
 	}
 
 	@Nonnull
