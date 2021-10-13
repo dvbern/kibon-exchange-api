@@ -111,13 +111,13 @@ public class TagesschuleAnmeldungDTO implements Serializable {
 	@Nonnull
 	private TagesschuleKindDTO kind = new TagesschuleKindDTO();
 
-	@Schema(description = "Details zur gesuchstellende Person")
+	@Schema(description = "Details zur gesuchstellenden Person")
 	@Valid
 	@NotNull
 	@Nonnull
 	private TagesschuleGesuchstellerDTO gesuchsteller = new TagesschuleGesuchstellerDTO();
 
-	@Schema(description = "Details zur gesuchstellende Person 2")
+	@Schema(description = "Details zur 2. gesuchstellenden Person")
 	@Valid
 	@Nullable
 	private TagesschuleGesuchstellerDTO gesuchsteller2;
@@ -174,8 +174,7 @@ public class TagesschuleAnmeldungDTO implements Serializable {
 			Objects.equals(getBemerkung(), that.getBemerkung()) &&
 			getKind().equals(that.getKind()) &&
 			getGesuchsteller().equals(that.getGesuchsteller()) &&
-			((getGesuchsteller2() == null && that.getGesuchsteller2() == null)
-				|| (getGesuchsteller2() != null && getGesuchsteller2().equals(that.getGesuchsteller2()))) &&
+			Objects.equals(getGesuchsteller2(), that.getGesuchsteller2()) &&
 			getModule().equals(that.getModule()) &&
 			isAnmeldungZurueckgezogen() == that.isAnmeldungZurueckgezogen();
 	}
