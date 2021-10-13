@@ -43,34 +43,25 @@ public class TagesschuleTarifeDTO implements Serializable {
 	@NotNull
 	@Valid
 	@Nonnull
-	private List<TarifDTO> tarifePaedagogisch;
+	private List<TarifZeitabschnittDTO> tarifZeitabschnitte;
 
-	@NotNull
-	@Valid
-	@Nonnull
-	private List<TarifDTO> tarifeNichtPaedagogisch;
-
-	@Schema(description = "Gibt an, ob die Tarife definitiv von der Gemeinde akzeptiert wurde oder nicht. Falls "
-		+ "nicht, wird der Maximaltarif ausgegeben.")
+	@Schema(description = "Gibt an, ob die Tarife definitiv von der Gemeinde akzeptiert wurde oder nicht.")
 	@NotNull
 	@Nonnull
 	private Boolean tarifeDefinitivAkzeptiert;
 
 	public TagesschuleTarifeDTO() {
 		this.refnr = "";
-		this.tarifePaedagogisch = new ArrayList<>();
-		this.tarifeNichtPaedagogisch = new ArrayList<>();
+		this.tarifZeitabschnitte = new ArrayList<>();
 		this.tarifeDefinitivAkzeptiert = false;
 	}
 
 	public TagesschuleTarifeDTO(
 		@Nonnull String refnr,
-		@Nonnull List<TarifDTO> tarifePaedagogisch,
-		@Nonnull List<TarifDTO> tarifeNichtPaedagogisch,
+		@Nonnull List<TarifZeitabschnittDTO> tarifZeitabschnitte,
 		@Nonnull Boolean tarifeDefinitivAkzeptiert) {
 		this.refnr = refnr;
-		this.tarifePaedagogisch = tarifePaedagogisch;
-		this.tarifeNichtPaedagogisch = tarifeNichtPaedagogisch;
+		this.tarifZeitabschnitte = tarifZeitabschnitte;
 		this.tarifeDefinitivAkzeptiert = tarifeDefinitivAkzeptiert;
 	}
 
@@ -79,8 +70,7 @@ public class TagesschuleTarifeDTO implements Serializable {
 	public String toString() {
 		return new StringJoiner(", ", TagesschuleTarifeDTO.class.getSimpleName() + '[', "]")
 			.add("refnr='" + refnr + '\'')
-			.add("tarifePaedagogisch=" + tarifePaedagogisch)
-			.add("tarifeNichtPaedagogisch=" + tarifeNichtPaedagogisch)
+			.add("tarifZeitabschnitte=" + tarifZeitabschnitte)
 			.add("tarifeDefinitivAkzeptiert=" + tarifeDefinitivAkzeptiert)
 			.toString();
 	}
@@ -98,8 +88,7 @@ public class TagesschuleTarifeDTO implements Serializable {
 		TagesschuleTarifeDTO that = (TagesschuleTarifeDTO) o;
 
 		return getRefnr().equals(that.getRefnr()) &&
-			getTarifePaedagogisch().equals(that.getTarifePaedagogisch()) &&
-			getTarifeNichtPaedagogisch().equals(that.getTarifeNichtPaedagogisch()) &&
+			getTarifZeitabschnitte().equals(that.getTarifZeitabschnitte()) &&
 			getTarifeDefinitivAkzeptiert().equals(that.getTarifeDefinitivAkzeptiert());
 	}
 
@@ -107,8 +96,7 @@ public class TagesschuleTarifeDTO implements Serializable {
 	public int hashCode() {
 		return Objects.hash(
 			getRefnr(),
-			getTarifePaedagogisch(),
-			getTarifeNichtPaedagogisch(),
+			getTarifZeitabschnitte(),
 			getTarifeDefinitivAkzeptiert());
 	}
 
@@ -122,21 +110,12 @@ public class TagesschuleTarifeDTO implements Serializable {
 	}
 
 	@Nonnull
-	public List<TarifDTO> getTarifePaedagogisch() {
-		return tarifePaedagogisch;
+	public List<TarifZeitabschnittDTO> getTarifZeitabschnitte() {
+		return tarifZeitabschnitte;
 	}
 
-	public void setTarifePaedagogisch(@Nonnull List<TarifDTO> tarifePaedagogisch) {
-		this.tarifePaedagogisch = tarifePaedagogisch;
-	}
-
-	@Nonnull
-	public List<TarifDTO> getTarifeNichtPaedagogisch() {
-		return tarifeNichtPaedagogisch;
-	}
-
-	public void setTarifeNichtPaedagogisch(@Nonnull List<TarifDTO> tarifeNichtPaedagogisch) {
-		this.tarifeNichtPaedagogisch = tarifeNichtPaedagogisch;
+	public void setTarifZeitabschnitte(@Nonnull List<TarifZeitabschnittDTO> tarifZeitabschnitte) {
+		this.tarifZeitabschnitte = tarifZeitabschnitte;
 	}
 
 	@Nonnull
