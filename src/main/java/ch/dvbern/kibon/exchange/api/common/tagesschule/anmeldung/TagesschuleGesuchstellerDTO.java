@@ -48,8 +48,7 @@ public class TagesschuleGesuchstellerDTO extends GesuchstellerDTO {
 	private String telefonAusland;
 
 	@Valid
-	@NotNull
-	@Nonnull
+	@Nullable
 	private AdresseDTO adresse;
 
 	public TagesschuleGesuchstellerDTO() {
@@ -58,7 +57,7 @@ public class TagesschuleGesuchstellerDTO extends GesuchstellerDTO {
 		this.mobile = null;
 		this.telefon = null;
 		this.telefonAusland = null;
-		this.adresse = new AdresseDTO();
+		this.adresse = null;
 	}
 
 	@Nonnull
@@ -106,12 +105,12 @@ public class TagesschuleGesuchstellerDTO extends GesuchstellerDTO {
 		this.telefonAusland = telefonAusland;
 	}
 
-	@Nonnull
+	@Nullable
 	public AdresseDTO getAdresse() {
 		return adresse;
 	}
 
-	public void setAdresse(@Nonnull AdresseDTO adresse) {
+	public void setAdresse(@Nullable AdresseDTO adresse) {
 		this.adresse = adresse;
 	}
 }
