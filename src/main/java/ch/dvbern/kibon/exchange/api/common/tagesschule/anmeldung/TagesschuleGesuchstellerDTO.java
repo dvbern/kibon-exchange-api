@@ -39,7 +39,13 @@ public class TagesschuleGesuchstellerDTO extends GesuchstellerDTO {
 	private LocalDate geburtsdatum;
 
 	@Nullable
+	private String mobile;
+
+	@Nullable
 	private String telefon;
+
+	@Nullable
+	private String telefonAusland;
 
 	@Valid
 	@NotNull
@@ -49,23 +55,10 @@ public class TagesschuleGesuchstellerDTO extends GesuchstellerDTO {
 	public TagesschuleGesuchstellerDTO() {
 		this.geschlecht = Geschlecht.WEIBLICH;
 		this.geburtsdatum = LocalDate.MIN;
+		this.mobile = null;
 		this.telefon = null;
+		this.telefonAusland = null;
 		this.adresse = new AdresseDTO();
-	}
-
-	public TagesschuleGesuchstellerDTO(
-		@Nonnull String vorname,
-		@Nonnull String nachname,
-		@Nullable String email,
-		@Nonnull Geschlecht geschlecht,
-		@Nonnull LocalDate geburtsdatum,
-		@Nullable String telefon,
-		@Nonnull AdresseDTO adresse) {
-		super(vorname, nachname, email);
-		this.geschlecht = geschlecht;
-		this.geburtsdatum = geburtsdatum;
-		this.telefon = telefon;
-		this.adresse = adresse;
 	}
 
 	@Nonnull
@@ -87,12 +80,30 @@ public class TagesschuleGesuchstellerDTO extends GesuchstellerDTO {
 	}
 
 	@Nullable
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(@Nullable String mobile) {
+		this.mobile = mobile;
+	}
+
+	@Nullable
 	public String getTelefon() {
 		return telefon;
 	}
 
 	public void setTelefon(@Nullable String telefon) {
 		this.telefon = telefon;
+	}
+
+	@Nullable
+	public String getTelefonAusland() {
+		return telefonAusland;
+	}
+
+	public void setTelefonAusland(@Nullable String telefonAusland) {
+		this.telefonAusland = telefonAusland;
 	}
 
 	@Nonnull
