@@ -45,13 +45,11 @@ public class ModulDTO implements Serializable {
 
 	@Schema(description = "Deutsche Bezeichnung")
 	@NotNull
-	@Size(min = 1)
 	@Nonnull
 	private String bezeichnungDE;
 
 	@Schema(description = "Französische Bezeichnung")
 	@NotNull
-	@Size(min = 1)
 	@Nonnull
 	private String bezeichnungFR;
 
