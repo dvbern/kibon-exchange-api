@@ -64,6 +64,11 @@ public class TagesschuleAnmeldungDTO implements Serializable {
 	@Nonnull
 	private Integer version = 0;
 
+	@Schema(description = "Status der Anmeldung.")
+	@NotNull
+	@Nonnull
+	private TagesschuleAnmeldungStatus status;
+
 	@Schema(description = "Zeitpunkt, an welchem die Anmeldung freigegeben wurde.")
 	@NotNull
 	@Nonnull
@@ -111,11 +116,16 @@ public class TagesschuleAnmeldungDTO implements Serializable {
 	@Nonnull
 	private TagesschuleKindDTO kind = new TagesschuleKindDTO();
 
-	@Schema(description = "Details zur antragstellenden Person")
+	@Schema(description = "Details zur gesuchstellenden Person")
 	@Valid
 	@NotNull
 	@Nonnull
-	private TagesschuleAntragstellerDTO antragsteller = new TagesschuleAntragstellerDTO();
+	private TagesschuleGesuchstellerDTO gesuchsteller = new TagesschuleGesuchstellerDTO();
+
+	@Schema(description = "Details zur 2. gesuchstellenden Person")
+	@Valid
+	@Nullable
+	private TagesschuleGesuchstellerDTO gesuchsteller2;
 
 	@Schema(description = "Die gewünschten Betreuungs-Module.\n\n"
 		+ "Falls die Anmeldung zurückgezogen wurde, kann das Array leer sein.")
@@ -137,6 +147,7 @@ public class TagesschuleAnmeldungDTO implements Serializable {
 			.add("institutionId='" + institutionId + '\'')
 			.add("refnr='" + refnr + '\'')
 			.add("version=" + version)
+			.add("status=" + status)
 			.add("periodeVon=" + periodeVon)
 			.add("periodeBis=" + periodeBis)
 			.add("kind=" + kind)
@@ -159,6 +170,7 @@ public class TagesschuleAnmeldungDTO implements Serializable {
 			getInstitutionId().equals(that.getInstitutionId()) &&
 			getRefnr().equals(that.getRefnr()) &&
 			getVersion().equals(that.getVersion()) &&
+			getStatus() == that.getStatus() &&
 			getEventTimestamp().equals(that.getEventTimestamp()) &&
 			getPeriodeVon().equals(that.getPeriodeVon()) &&
 			getPeriodeBis().equals(that.getPeriodeBis()) &&
@@ -168,7 +180,8 @@ public class TagesschuleAnmeldungDTO implements Serializable {
 			getAbweichungZweitesSemester().equals(that.getAbweichungZweitesSemester()) &&
 			Objects.equals(getBemerkung(), that.getBemerkung()) &&
 			getKind().equals(that.getKind()) &&
-			getAntragsteller().equals(that.getAntragsteller()) &&
+			getGesuchsteller().equals(that.getGesuchsteller()) &&
+			Objects.equals(getGesuchsteller2(), that.getGesuchsteller2()) &&
 			getModule().equals(that.getModule()) &&
 			isAnmeldungZurueckgezogen() == that.isAnmeldungZurueckgezogen();
 	}
@@ -180,6 +193,7 @@ public class TagesschuleAnmeldungDTO implements Serializable {
 			getInstitutionId(),
 			getRefnr(),
 			getVersion(),
+			getStatus(),
 			getEventTimestamp(),
 			getPeriodeVon(),
 			getPeriodeBis(),
@@ -189,7 +203,8 @@ public class TagesschuleAnmeldungDTO implements Serializable {
 			getAbweichungZweitesSemester(),
 			getBemerkung(),
 			getKind(),
-			getAntragsteller(),
+			getGesuchsteller(),
+			getGesuchsteller2(),
 			getModule(),
 			isAnmeldungZurueckgezogen());
 	}
@@ -228,6 +243,15 @@ public class TagesschuleAnmeldungDTO implements Serializable {
 
 	public void setVersion(@Nonnull Integer version) {
 		this.version = version;
+	}
+
+	@Nonnull
+	public TagesschuleAnmeldungStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(@Nonnull TagesschuleAnmeldungStatus status) {
+		this.status = status;
 	}
 
 	@Nonnull
@@ -312,15 +336,6 @@ public class TagesschuleAnmeldungDTO implements Serializable {
 	}
 
 	@Nonnull
-	public TagesschuleAntragstellerDTO getAntragsteller() {
-		return antragsteller;
-	}
-
-	public void setAntragsteller(@Nonnull TagesschuleAntragstellerDTO antragsteller) {
-		this.antragsteller = antragsteller;
-	}
-
-	@Nonnull
 	public List<ModulAuswahlDTO> getModule() {
 		return module;
 	}
@@ -335,5 +350,23 @@ public class TagesschuleAnmeldungDTO implements Serializable {
 
 	public void setAnmeldungZurueckgezogen(boolean anmeldungZurueckgezogen) {
 		this.anmeldungZurueckgezogen = anmeldungZurueckgezogen;
+	}
+
+	@Nonnull
+	public TagesschuleGesuchstellerDTO getGesuchsteller() {
+		return gesuchsteller;
+	}
+
+	public void setGesuchsteller(@Nonnull TagesschuleGesuchstellerDTO gesuchsteller) {
+		this.gesuchsteller = gesuchsteller;
+	}
+
+	@Nullable
+	public TagesschuleGesuchstellerDTO getGesuchsteller2() {
+		return gesuchsteller2;
+	}
+
+	public void setGesuchsteller2(@Nullable TagesschuleGesuchstellerDTO gesuchsteller2) {
+		this.gesuchsteller2 = gesuchsteller2;
 	}
 }

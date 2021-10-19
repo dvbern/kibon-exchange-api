@@ -33,16 +33,6 @@ public class TarifDTO implements Serializable {
 
 	private static final long serialVersionUID = 373903231409037318L;
 
-	@Schema(description = "Dieser Tarif gilt ab dem diesem Datum")
-	@NotNull
-	@Nonnull
-	private LocalDate von;
-
-	@Schema(description = "Dieser Tarif gilt bis zu dem diesem Datum")
-	@NotNull
-	@Nonnull
-	private LocalDate bis;
-
 	@Schema(description = "Anzahl Betreuungsminuten pro Woche")
 	@NotNull
 	@Min(0)
@@ -75,8 +65,6 @@ public class TarifDTO implements Serializable {
 	private BigDecimal totalKostenProWoche;
 
 	public TarifDTO() {
-		this.von = LocalDate.MIN;
-		this.bis = LocalDate.MAX;
 		betreuungsMinutenProWoche = 0;
 		betreuungsKostenProStunde = BigDecimal.ZERO;
 		verpflegungsKostenProWoche = BigDecimal.ZERO;
@@ -92,8 +80,6 @@ public class TarifDTO implements Serializable {
 		@Nonnull BigDecimal verpflegungsKostenProWoche,
 		@Nonnull BigDecimal verpflegungsKostenVerguenstigung,
 		@Nonnull BigDecimal totalKostenProWoche) {
-		this.von = von;
-		this.bis = bis;
 		this.betreuungsMinutenProWoche = betreuungsMinutenProWoche;
 		this.betreuungsKostenProStunde = betreuungsKostenProStunde;
 		this.verpflegungsKostenProWoche = verpflegungsKostenProWoche;
@@ -105,8 +91,6 @@ public class TarifDTO implements Serializable {
 	@Nonnull
 	public String toString() {
 		return new StringJoiner(", ", TarifDTO.class.getSimpleName() + '[', "]")
-			.add("von=" + von)
-			.add("bis=" + bis)
 			.add("betreuungsMinutenProWoche=" + betreuungsMinutenProWoche)
 			.add("betreuungsKostenProStunde=" + betreuungsKostenProStunde)
 			.add("verpflegungsKostenProWoche=" + verpflegungsKostenProWoche)
@@ -127,9 +111,7 @@ public class TarifDTO implements Serializable {
 
 		TarifDTO tarifDTO = (TarifDTO) o;
 
-		return getVon().equals(tarifDTO.getVon()) &&
-			getBis().equals(tarifDTO.getBis()) &&
-			getBetreuungsMinutenProWoche().equals(tarifDTO.getBetreuungsMinutenProWoche()) &&
+		return getBetreuungsMinutenProWoche().equals(tarifDTO.getBetreuungsMinutenProWoche()) &&
 			getBetreuungsKostenProStunde().compareTo(tarifDTO.getBetreuungsKostenProStunde()) == 0 &&
 			getVerpflegungsKostenProWoche().compareTo(tarifDTO.getVerpflegungsKostenProWoche()) == 0 &&
 			getVerpflegungsKostenVerguenstigung().compareTo(tarifDTO.getVerpflegungsKostenVerguenstigung()) == 0 &&
@@ -139,31 +121,11 @@ public class TarifDTO implements Serializable {
 	@Override
 	public int hashCode() {
 		return Objects.hash(
-			getVon(),
-			getBis(),
 			getBetreuungsMinutenProWoche(),
 			getBetreuungsKostenProStunde(),
 			getVerpflegungsKostenProWoche(),
 			getVerpflegungsKostenVerguenstigung(),
 			getTotalKostenProWoche());
-	}
-
-	@Nonnull
-	public LocalDate getVon() {
-		return von;
-	}
-
-	public void setVon(@Nonnull LocalDate von) {
-		this.von = von;
-	}
-
-	@Nonnull
-	public LocalDate getBis() {
-		return bis;
-	}
-
-	public void setBis(@Nonnull LocalDate bis) {
-		this.bis = bis;
 	}
 
 	@Nonnull

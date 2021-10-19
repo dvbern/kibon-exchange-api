@@ -26,7 +26,7 @@ import javax.validation.constraints.NotNull;
 import ch.dvbern.kibon.exchange.api.common.institution.AdresseDTO;
 import ch.dvbern.kibon.exchange.api.common.shared.GesuchstellerDTO;
 
-public class TagesschuleAntragstellerDTO extends GesuchstellerDTO {
+public class TagesschuleGesuchstellerDTO extends GesuchstellerDTO {
 
 	private static final long serialVersionUID = 3493241283544795993L;
 
@@ -39,33 +39,25 @@ public class TagesschuleAntragstellerDTO extends GesuchstellerDTO {
 	private LocalDate geburtsdatum;
 
 	@Nullable
+	private String mobile;
+
+	@Nullable
 	private String telefon;
 
+	@Nullable
+	private String telefonAusland;
+
 	@Valid
-	@NotNull
-	@Nonnull
+	@Nullable
 	private AdresseDTO adresse;
 
-	public TagesschuleAntragstellerDTO() {
+	public TagesschuleGesuchstellerDTO() {
 		this.geschlecht = Geschlecht.WEIBLICH;
 		this.geburtsdatum = LocalDate.MIN;
+		this.mobile = null;
 		this.telefon = null;
-		this.adresse = new AdresseDTO();
-	}
-
-	public TagesschuleAntragstellerDTO(
-		@Nonnull String vorname,
-		@Nonnull String nachname,
-		@Nullable String email,
-		@Nonnull Geschlecht geschlecht,
-		@Nonnull LocalDate geburtsdatum,
-		@Nullable String telefon,
-		@Nonnull AdresseDTO adresse) {
-		super(vorname, nachname, email);
-		this.geschlecht = geschlecht;
-		this.geburtsdatum = geburtsdatum;
-		this.telefon = telefon;
-		this.adresse = adresse;
+		this.telefonAusland = null;
+		this.adresse = null;
 	}
 
 	@Nonnull
@@ -87,6 +79,15 @@ public class TagesschuleAntragstellerDTO extends GesuchstellerDTO {
 	}
 
 	@Nullable
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(@Nullable String mobile) {
+		this.mobile = mobile;
+	}
+
+	@Nullable
 	public String getTelefon() {
 		return telefon;
 	}
@@ -95,12 +96,21 @@ public class TagesschuleAntragstellerDTO extends GesuchstellerDTO {
 		this.telefon = telefon;
 	}
 
-	@Nonnull
+	@Nullable
+	public String getTelefonAusland() {
+		return telefonAusland;
+	}
+
+	public void setTelefonAusland(@Nullable String telefonAusland) {
+		this.telefonAusland = telefonAusland;
+	}
+
+	@Nullable
 	public AdresseDTO getAdresse() {
 		return adresse;
 	}
 
-	public void setAdresse(@Nonnull AdresseDTO adresse) {
+	public void setAdresse(@Nullable AdresseDTO adresse) {
 		this.adresse = adresse;
 	}
 }
