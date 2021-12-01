@@ -34,10 +34,12 @@ public class ModulAuswahlDTO implements Serializable {
 	private static final long serialVersionUID = -2403935105004458699L;
 
 	@Schema(description = "kiBon ID des ausgewählten Moduls")
-	@NotNull
-	@Size(min = 1)
-	@Nonnull
+	@Nullable
 	private String modulId;
+
+	@Schema(description = "kiBon ID des ausgewählten Moduls")
+	@Nullable
+	private String fremdId;
 
 	@Schema(description = "Ausgewählter Wochentag")
 	@NotNull
@@ -56,12 +58,14 @@ public class ModulAuswahlDTO implements Serializable {
 	}
 
 	public ModulAuswahlDTO(
-		@Nonnull String modulId,
+		@Nullable String modulId,
 		@Nonnull DayOfWeek wochentag,
-		@Nonnull Intervall intervall) {
+		@Nonnull Intervall intervall,
+		@Nullable String fremdId) {
 		this.modulId = modulId;
 		this.wochentag = wochentag;
 		this.intervall = intervall;
+		this.fremdId = fremdId;
 	}
 
 	@Override
@@ -71,6 +75,7 @@ public class ModulAuswahlDTO implements Serializable {
 			.add("modulId='" + modulId + '\'')
 			.add("wochentag=" + wochentag)
 			.add("intervall=" + intervall)
+			.add("fremdId=" + fremdId )
 			.toString();
 	}
 
@@ -86,7 +91,8 @@ public class ModulAuswahlDTO implements Serializable {
 
 		ModulAuswahlDTO that = (ModulAuswahlDTO) o;
 
-		return getModulId().equals(that.getModulId()) &&
+		return Objects.equals(getModulId(), that.getModulId()) &&
+				Objects.equals(getFremdId(), that.getFremdId()) &&
 			getWochentag() == that.getWochentag() &&
 			getIntervall() == that.getIntervall();
 	}
@@ -96,12 +102,12 @@ public class ModulAuswahlDTO implements Serializable {
 		return Objects.hash(getModulId(), getWochentag(), getIntervall());
 	}
 
-	@Nonnull
+	@Nullable
 	public String getModulId() {
 		return modulId;
 	}
 
-	public void setModulId(@Nonnull String modulId) {
+	public void setModulId(@Nullable String modulId) {
 		this.modulId = modulId;
 	}
 
@@ -121,5 +127,13 @@ public class ModulAuswahlDTO implements Serializable {
 
 	public void setIntervall(@Nonnull Intervall intervall) {
 		this.intervall = intervall;
+	}
+
+	public String getFremdId() {
+		return this.fremdId;
+	}
+
+	public void setFremdId(@Nullable String fremdId) {
+		this.fremdId = fremdId;
 	}
 }
