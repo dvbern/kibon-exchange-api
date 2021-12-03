@@ -47,6 +47,10 @@ public class TarifZeitabschnittDTO implements Serializable {
 	@Nullable
 	private BigDecimal massgebendesEinkommen;
 
+	@Schema(description = "Berücksichtigte Familiengrösse")
+	@Nullable
+	private BigDecimal familienGroesse;
+
 	@Valid
 	@Nullable
 	private TarifDTO tarifPaedagogisch;
@@ -59,6 +63,7 @@ public class TarifZeitabschnittDTO implements Serializable {
 		von = LocalDate.MIN;
 		bis = LocalDate.MAX;
 		massgebendesEinkommen = null;
+		familienGroesse = null;
 		tarifPaedagogisch = null;
 		tarifNichtPaedagogisch = null;
 	}
@@ -82,6 +87,7 @@ public class TarifZeitabschnittDTO implements Serializable {
 			.add("von=" + von)
 			.add("bis=" + bis)
 			.add("massgebendesEinkommen=" + massgebendesEinkommen)
+			.add("familienGroesse=" + familienGroesse)
 			.add("tarifPaedagogisch=" + tarifPaedagogisch)
 			.add("tarifNichtPaedagogisch=" + tarifNichtPaedagogisch)
 			.toString();
@@ -104,6 +110,9 @@ public class TarifZeitabschnittDTO implements Serializable {
 			&& (getMassgebendesEinkommen() == null ?
 			that.getMassgebendesEinkommen() == null :
 			getMassgebendesEinkommen().compareTo(that.getMassgebendesEinkommen()) == 0)
+			&& (getFamilienGroesse() == null ?
+			that.getFamilienGroesse() == null :
+			getFamilienGroesse().compareTo(that.getFamilienGroesse()) == 0)
 			&& Objects.equals(getTarifPaedagogisch(), that.getTarifPaedagogisch())
 			&& Objects.equals(getTarifNichtPaedagogisch(), that.getTarifNichtPaedagogisch());
 	}
@@ -114,6 +123,7 @@ public class TarifZeitabschnittDTO implements Serializable {
 			getVon(),
 			getBis(),
 			getMassgebendesEinkommen(),
+			getFamilienGroesse(),
 			getTarifPaedagogisch(),
 			getTarifNichtPaedagogisch());
 	}
@@ -143,6 +153,15 @@ public class TarifZeitabschnittDTO implements Serializable {
 
 	public void setMassgebendesEinkommen(@Nullable BigDecimal massgebendesEinkommen) {
 		this.massgebendesEinkommen = massgebendesEinkommen;
+	}
+
+	@Nullable
+	public BigDecimal getFamilienGroesse() {
+		return familienGroesse;
+	}
+
+	public void setFamilienGroesse(@Nullable BigDecimal familienGroesse) {
+		this.familienGroesse = familienGroesse;
 	}
 
 	@Nullable
