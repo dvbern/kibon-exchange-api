@@ -24,7 +24,6 @@ import java.util.StringJoiner;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
@@ -34,10 +33,12 @@ public class ModulAuswahlDTO implements Serializable {
 	private static final long serialVersionUID = -2403935105004458699L;
 
 	@Schema(description = "kiBon ID des ausgewählten Moduls")
-	@NotNull
-	@Size(min = 1)
-	@Nonnull
-	private String modulId;
+	@Nullable
+	private String modulId = null;
+
+	@Schema(description = "kiBon ID des ausgewählten Moduls")
+	@Nullable
+	private String fremdId = null;
 
 	@Schema(description = "Ausgewählter Wochentag")
 	@NotNull
@@ -50,18 +51,19 @@ public class ModulAuswahlDTO implements Serializable {
 	private Intervall intervall;
 
 	public ModulAuswahlDTO() {
-		this.modulId = "";
 		this.wochentag = DayOfWeek.MONDAY;
 		this.intervall = Intervall.WOECHENTLICH;
 	}
 
 	public ModulAuswahlDTO(
-		@Nonnull String modulId,
+		@Nullable String modulId,
 		@Nonnull DayOfWeek wochentag,
-		@Nonnull Intervall intervall) {
+		@Nonnull Intervall intervall,
+		@Nullable String fremdId) {
 		this.modulId = modulId;
 		this.wochentag = wochentag;
 		this.intervall = intervall;
+		this.fremdId = fremdId;
 	}
 
 	@Override
@@ -71,6 +73,7 @@ public class ModulAuswahlDTO implements Serializable {
 			.add("modulId='" + modulId + '\'')
 			.add("wochentag=" + wochentag)
 			.add("intervall=" + intervall)
+			.add("fremdId=" + fremdId )
 			.toString();
 	}
 
@@ -86,22 +89,23 @@ public class ModulAuswahlDTO implements Serializable {
 
 		ModulAuswahlDTO that = (ModulAuswahlDTO) o;
 
-		return getModulId().equals(that.getModulId()) &&
+		return Objects.equals(getModulId(), that.getModulId()) &&
+				Objects.equals(getFremdId(), that.getFremdId()) &&
 			getWochentag() == that.getWochentag() &&
 			getIntervall() == that.getIntervall();
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getModulId(), getWochentag(), getIntervall());
+		return Objects.hash(getModulId(), getWochentag(), getIntervall(), getFremdId());
 	}
 
-	@Nonnull
+	@Nullable
 	public String getModulId() {
 		return modulId;
 	}
 
-	public void setModulId(@Nonnull String modulId) {
+	public void setModulId(@Nullable String modulId) {
 		this.modulId = modulId;
 	}
 
@@ -121,5 +125,14 @@ public class ModulAuswahlDTO implements Serializable {
 
 	public void setIntervall(@Nonnull Intervall intervall) {
 		this.intervall = intervall;
+	}
+
+	@Nullable
+	public String getFremdId() {
+		return this.fremdId;
+	}
+
+	public void setFremdId(@Nullable String fremdId) {
+		this.fremdId = fremdId;
 	}
 }
