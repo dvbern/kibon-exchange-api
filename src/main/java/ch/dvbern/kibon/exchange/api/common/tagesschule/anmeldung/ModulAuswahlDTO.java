@@ -24,7 +24,6 @@ import java.util.StringJoiner;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
@@ -129,6 +128,7 @@ public class ModulAuswahlDTO implements Serializable {
 		this.intervall = intervall;
 	}
 
+	@Nullable
 	public String getFremdId() {
 		return this.fremdId;
 	}
