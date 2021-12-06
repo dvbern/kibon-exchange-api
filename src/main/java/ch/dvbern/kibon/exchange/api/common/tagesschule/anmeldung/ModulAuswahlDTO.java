@@ -34,11 +34,11 @@ public class ModulAuswahlDTO implements Serializable {
 
 	@Schema(description = "kiBon ID des ausgewählten Moduls")
 	@Nullable
-	private String modulId;
+	private String modulId = null;
 
 	@Schema(description = "kiBon ID des ausgewählten Moduls")
 	@Nullable
-	private String fremdId;
+	private String fremdId = null;
 
 	@Schema(description = "Ausgewählter Wochentag")
 	@NotNull
@@ -51,7 +51,6 @@ public class ModulAuswahlDTO implements Serializable {
 	private Intervall intervall;
 
 	public ModulAuswahlDTO() {
-		this.modulId = "";
 		this.wochentag = DayOfWeek.MONDAY;
 		this.intervall = Intervall.WOECHENTLICH;
 	}
@@ -98,7 +97,7 @@ public class ModulAuswahlDTO implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getModulId(), getWochentag(), getIntervall());
+		return Objects.hash(getModulId(), getWochentag(), getIntervall(), getFremdId());
 	}
 
 	@Nullable
