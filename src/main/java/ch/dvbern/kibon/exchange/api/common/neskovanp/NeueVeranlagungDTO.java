@@ -31,6 +31,8 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 public class NeueVeranlagungDTO implements Serializable {
 
+	private static final long serialVersionUID = 4730581613392955915L;
+
 	@Schema(description = "ZPV Nummer")
 	@NotNull
 	@Min(0)
