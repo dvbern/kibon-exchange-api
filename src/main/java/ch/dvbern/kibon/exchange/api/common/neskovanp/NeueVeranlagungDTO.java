@@ -23,6 +23,7 @@ import java.util.Objects;
 import java.util.StringJoiner;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -61,10 +62,10 @@ public class NeueVeranlagungDTO implements Serializable {
 	}
 
 	public NeueVeranlagungDTO(
-		@Nonnull @NotNull @Min(0) Integer zpvNummer,
-		@Nonnull @NotNull LocalDate geburtsdatum,
-		@Nonnull @Size(min = 1) @NotNull String kibonAntragId,
-		@Nonnull @NotNull @Min(0) Integer gesuchsperiodeBeginnJahr) {
+		@Nonnull Integer zpvNummer,
+		@Nonnull LocalDate geburtsdatum,
+		@Nonnull String kibonAntragId,
+		@Nonnull Integer gesuchsperiodeBeginnJahr) {
 		this.zpvNummer = zpvNummer;
 		this.geburtsdatum = geburtsdatum;
 		this.kibonAntragId = kibonAntragId;
@@ -118,14 +119,16 @@ public class NeueVeranlagungDTO implements Serializable {
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(@Nullable Object o) {
 		if (this == o) {
 			return true;
 		}
-		if (o == null || getClass() != o.getClass()) {
+		if (o == null || !getClass().equals(o.getClass())) {
 			return false;
 		}
+
 		NeueVeranlagungDTO that = (NeueVeranlagungDTO) o;
+
 		return getZpvNummer().equals(that.getZpvNummer())
 			&& getGeburtsdatum().equals(that.getGeburtsdatum())
 			&& getKibonAntragId().equals(that.getKibonAntragId())
