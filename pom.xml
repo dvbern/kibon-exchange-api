@@ -25,14 +25,20 @@
 
     <groupId>ch.dvbern.kibon</groupId>
     <artifactId>kibon-exchange-api</artifactId>
-    <version>5.1.0</version>
+    <version>5.2.0</version>
     <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
-            <groupId>com.google.code.findbugs</groupId>
-            <artifactId>annotations</artifactId>
-            <version>3.0.1u2</version>
+            <groupId>net.jcip</groupId>
+            <artifactId>jcip-annotations</artifactId>
+            <version>1.0</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.github.spotbugs</groupId>
+            <artifactId>spotbugs-annotations</artifactId>
+            <version>4.5.3</version>
             <optional>true</optional>
         </dependency>
         <dependency>
