@@ -120,8 +120,6 @@ public class BetreuungAnfrageDTO implements Serializable {
 			.add("periodeVon=" + periodeVon)
 			.add("periodeBis=" + periodeBis)
 			.add("intitutionId=" + institutionId)
-			.add("gesuchsteller=" + gesuchsteller.toString())
-			.add("kind=" + kind.toString())
 			.add("betreuungsArt=" + betreuungsArt.toString())
 			.add("abgelehntVonGesuchsteller=" + abgelehntVonGesuchsteller)
 			.add("eventTimestamp=" + eventTimestamp)
