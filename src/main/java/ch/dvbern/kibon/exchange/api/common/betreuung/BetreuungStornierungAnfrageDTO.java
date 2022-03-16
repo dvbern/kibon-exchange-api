@@ -94,8 +94,8 @@ public class BetreuungStornierungAnfrageDTO implements Serializable {
 	@Nonnull
 	public String toString() {
 		return new StringJoiner(", ", BetreuungStornierungAnfrageDTO.class.getSimpleName() + '[', "]")
-			.add("fallNummer='" + refnr + '\'')
-			.add("institutionId='" + institutionId + '\'')
+			.add("institutionId=" + institutionId)
+			.add("refnr=" + refnr)
 			.toString();
 	}
 

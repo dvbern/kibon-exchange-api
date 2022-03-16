@@ -57,13 +57,13 @@ public class BetreuungDTO implements Serializable {
 	private String gemeindeName;
 
 	@Schema(description =
-		"`true`, falls für ein Kind einen ausserordentlichen Betreuungsaufwand gemäss BGSDV, Artikel 11 - 15 "
+		"`true`, falls für das Kind einen ausserordentlichen Betreuungsaufwand gemäss BGSDV, Artikel 11 - 15 "
 			+ "in Rechnung gestellt wird.\n")
 	private boolean ausserordentlicherBetreuungsaufwand;
 
 	@Schema(description =
-		"`true`, falls für ein Kind eine Eingewöhnung in Rechnung gestellt wird.\n")
-	private boolean eingewoehnungInZeitraum;
+		"`true`, falls für das Kind eine Eingewöhnung bei der Institution stattfindet.\n")
+	private boolean eingewoehnungInPeriode;
 
 	public BetreuungDTO() {
 		institutionId = "";
@@ -72,7 +72,7 @@ public class BetreuungDTO implements Serializable {
 		gemeindeBfsNr = null;
 		gemeindeName = null;
 		ausserordentlicherBetreuungsaufwand = false;
-		eingewoehnungInZeitraum = false;
+		eingewoehnungInPeriode = false;
 	}
 
 	public BetreuungDTO(
@@ -82,14 +82,14 @@ public class BetreuungDTO implements Serializable {
 		@Nullable Long gemeindeBfsNr,
 		@Nullable String gemeindeName,
 		boolean ausserordentlicherBetreuungsaufwand,
-		boolean eingewoehnungInZeitraum) {
+		boolean eingewoehnungInPeriode) {
 		this.institutionId = institutionId;
 		this.refnr = refnr;
 		this.zeitabschnitte = zeitabschnitte;
 		this.gemeindeBfsNr = gemeindeBfsNr;
 		this.gemeindeName = gemeindeName;
 		this.ausserordentlicherBetreuungsaufwand = ausserordentlicherBetreuungsaufwand;
-		this.eingewoehnungInZeitraum = eingewoehnungInZeitraum;
+		this.eingewoehnungInPeriode = eingewoehnungInPeriode;
 	}
 
 	@Override
@@ -110,7 +110,7 @@ public class BetreuungDTO implements Serializable {
 			Objects.equals(getGemeindeBfsNr(), that.getGemeindeBfsNr()) &&
 			Objects.equals(getGemeindeName(), that.getGemeindeName()) &&
 			isAusserordentlicherBetreuungsaufwand() == that.isAusserordentlicherBetreuungsaufwand() &&
-			isEingewoehnungInZeitraum() == that.isEingewoehnungInZeitraum();
+			isEingewoehnungInPeriode() == that.isEingewoehnungInPeriode();
 	}
 
 	@Override
@@ -123,7 +123,7 @@ public class BetreuungDTO implements Serializable {
 			getGemeindeName(),
 			getInstitutionId(),
 			isAusserordentlicherBetreuungsaufwand(),
-			isEingewoehnungInZeitraum());
+			isEingewoehnungInPeriode());
 	}
 
 	@Override
@@ -132,8 +132,6 @@ public class BetreuungDTO implements Serializable {
 		return new StringJoiner(", ", BetreuungDTO.class.getSimpleName() + '[', "]")
 			.add("institutionId=" + institutionId)
 			.add("refnr=" + refnr)
-			.add("ausserordentlicherBetreuungsaufwand=" + ausserordentlicherBetreuungsaufwand)
-			.add("eingewoehnungInZeitraum=" + eingewoehnungInZeitraum)
 			.toString();
 	}
 
@@ -190,11 +188,11 @@ public class BetreuungDTO implements Serializable {
 		this.institutionId = institutionId;
 	}
 
-	public boolean isEingewoehnungInZeitraum() {
-		return eingewoehnungInZeitraum;
+	public boolean isEingewoehnungInPeriode() {
+		return eingewoehnungInPeriode;
 	}
 
-	public void setEingewoehnungInZeitraum(boolean eingewoehnungInZeitraum) {
-		this.eingewoehnungInZeitraum = eingewoehnungInZeitraum;
+	public void setEingewoehnungInPeriode(boolean eingewoehnungInPeriode) {
+		this.eingewoehnungInPeriode = eingewoehnungInPeriode;
 	}
 }
