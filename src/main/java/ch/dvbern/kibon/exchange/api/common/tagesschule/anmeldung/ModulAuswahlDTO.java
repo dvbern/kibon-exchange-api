@@ -36,7 +36,7 @@ public class ModulAuswahlDTO implements Serializable {
 	@Nullable
 	private String modulId = null;
 
-	@Schema(description = "kiBon ID des ausgewählten Moduls")
+	@Schema(description = "Benutzerdefinierte ID des ausgewählten Moduls")
 	@Nullable
 	private String fremdId = null;
 
