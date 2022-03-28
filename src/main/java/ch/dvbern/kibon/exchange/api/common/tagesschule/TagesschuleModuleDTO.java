@@ -49,7 +49,7 @@ public class TagesschuleModuleDTO implements Serializable {
 	@Schema(description = "Ende der Schuljahr Periode, e.g. 2021-07-31")
 	@NotNull
 	@Nonnull
-	private LocalDate periodeBis = LocalDate.MIN;
+	private LocalDate periodeBis = LocalDate.MAX;
 
 	@NotNull
 	@Valid
