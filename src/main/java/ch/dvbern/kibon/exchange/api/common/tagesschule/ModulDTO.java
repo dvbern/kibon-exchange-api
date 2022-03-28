@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 DV Bern AG, Switzerland
+ * Copyright (C) 2022 DV Bern AG, Switzerland
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ch.dvbern.kibon.exchange.api.common.tagesschule.anmeldung;
+package ch.dvbern.kibon.exchange.api.common.tagesschule;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -31,6 +31,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import ch.dvbern.kibon.exchange.api.common.tagesschule.anmeldung.Intervall;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 public class ModulDTO implements Serializable {
@@ -43,6 +44,10 @@ public class ModulDTO implements Serializable {
 	@Nonnull
 	private String id;
 
+	@Schema(description = "Benutzerdefinierte ID des ausgewählten Moduls")
+	@Nullable
+	private String fremdId;
+
 	@Schema(description = "Deutsche Bezeichnung")
 	@NotNull
 	@Nonnull
@@ -52,12 +57,6 @@ public class ModulDTO implements Serializable {
 	@NotNull
 	@Nonnull
 	private String bezeichnungFR;
-
-	@Schema(description = "kiBon ID der Institution (Tagesschule), für welche das Modul erfasst wurde.")
-	@NotNull
-	@Size(min = 1)
-	@Nonnull
-	private String institutionId;
 
 	@Schema(description = "Modul Beginn")
 	@NotNull
@@ -95,9 +94,9 @@ public class ModulDTO implements Serializable {
 
 	public ModulDTO() {
 		this.id = "";
+		this.fremdId = null;
 		this.bezeichnungDE = "";
 		this.bezeichnungFR = "";
-		this.institutionId = "";
 		this.zeitVon = LocalTime.MIN;
 		this.zeitBis = LocalTime.MAX;
 		this.wochentage = new ArrayList<>();
@@ -108,9 +107,9 @@ public class ModulDTO implements Serializable {
 
 	public ModulDTO(
 		@Nonnull String id,
+		@Nullable String fremdId,
 		@Nonnull String bezeichnungDE,
 		@Nonnull String bezeichnungFR,
-		@Nonnull String institutionId,
 		@Nonnull LocalTime zeitVon,
 		@Nonnull LocalTime zeitBis,
 		@Nonnull List<DayOfWeek> wochentage,
@@ -118,9 +117,9 @@ public class ModulDTO implements Serializable {
 		@Nonnull Boolean wirdPaedagogischBetreut,
 		@Nonnull BigDecimal verpflegungsKosten) {
 		this.id = id;
+		this.fremdId = fremdId;
 		this.bezeichnungDE = bezeichnungDE;
 		this.bezeichnungFR = bezeichnungFR;
-		this.institutionId = institutionId;
 		this.zeitVon = zeitVon;
 		this.zeitBis = zeitBis;
 		this.wochentage = wochentage;
@@ -133,9 +132,9 @@ public class ModulDTO implements Serializable {
 	public String toString() {
 		return new StringJoiner(", ", ModulDTO.class.getSimpleName() + '[', "]")
 			.add("id='" + id + '\'')
+			.add("fremdId='" + fremdId + '\'')
 			.add("bezeichnungDE='" + bezeichnungDE + '\'')
 			.add("bezeichnungFR='" + bezeichnungFR + '\'')
-			.add("institutionId='" + institutionId + '\'')
 			.add("zeitVon=" + zeitVon)
 			.add("zeitBis=" + zeitBis)
 			.add("wochentage=" + wochentage)
@@ -158,9 +157,9 @@ public class ModulDTO implements Serializable {
 		ModulDTO modulDTO = (ModulDTO) o;
 
 		return getId().equals(modulDTO.getId()) &&
+			Objects.equals(getFremdId(), modulDTO.getFremdId()) &&
 			getBezeichnungDE().equals(modulDTO.getBezeichnungDE()) &&
 			getBezeichnungFR().equals(modulDTO.getBezeichnungFR()) &&
-			getInstitutionId().equals(modulDTO.getInstitutionId()) &&
 			getZeitVon().equals(modulDTO.getZeitVon()) &&
 			getZeitBis().equals(modulDTO.getZeitBis()) &&
 			Objects.equals(getWochentage(), modulDTO.getWochentage()) &&
@@ -173,9 +172,9 @@ public class ModulDTO implements Serializable {
 	public int hashCode() {
 		return Objects.hash(
 			getId(),
+			getFremdId(),
 			getBezeichnungDE(),
 			getBezeichnungFR(),
-			getInstitutionId(),
 			getZeitVon(),
 			getZeitBis(),
 			getWochentage(),
@@ -191,6 +190,15 @@ public class ModulDTO implements Serializable {
 
 	public void setId(@Nonnull String id) {
 		this.id = id;
+	}
+
+	@Nullable
+	public String getFremdId() {
+		return fremdId;
+	}
+
+	public void setFremdId(@Nullable String fremdId) {
+		this.fremdId = fremdId;
 	}
 
 	@Nonnull
@@ -209,15 +217,6 @@ public class ModulDTO implements Serializable {
 
 	public void setBezeichnungFR(@Nonnull String bezeichnungFR) {
 		this.bezeichnungFR = bezeichnungFR;
-	}
-
-	@Nonnull
-	public String getInstitutionId() {
-		return institutionId;
-	}
-
-	public void setInstitutionId(@Nonnull String institutionId) {
-		this.institutionId = institutionId;
 	}
 
 	@Nonnull
