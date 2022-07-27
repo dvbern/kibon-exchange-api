@@ -26,12 +26,19 @@ import java.util.StringJoiner;
 import javax.annotation.Nonnull;
 import javax.validation.constraints.NotNull;
 
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+
 public class LastenausgleichDTO implements Serializable {
 
 	private static final long serialVersionUID = -4392319486720638816L;
 
 	private static final Comparator<BigDecimal> BIG_DECIMAL_COMPARATOR =
 		Comparator.nullsLast(Comparator.naturalOrder());
+
+	@Schema(description = "Strikt monoton steigende ID\n\n"
+		+ "Kann für Filterung mit dem `after_id` Parameter verwendet werden.")
+	@Nonnull
+	private @NotNull Long id;
 
 	@Nonnull
 	private @NotNull Long bfsNummer;
@@ -46,6 +53,7 @@ public class LastenausgleichDTO implements Serializable {
 	private @NotNull BigDecimal totalGutscheine;
 
 	public LastenausgleichDTO() {
+		this.id = 0L;
 		this.bfsNummer = 0L;
 		this.jahr = 1900;
 		this.eingabeLastenausgleich = BigDecimal.ZERO;
@@ -53,10 +61,12 @@ public class LastenausgleichDTO implements Serializable {
 	}
 
 	public LastenausgleichDTO(
+		@Nonnull @NotNull Long id,
 		@Nonnull @NotNull Long bfsNummer,
 		@NotNull int jahr,
 		@Nonnull @NotNull BigDecimal eingabeLastenausgleich,
 		@Nonnull @NotNull BigDecimal totalGutscheine) {
+		this.id = id;
 		this.bfsNummer = bfsNummer;
 		this.jahr = jahr;
 		this.eingabeLastenausgleich = eingabeLastenausgleich;
@@ -72,7 +82,8 @@ public class LastenausgleichDTO implements Serializable {
 			return false;
 		}
 		LastenausgleichDTO that = (LastenausgleichDTO) o;
-		return getJahr() == that.getJahr()
+		return getId().equals(that.getId())
+			&& getJahr() == that.getJahr()
 			&& getBfsNummer().equals(that.getBfsNummer())
 			&& BIG_DECIMAL_COMPARATOR.compare(getEingabeLastenausgleich(), that.getEingabeLastenausgleich()) == 0
 			&& BIG_DECIMAL_COMPARATOR.compare(getTotalGutscheine(), that.getTotalGutscheine()) == 0;
@@ -81,6 +92,7 @@ public class LastenausgleichDTO implements Serializable {
 	@Override
 	public String toString() {
 		return new StringJoiner(", ", LastenausgleichDTO.class.getSimpleName() + '[', "]")
+			.add("id=" + id)
 			.add("bfsNummer=" + bfsNummer)
 			.add("jahr=" + jahr)
 			.add("eingabeLastenausgleich=" + eingabeLastenausgleich)
@@ -90,7 +102,16 @@ public class LastenausgleichDTO implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getBfsNummer(), getJahr(), getEingabeLastenausgleich(), getTotalGutscheine());
+		return Objects.hash(getId(), getBfsNummer(), getJahr(), getEingabeLastenausgleich(), getTotalGutscheine());
+	}
+
+	@Nonnull
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(@Nonnull Long id) {
+		this.id = id;
 	}
 
 	@Nonnull

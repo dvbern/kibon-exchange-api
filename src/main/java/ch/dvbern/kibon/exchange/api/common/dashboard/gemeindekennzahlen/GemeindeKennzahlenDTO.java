@@ -29,6 +29,7 @@ import javax.annotation.Nullable;
 import javax.validation.constraints.NotNull;
 
 import ch.dvbern.kibon.exchange.api.common.shared.EinschulungTyp;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 public class GemeindeKennzahlenDTO implements Serializable {
 
@@ -37,8 +38,10 @@ public class GemeindeKennzahlenDTO implements Serializable {
 	private static final Comparator<BigDecimal> BIG_DECIMAL_COMPARATOR =
 		Comparator.nullsLast(Comparator.naturalOrder());
 
+	@Schema(description = "Strikt monoton steigende ID\n\n"
+		+ "Kann für Filterung mit dem `after_id` Parameter verwendet werden.")
 	@Nonnull
-	private @NotNull String id;
+	private @NotNull Long id;
 
 	@Nonnull
 	private @NotNull Long bfsNummer;
@@ -71,7 +74,7 @@ public class GemeindeKennzahlenDTO implements Serializable {
 	private BigDecimal erwerbspensumZuschlag;
 
 	public GemeindeKennzahlenDTO() {
-		this.id = "";
+		this.id = 0L;
 		this.bfsNummer = 0L;
 		this.gesuchsperiodeStart = LocalDate.MIN;
 		this.gesuchsperiodeStop = LocalDate.MAX;
@@ -85,7 +88,7 @@ public class GemeindeKennzahlenDTO implements Serializable {
 	}
 
 	public GemeindeKennzahlenDTO(
-		@Nonnull @NotNull String id,
+		@Nonnull @NotNull Long id,
 		@Nonnull @NotNull Long bfsNummer,
 		@Nonnull @NotNull LocalDate gesuchsperiodeStart,
 		@Nonnull @NotNull LocalDate gesuchsperiodeStop,
@@ -164,11 +167,11 @@ public class GemeindeKennzahlenDTO implements Serializable {
 	}
 
 	@Nonnull
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(@Nonnull String id) {
+	public void setId(@Nonnull Long id) {
 		this.id = id;
 	}
 

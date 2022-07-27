@@ -29,6 +29,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import ch.dvbern.kibon.exchange.api.common.shared.BetreuungsangebotTyp;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 public class InstitutionDTO implements Serializable {
 
@@ -37,8 +38,13 @@ public class InstitutionDTO implements Serializable {
 	private static final Comparator<BigDecimal> BIG_DECIMAL_COMPARATOR =
 		Comparator.nullsLast(Comparator.naturalOrder());
 
+	@Schema(description = "Strikt monoton steigende ID\n\n"
+		+ "Kann für Filterung mit dem `after_id` Parameter verwendet werden.")
 	@Nonnull
-	private @NotNull String id;
+	private @NotNull Long id;
+
+	@Nonnull
+	private @NotNull String institutionId;
 
 	@Nonnull
 	private @NotNull String name;
@@ -65,7 +71,8 @@ public class InstitutionDTO implements Serializable {
 	private BigDecimal auslastungPct;
 
 	public InstitutionDTO() {
-		this.id = "";
+		this.id = 0L;
+		this.institutionId = "";
 		this.name = "";
 		this.betreuungsArt = BetreuungsangebotTyp.KITA;
 		this.adresse = new AdresseInstitutionDTO();
@@ -77,7 +84,8 @@ public class InstitutionDTO implements Serializable {
 	}
 
 	public InstitutionDTO(
-		@Nonnull @NotNull String id,
+		@Nonnull @NotNull Long id,
+		@Nonnull @NotNull String institutionId,
 		@Nonnull @NotNull String name,
 		@Nonnull @NotNull
 			BetreuungsangebotTyp betreuungsArt,
@@ -88,6 +96,7 @@ public class InstitutionDTO implements Serializable {
 		@Nonnull LocalDate betreuungsgutscheineAb,
 		@Nonnull LocalDate betreuungsgutscheineBis) {
 		this.id = id;
+		this.institutionId = institutionId;
 		this.name = name;
 		this.betreuungsArt = betreuungsArt;
 		this.adresse = adresse;
@@ -108,6 +117,7 @@ public class InstitutionDTO implements Serializable {
 		}
 		InstitutionDTO that = (InstitutionDTO) o;
 		return getId().equals(that.getId())
+			&& getInstitutionId().equals(that.getInstitutionId())
 			&& getName().equals(that.getName())
 			&& getBetreuungsArt() == that.getBetreuungsArt()
 			&& getAdresse().equals(that.getAdresse())
@@ -122,6 +132,7 @@ public class InstitutionDTO implements Serializable {
 	public int hashCode() {
 		return Objects.hash(
 			getId(),
+			getInstitutionId(),
 			getName(),
 			getBetreuungsArt(),
 			getAdresse(),
@@ -136,6 +147,7 @@ public class InstitutionDTO implements Serializable {
 	public String toString() {
 		return new StringJoiner(", ", InstitutionDTO.class.getSimpleName() + '[', "]")
 			.add("id=" + id)
+			.add("institutionId=" + institutionId)
 			.add("name=" + name)
 			.add("betreuungsArt=" + betreuungsArt)
 			.add("adresse=" + adresse)
@@ -148,12 +160,21 @@ public class InstitutionDTO implements Serializable {
 	}
 
 	@Nonnull
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(@Nonnull String id) {
+	public void setId(@Nonnull Long id) {
 		this.id = id;
+	}
+
+	@Nonnull
+	public String getInstitutionId() {
+		return institutionId;
+	}
+
+	public void setInstitutionId(@Nonnull String institutionId) {
+		this.institutionId = institutionId;
 	}
 
 	@Nonnull

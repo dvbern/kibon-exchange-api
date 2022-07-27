@@ -25,12 +25,16 @@ import java.util.StringJoiner;
 import javax.annotation.Nonnull;
 import javax.validation.constraints.NotNull;
 
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+
 public class GemeindeDTO implements Serializable {
 
 	private static final long serialVersionUID = 1939750203537206169L;
 
+	@Schema(description = "Strikt monoton steigende ID\n\n"
+		+ "Kann für Filterung mit dem `after_id` Parameter verwendet werden.")
 	@Nonnull
-	private @NotNull String id;
+	private @NotNull Long id;
 
 	@Nonnull
 	private @NotNull String name;
@@ -45,7 +49,7 @@ public class GemeindeDTO implements Serializable {
 	private @NotNull Long bfsNummer;
 
 	public GemeindeDTO() {
-		this.id = "";
+		this.id = 0L;
 		this.name = "";
 		this.betreuungsgutscheineAnbietenAb = LocalDate.MIN;
 		this.gueltigBis = LocalDate.MAX;
@@ -53,7 +57,7 @@ public class GemeindeDTO implements Serializable {
 	}
 
 	public GemeindeDTO(
-		@Nonnull @NotNull String id,
+		@Nonnull @NotNull Long id,
 		@Nonnull @NotNull String name,
 		@Nonnull @NotNull LocalDate betreuungsgutscheineAnbietenAb,
 		@Nonnull @NotNull LocalDate gueltigBis, @Nonnull @NotNull Long bfsNummer) {
@@ -97,11 +101,11 @@ public class GemeindeDTO implements Serializable {
 	}
 
 	@Nonnull
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(@Nonnull String id) {
+	public void setId(@Nonnull Long id) {
 		this.id = id;
 	}
 
