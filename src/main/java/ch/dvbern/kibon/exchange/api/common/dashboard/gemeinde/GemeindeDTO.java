@@ -20,6 +20,7 @@ package ch.dvbern.kibon.exchange.api.common.dashboard.gemeinde;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
+import java.util.StringJoiner;
 
 import javax.annotation.Nonnull;
 import javax.validation.constraints.NotNull;
@@ -86,13 +87,13 @@ public class GemeindeDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "GemeindeDTO{" +
-			"id='" + id + '\'' +
-			", name='" + name + '\'' +
-			", betreuungsgutscheineAnbietenAb=" + betreuungsgutscheineAnbietenAb +
-			", gueltigBis=" + gueltigBis +
-			", bfsNummer=" + bfsNummer +
-			'}';
+		return new StringJoiner(", ", GemeindeDTO.class.getSimpleName() + '[', "]")
+			.add("id=" + id)
+			.add("name=" + name)
+			.add("betreuungsgutscheineAnbietenAb=" + betreuungsgutscheineAnbietenAb)
+			.add("gueltigBis=" + gueltigBis)
+			.add("bfsNummer=" + bfsNummer)
+			.toString();
 	}
 
 	@Nonnull

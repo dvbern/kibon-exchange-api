@@ -22,6 +22,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.Objects;
+import java.util.StringJoiner;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -29,7 +30,7 @@ import javax.validation.constraints.NotNull;
 
 import ch.dvbern.kibon.exchange.api.common.shared.EinschulungTyp;
 
-public class GemeindeKennzahlen implements Serializable {
+public class GemeindeKennzahlenDTO implements Serializable {
 
 	private static final long serialVersionUID = 7262604731097288786L;
 
@@ -69,7 +70,7 @@ public class GemeindeKennzahlen implements Serializable {
 	@Nullable
 	private BigDecimal erwerbspensumZuschlag;
 
-	public GemeindeKennzahlen() {
+	public GemeindeKennzahlenDTO() {
 		this.id = "";
 		this.bfsNummer = 0L;
 		this.gesuchsperiodeStart = LocalDate.MIN;
@@ -83,7 +84,7 @@ public class GemeindeKennzahlen implements Serializable {
 		this.erwerbspensumZuschlag = BigDecimal.ZERO;
 	}
 
-	public GemeindeKennzahlen(
+	public GemeindeKennzahlenDTO(
 		@Nonnull @NotNull String id,
 		@Nonnull @NotNull Long bfsNummer,
 		@Nonnull @NotNull LocalDate gesuchsperiodeStart,
@@ -115,7 +116,7 @@ public class GemeindeKennzahlen implements Serializable {
 		if (o == null || getClass() != o.getClass()) {
 			return false;
 		}
-		GemeindeKennzahlen that = (GemeindeKennzahlen) o;
+		GemeindeKennzahlenDTO that = (GemeindeKennzahlenDTO) o;
 		return getId().equals(that.getId())
 			&& getBfsNummer().equals(that.getBfsNummer())
 			&& getGesuchsperiodeStart().equals(that.getGesuchsperiodeStart())
@@ -147,19 +148,19 @@ public class GemeindeKennzahlen implements Serializable {
 
 	@Override
 	public String toString() {
-		return "GemeindeKennzahlen{" +
-			"id='" + id + '\'' +
-			", bfsNummer=" + bfsNummer +
-			", gesuchsperiodeStart=" + gesuchsperiodeStart +
-			", gesuchsperiodeStop=" + gesuchsperiodeStop +
-			", kontingentierung=" + kontingentierung +
-			", kontingentierungAusgeschoepft=" + kontingentierungAusgeschoepft +
-			", anzahlKinderWarteliste=" + anzahlKinderWarteliste +
-			", dauerWarteliste=" + dauerWarteliste +
-			", limitierungTfo=" + limitierungTfo +
-			", limitierungKita=" + limitierungKita +
-			", erwerbspensumZuschlag=" + erwerbspensumZuschlag +
-			'}';
+		return new StringJoiner(", ", GemeindeKennzahlenDTO.class.getSimpleName() + '[', "]")
+			.add("id=" + id)
+			.add("bfsNummer=" + bfsNummer)
+			.add("gesuchsperiodeStart=" + gesuchsperiodeStart)
+			.add("gesuchsperiodeStop=" + gesuchsperiodeStop)
+			.add("kontingentierung=" + kontingentierung)
+			.add("kontingentierungAusgeschoepft=" + kontingentierungAusgeschoepft)
+			.add("anzahlKinderWarteliste=" + anzahlKinderWarteliste)
+			.add("dauerWarteliste=" + dauerWarteliste)
+			.add("limitierungTfo=" + limitierungTfo)
+			.add("limitierungKita=" + limitierungKita)
+			.add("erwerbspensumZuschlag=" + erwerbspensumZuschlag)
+			.toString();
 	}
 
 	@Nonnull

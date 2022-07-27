@@ -20,6 +20,7 @@ package ch.dvbern.kibon.exchange.api.common.dashboard.verfuegung;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
+import java.util.StringJoiner;
 
 import javax.annotation.Nonnull;
 import javax.validation.constraints.NotNull;
@@ -99,6 +100,18 @@ public class KindDTO implements Serializable {
 			isSozialeIndikation(),
 			isSprachlicheIndikation(),
 			isSprichtMuttersprache());
+	}
+
+	@Override
+	public String toString() {
+		return new StringJoiner(", ", KindDTO.class.getSimpleName() + '[', "]")
+			.add("kindHash=" + kindHash)
+			.add("geburtsdatum=" + geburtsdatum)
+			.add("einschulungTyp=" + einschulungTyp)
+			.add("sozialeIndikation=" + sozialeIndikation)
+			.add("sprachlicheIndikation=" + sprachlicheIndikation)
+			.add("sprichtMuttersprache=" + sprichtMuttersprache)
+			.toString();
 	}
 
 	@Nonnull

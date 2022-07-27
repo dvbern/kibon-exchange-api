@@ -21,6 +21,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.Objects;
+import java.util.StringJoiner;
 
 import javax.annotation.Nonnull;
 import javax.validation.constraints.NotNull;
@@ -79,12 +80,12 @@ public class LastenausgleichDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "LastenausgleichDTO{" +
-			"bfsNummer=" + bfsNummer +
-			", jahr=" + jahr +
-			", eingabeLastenausgleich=" + eingabeLastenausgleich +
-			", totalGutscheine=" + totalGutscheine +
-			'}';
+		return new StringJoiner(", ", LastenausgleichDTO.class.getSimpleName() + '[', "]")
+			.add("bfsNummer=" + bfsNummer)
+			.add("jahr=" + jahr)
+			.add("eingabeLastenausgleich=" + eingabeLastenausgleich)
+			.add("totalGutscheine=" + totalGutscheine)
+			.toString();
 	}
 
 	@Override

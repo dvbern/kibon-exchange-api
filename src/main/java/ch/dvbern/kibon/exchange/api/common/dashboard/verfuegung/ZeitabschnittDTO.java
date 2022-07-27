@@ -22,6 +22,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.Objects;
+import java.util.StringJoiner;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -247,6 +248,30 @@ public class ZeitabschnittDTO  implements Serializable {
 			getMassgebendesEinkommen(),
 			getAusserordentlicherAnspruch(),
 			isBesondereBedurfnisse());
+	}
+
+	@Override
+	public String toString() {
+		return new StringJoiner(", ", ZeitabschnittDTO.class.getSimpleName() + '[', "]")
+			.add("id=" + id)
+			.add("von=" + von)
+			.add("bis=" + bis)
+			.add("effektiveBetreuungPct=" + effektiveBetreuungPct)
+			.add("anspruchPct=" + anspruchPct)
+			.add("verguenstigtPct=" + verguenstigtPct)
+			.add("vollkosten=" + vollkosten)
+			.add("betreuungsgutschein=" + betreuungsgutschein)
+			.add("betreuungsgutscheinGemeinde=" + betreuungsgutscheinGemeinde)
+			.add("betreuungsgutscheinKanton=" + betreuungsgutscheinKanton)
+			.add("minimalerElternbeitrag=" + minimalerElternbeitrag)
+			.add("verguenstigung=" + verguenstigung)
+			.add("verfuegteAnzahlZeiteinheiten=" + verfuegteAnzahlZeiteinheiten)
+			.add("anspruchsberechtigteAnzahlZeiteinheiten=" + anspruchsberechtigteAnzahlZeiteinheiten)
+			.add("zeiteinheit=" + zeiteinheit)
+			.add("massgebendesEinkommen=" + massgebendesEinkommen)
+			.add("ausserordentlicherAnspruch=" + ausserordentlicherAnspruch)
+			.add("besondereBedurfnisse=" + besondereBedurfnisse)
+			.toString();
 	}
 
 	@Nonnull

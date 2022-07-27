@@ -27,7 +27,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import ch.dvbern.kibon.exchange.api.common.betreuung.BetreuungsAngebot;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
@@ -145,18 +144,16 @@ public class VerfuegungDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "VerfuegungDTO{" +
-			"id=" + id +
-			", institutionId='" + institutionId + '\'' +
-			", verfuegtAm=" + verfuegtAm +
-			", gueltig=" + gueltig +
-			", fallNummer=" + fallNummer +
-			", betreuungsArt=" + betreuungsArt +
-			", gemeindeBfsNr=" + gemeindeBfsNr +
-			", gemeindeName='" + gemeindeName + '\'' +
-			", kind=" + kind +
-			", zeitabschnitte=" + zeitabschnitte +
-			'}';
+		return new StringJoiner(", ", VerfuegungDTO.class.getSimpleName() + '[', "]")
+			.add("id=" + id)
+			.add("institutionId=" + institutionId)
+			.add("verfuegtAm=" + verfuegtAm)
+			.add("gueltig=" + gueltig)
+			.add("fallNummer=" + fallNummer)
+			.add("betreuungsArt=" + betreuungsArt)
+			.add("gemeindeBfsNr=" + gemeindeBfsNr)
+			.add("gemeindeName=" + gemeindeName)
+			.toString();
 	}
 
 	@Nonnull

@@ -21,6 +21,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.Objects;
+import java.util.StringJoiner;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -133,17 +134,17 @@ public class InstitutionDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "InstitutionDTO{" +
-			"id='" + id + '\'' +
-			", name='" + name + '\'' +
-			", betreuungsArt=" + betreuungsArt +
-			", adresse=" + adresse +
-			", anzahlPlaetze=" + anzahlPlaetze +
-			", anzahlPlaetzeFirmen=" + anzahlPlaetzeFirmen +
-			", auslastungPct=" + auslastungPct +
-			", betreuungsgutscheineAb=" + betreuungsgutscheineAb +
-			", betreuungsgutscheineBis=" + betreuungsgutscheineBis +
-			'}';
+		return new StringJoiner(", ", InstitutionDTO.class.getSimpleName() + '[', "]")
+			.add("id=" + id)
+			.add("name=" + name)
+			.add("betreuungsArt=" + betreuungsArt)
+			.add("adresse=" + adresse)
+			.add("anzahlPlaetze=" + anzahlPlaetze)
+			.add("anzahlPlaetzeFirmen=" + anzahlPlaetzeFirmen)
+			.add("auslastungPct=" + auslastungPct)
+			.add("betreuungsgutscheineAb=" + betreuungsgutscheineAb)
+			.add("betreuungsgutscheineBis=" + betreuungsgutscheineBis)
+			.toString();
 	}
 
 	@Nonnull

@@ -19,6 +19,7 @@ package ch.dvbern.kibon.exchange.api.common.dashboard.institution;
 
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.StringJoiner;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -74,6 +75,14 @@ public class AdresseInstitutionDTO extends AdresseDTO implements Serializable {
 	@Override
 	public int hashCode() {
 		return Objects.hash(super.hashCode(), getStandortGemeinde(), getStandortGemeindeBFSNummer());
+	}
+
+	@Override
+	public String toString() {
+		return new StringJoiner(", ", AdresseInstitutionDTO.class.getSimpleName() + '[', "]")
+			.add("standortGemeinde=" + standortGemeinde)
+			.add("standortGemeindeBFSNummer=" + standortGemeindeBFSNummer)
+			.toString();
 	}
 
 	@Nonnull
