@@ -150,4 +150,12 @@ public interface Zeitabschnitt {
 	 */
 	@Nonnull
 	Regelwerk getRegelwerk();
+
+	/**
+	 * Bezeichnet den Betrag in CHF, der an die Eltern überwiesen wird. Dieser entspricht dem Betreuungsgutschein
+	 * abzüglich eines allfälligen minimalen Elternbeitrags (den die Kita bzw. die Tagesfamilienorganisation
+	 * den Eltern in Rechnung stellen würde).
+ 	 */
+	@Nullable
+	BigDecimal getAnElternUeberwiesenerBetrag();
 }
