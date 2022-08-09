@@ -23,7 +23,7 @@ import javax.annotation.Nullable;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-import ch.dvbern.kibon.exchange.api.common.institution.AdresseDTO;
+import ch.dvbern.kibon.exchange.api.common.shared.AdresseDTO;
 import ch.dvbern.kibon.exchange.api.common.shared.GesuchstellerDTO;
 
 public class TagesschuleGesuchstellerDTO extends GesuchstellerDTO {

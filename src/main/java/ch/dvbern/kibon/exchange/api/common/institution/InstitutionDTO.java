@@ -26,6 +26,8 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import ch.dvbern.kibon.exchange.api.common.shared.AdresseDTO;
+
 public class InstitutionDTO implements Serializable {
 
 	private static final long serialVersionUID = 5304104104672134122L;
