@@ -150,4 +150,21 @@ public interface Zeitabschnitt {
 	 */
 	@Nonnull
 	Regelwerk getRegelwerk();
+
+	/**
+	 * Zeigt an, ob der Gutschein für den Zeitabschnitt direkt an die Eltern überwiesen wird.
+	 *
+	 *  @since kiBon (schema 2.3)
+	 */
+	boolean isAuszahlungAnEltern();
+
+	/**
+	 * Bezeichnet den Betrag in CHF, der an die Eltern überwiesen wird. Dieser entspricht dem Betreuungsgutschein
+	 * abzüglich eines allfälligen minimalen Elternbeitrags (den die Kita bzw. die Tagesfamilienorganisation
+	 * den Eltern in Rechnung stellen würde).
+	 *
+	 * @since kiBon (schema 2.3)
+ 	 */
+	@Nullable
+	BigDecimal getAnElternUeberwiesenerBetrag();
 }

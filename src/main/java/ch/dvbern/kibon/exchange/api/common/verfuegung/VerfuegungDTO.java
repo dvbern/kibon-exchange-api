@@ -76,6 +76,9 @@ public class VerfuegungDTO implements Serializable {
 	@Nonnull
 	private @NotNull String gemeindeName;
 
+	@Schema(description = "Zeigt an, ob Gutschein direkt an die Eltern überwiesen wird.")
+	private boolean auszahlungAnEltern = false;
+
 	@Nonnull
 	private @NotNull @Valid KindDTO kind;
 
@@ -100,6 +103,7 @@ public class VerfuegungDTO implements Serializable {
 		this.betreuungsArt = BetreuungsAngebot.KITA;
 		this.gemeindeBfsNr = -1L;
 		this.gemeindeName = "";
+		this.auszahlungAnEltern = false;
 		this.kind = new KindDTO();
 		this.gesuchsteller = new GesuchstellerDTO();
 	}
@@ -116,6 +120,7 @@ public class VerfuegungDTO implements Serializable {
 		@Nonnull BetreuungsAngebot betreuungsArt,
 		@Nonnull Long gemeindeBfsNr,
 		@Nonnull String gemeindeName,
+		@Nonnull Boolean auszahlungAnEltern,
 		@Nonnull KindDTO kind,
 		@Nonnull GesuchstellerDTO gesuchsteller,
 		@Nonnull List<ZeitabschnittDTO> zeitabschnitte,
@@ -131,6 +136,7 @@ public class VerfuegungDTO implements Serializable {
 		this.betreuungsArt = betreuungsArt;
 		this.gemeindeBfsNr = gemeindeBfsNr;
 		this.gemeindeName = gemeindeName;
+		this.auszahlungAnEltern = auszahlungAnEltern;
 		this.kind = kind;
 		this.gesuchsteller = gesuchsteller;
 		this.zeitabschnitte = zeitabschnitte;
@@ -160,6 +166,7 @@ public class VerfuegungDTO implements Serializable {
 			getBetreuungsArt() == that.getBetreuungsArt() &&
 			getGemeindeBfsNr().equals(that.getGemeindeBfsNr()) &&
 			getGemeindeName().equals(that.getGemeindeName()) &&
+			isAuszahlungAnEltern() == that.isAuszahlungAnEltern() &&
 			getKind().equals(that.getKind()) &&
 			getGesuchsteller().equals(that.getGesuchsteller()) &&
 			getZeitabschnitte().equals(that.getZeitabschnitte()) &&
@@ -179,6 +186,7 @@ public class VerfuegungDTO implements Serializable {
 			getBetreuungsArt(),
 			getGemeindeBfsNr(),
 			getGemeindeName(),
+			isAuszahlungAnEltern(),
 			getKind(),
 			getGesuchsteller(),
 			getZeitabschnitte(),
@@ -197,6 +205,7 @@ public class VerfuegungDTO implements Serializable {
 			.add("version=" + version)
 			.add("verfuegtAm=" + verfuegtAm)
 			.add("bfsNummer=" + gemeindeBfsNr)
+			.add("auszahlungAnEltern=" + auszahlungAnEltern)
 			.toString();
 	}
 
@@ -333,5 +342,13 @@ public class VerfuegungDTO implements Serializable {
 
 	public void setIgnorierteZeitabschnitte(@Nonnull List<ZeitabschnittDTO> ignorierteZeitabschnitte) {
 		this.ignorierteZeitabschnitte = ignorierteZeitabschnitte;
+	}
+
+	public boolean isAuszahlungAnEltern() {
+		return auszahlungAnEltern;
+	}
+
+	public void setAuszahlungAnEltern(boolean auszahlungAnEltern) {
+		this.auszahlungAnEltern = auszahlungAnEltern;
 	}
 }
