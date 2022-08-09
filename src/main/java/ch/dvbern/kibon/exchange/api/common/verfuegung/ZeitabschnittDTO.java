@@ -110,14 +110,17 @@ public class ZeitabschnittDTO implements Serializable, Zeitabschnitt {
 	@Nullable
 	private Zeiteinheit zeiteinheit;
 
+	@Nonnull
+	private @NotNull Regelwerk regelwerk = Regelwerk.ASIV;
+
+	@Schema(description = "Zeigt an, ob für diesen Zeitabschnitt direkt an die Eltern überwiesen wird")
+	private boolean auszahlungAnEltern = false;
+
 	@Schema(description = "Bezeichnet den Betrag in CHF, der an die Eltern überwiesen wird. Dieser entspricht "
 		+ "dem Betreuungsgutschein abzüglich eines allfälligen minimalen Elternbeitrags (den die Kita bzw. die "
 		+ "Tagesfamilienorganisation  den Eltern in Rechnung stellen würde).")
 	@Nullable
 	private @DecimalMin("0") BigDecimal anElternUeberwiesenerBetrag;
-
-	@Nonnull
-	private @NotNull Regelwerk regelwerk = Regelwerk.ASIV;
 
 	public ZeitabschnittDTO() {
 		this.von = LocalDate.MIN;
@@ -140,6 +143,7 @@ public class ZeitabschnittDTO implements Serializable, Zeitabschnitt {
 		@Nullable BigDecimal betreuungsgutschein,
 		@Nullable BigDecimal minimalerElternbeitrag,
 		@Nonnull BigDecimal verguenstigung,
+		boolean auszahlungAnEltern,
 		@Nullable BigDecimal anElternUeberwiesenerBetrag) {
 		this.von = von;
 		this.bis = bis;
@@ -151,6 +155,7 @@ public class ZeitabschnittDTO implements Serializable, Zeitabschnitt {
 		this.betreuungsgutschein = betreuungsgutschein;
 		this.minimalerElternbeitrag = minimalerElternbeitrag;
 		this.verguenstigung = verguenstigung;
+		this.auszahlungAnEltern = auszahlungAnEltern;
 		this.anElternUeberwiesenerBetrag = anElternUeberwiesenerBetrag;
 	}
 
@@ -174,6 +179,7 @@ public class ZeitabschnittDTO implements Serializable, Zeitabschnitt {
 			BIG_DECIMAL_COMPARATOR.compare(getBetreuungsgutschein(), that.getBetreuungsgutschein()) == 0 &&
 			BIG_DECIMAL_COMPARATOR.compare(getMinimalerElternbeitrag(), that.getMinimalerElternbeitrag()) == 0 &&
 			getVerguenstigung().compareTo(that.getVerguenstigung()) == 0 &&
+			isAuszahlungAnEltern() == that.isAuszahlungAnEltern() &&
 			BIG_DECIMAL_COMPARATOR.compare(getAnElternUeberwiesenerBetrag(), that.getAnElternUeberwiesenerBetrag()) == 0;
 	}
 
@@ -190,6 +196,7 @@ public class ZeitabschnittDTO implements Serializable, Zeitabschnitt {
 			getBetreuungsgutschein(),
 			getMinimalerElternbeitrag(),
 			getVerguenstigung(),
+			isAuszahlungAnEltern(),
 			getAnElternUeberwiesenerBetrag());
 	}
 
@@ -341,6 +348,15 @@ public class ZeitabschnittDTO implements Serializable, Zeitabschnitt {
 
 	public void setRegelwerk(@Nonnull Regelwerk regelwerk) {
 		this.regelwerk = regelwerk;
+	}
+
+	@Override
+	public boolean isAuszahlungAnEltern() {
+		return auszahlungAnEltern;
+	}
+
+	public void setAuszahlungAnEltern(boolean auszahlungAnEltern) {
+		this.auszahlungAnEltern = auszahlungAnEltern;
 	}
 
 	@Override
