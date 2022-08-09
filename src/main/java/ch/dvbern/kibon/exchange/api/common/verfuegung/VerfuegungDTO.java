@@ -76,7 +76,7 @@ public class VerfuegungDTO implements Serializable {
 	@Nonnull
 	private @NotNull String gemeindeName;
 
-	@Schema(description = "Zeigt an, ob gutschein direkt an die Eltern überwiesen wird.")
+	@Schema(description = "Zeigt an, ob Gutschein direkt an die Eltern überwiesen wird.")
 	private boolean auszahlungAnEltern = false;
 
 	@Nonnull
