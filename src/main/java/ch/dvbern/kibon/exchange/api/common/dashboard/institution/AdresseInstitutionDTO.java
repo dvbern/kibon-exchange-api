@@ -26,6 +26,7 @@ import javax.annotation.Nullable;
 import javax.validation.constraints.NotNull;
 
 import ch.dvbern.kibon.exchange.api.common.shared.AdresseDTO;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class AdresseInstitutionDTO extends AdresseDTO implements Serializable {
 
@@ -86,19 +87,23 @@ public class AdresseInstitutionDTO extends AdresseDTO implements Serializable {
 	}
 
 	@Nonnull
+	@JsonProperty(value= "standortGemeinde")
 	public String getStandortGemeinde() {
 		return standortGemeinde;
 	}
 
+	@JsonProperty(value= "gemeinde_name")
 	public void setStandortGemeinde(@Nonnull String standortGemeinde) {
 		this.standortGemeinde = standortGemeinde;
 	}
 
 	@Nonnull
+	@JsonProperty(value= "standortGemeindeBFSNummer")
 	public String getStandortGemeindeBFSNummer() {
 		return standortGemeindeBFSNummer;
 	}
 
+	@JsonProperty(value= "gemeinde_bfsnummer")
 	public void setStandortGemeindeBFSNummer(@Nonnull String standortGemeindeBFSNummer) {
 		this.standortGemeindeBFSNummer = standortGemeindeBFSNummer;
 	}

@@ -29,6 +29,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import ch.dvbern.kibon.exchange.api.common.shared.BetreuungsangebotTyp;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 public class InstitutionDTO implements Serializable {
@@ -160,19 +161,23 @@ public class InstitutionDTO implements Serializable {
 	}
 
 	@Nonnull
+	@JsonProperty(value= "id")
 	public Long getId() {
 		return id;
 	}
 
+	@JsonProperty(value= "zusatzId")
 	public void setId(@Nonnull Long id) {
 		this.id = id;
 	}
 
 	@Nonnull
+	@JsonProperty(value= "institutionId")
 	public String getInstitutionId() {
 		return institutionId;
 	}
 
+	@JsonProperty(value= "id")
 	public void setInstitutionId(@Nonnull String institutionId) {
 		this.institutionId = institutionId;
 	}
@@ -196,10 +201,12 @@ public class InstitutionDTO implements Serializable {
 	}
 
 	@Nonnull
+	@JsonProperty(value= "adresse")
 	public AdresseInstitutionDTO getAdresse() {
 		return adresse;
 	}
 
+	@JsonProperty(value= "kontaktAdresse")
 	public void setAdresse(@Nonnull AdresseInstitutionDTO adresse) {
 		this.adresse = adresse;
 	}
