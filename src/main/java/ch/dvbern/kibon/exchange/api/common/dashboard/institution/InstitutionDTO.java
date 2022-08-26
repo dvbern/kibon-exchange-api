@@ -56,8 +56,8 @@ public class InstitutionDTO implements Serializable {
 	@Nonnull
 	private @NotNull LocalDate betreuungsgutscheineAb;
 
-	@Nonnull
-	private @NotNull LocalDate betreuungsgutscheineBis;
+	@Nullable
+	private LocalDate betreuungsgutscheineBis;
 
 	@Nonnull
 	private @NotNull @Valid AdresseInstitutionDTO adresse;
@@ -239,20 +239,24 @@ public class InstitutionDTO implements Serializable {
 	}
 
 	@Nonnull
+	@JsonProperty(value= "betreuungsgutscheineAb")
 	public LocalDate getBetreuungsgutscheineAb() {
 		return betreuungsgutscheineAb;
 	}
 
+	@JsonProperty(value= "betreuungsGutscheineAb")
 	public void setBetreuungsgutscheineAb(@Nonnull LocalDate betreuungsgutscheineAb) {
 		this.betreuungsgutscheineAb = betreuungsgutscheineAb;
 	}
 
-	@Nonnull
+	@Nullable
+	@JsonProperty(value= "betreuungsgutscheineBis")
 	public LocalDate getBetreuungsgutscheineBis() {
 		return betreuungsgutscheineBis;
 	}
 
-	public void setBetreuungsgutscheineBis(@Nonnull LocalDate betreuungsgutscheineBis) {
+	@JsonProperty(value= "betreuungsGutscheineBis")
+	public void setBetreuungsgutscheineBis(@Nullable LocalDate betreuungsgutscheineBis) {
 		this.betreuungsgutscheineBis = betreuungsgutscheineBis;
 	}
 }
