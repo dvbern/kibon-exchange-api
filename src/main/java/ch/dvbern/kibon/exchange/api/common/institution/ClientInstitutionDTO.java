@@ -24,6 +24,7 @@ import javax.annotation.Nullable;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import ch.dvbern.kibon.exchange.api.common.shared.Mandant;
 import ch.dvbern.kibon.exchange.api.common.shared.VonBisDatesDTO;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
@@ -45,6 +46,9 @@ public class ClientInstitutionDTO extends InstitutionDTO {
 	@Nonnull
 	private VonBisDatesDTO clientBerechtigung = new VonBisDatesDTO();
 
+	@Nonnull
+	private Mandant mandant = Mandant.BERN;
+
 	public ClientInstitutionDTO() {
 	}
 
@@ -57,7 +61,8 @@ public class ClientInstitutionDTO extends InstitutionDTO {
 		@Nullable String adresszusatz,
 		@Nonnull String plz,
 		@Nonnull String ort,
-		@Nonnull String land) {
+		@Nonnull String land,
+		@Nonnull Mandant mandant) {
 		super(id, name, traegerschaft, strasse, hausnummer, adresszusatz, plz, ort, land);
 	}
 
@@ -72,7 +77,8 @@ public class ClientInstitutionDTO extends InstitutionDTO {
 		@Nonnull String ort,
 		@Nonnull String land,
 		@Nullable LocalDate berechtigtVon,
-		@Nullable LocalDate berechtigtBis) {
+		@Nullable LocalDate berechtigtBis,
+		@Nonnull Mandant mandant) {
 		super(id, name, traegerschaft, strasse, hausnummer, adresszusatz, plz, ort, land);
 		this.clientBerechtigung.setVon(berechtigtVon);
 		this.clientBerechtigung.setBis(berechtigtBis);
@@ -92,12 +98,13 @@ public class ClientInstitutionDTO extends InstitutionDTO {
 
 		ClientInstitutionDTO that = (ClientInstitutionDTO) o;
 
-		return getClientBerechtigung().equals(that.getClientBerechtigung());
+		return getMandant() == that.getMandant() &&
+			getClientBerechtigung().equals(that.getClientBerechtigung());
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(super.hashCode(), getClientBerechtigung());
+		return Objects.hash(super.hashCode(), getMandant(), getClientBerechtigung());
 	}
 
 	@Nonnull
@@ -107,5 +114,14 @@ public class ClientInstitutionDTO extends InstitutionDTO {
 
 	public void setClientBerechtigung(@Nonnull VonBisDatesDTO clientBerechtigung) {
 		this.clientBerechtigung = clientBerechtigung;
+	}
+
+	@Nonnull
+	public Mandant getMandant() {
+		return mandant;
+	}
+
+	public void setMandant(@Nonnull Mandant mandant) {
+		this.mandant = mandant;
 	}
 }

@@ -32,7 +32,7 @@ public class InstitutionenDTO implements Serializable {
 	@Nonnull
 	@NotNull
 	@Valid
-	private List<InstitutionDTO> institutionen = new ArrayList();
+	private List<InstitutionDTO> institutionen = new ArrayList<>();
 
 	public InstitutionenDTO() {
 	}

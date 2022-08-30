@@ -85,15 +85,14 @@ public class InstitutionDTO implements Serializable {
 	}
 
 	public InstitutionDTO(
-		@Nonnull @NotNull Long id,
-		@Nonnull @NotNull String institutionId,
-		@Nonnull @NotNull String name,
-		@Nonnull @NotNull
-			BetreuungsangebotTyp betreuungsArt,
-		@Nonnull @NotNull @Valid
-			AdresseInstitutionDTO adresse,
+		@Nonnull Long id,
+		@Nonnull String institutionId,
+		@Nonnull String name,
+		@Nonnull BetreuungsangebotTyp betreuungsArt,
+		@Nonnull AdresseInstitutionDTO adresse,
 		@Nullable BigDecimal anzahlPlaetze,
-		@Nullable BigDecimal anzahlPlaetzeFirmen, @Nullable BigDecimal auslastungPct,
+		@Nullable BigDecimal anzahlPlaetzeFirmen,
+		@Nullable BigDecimal auslastungPct,
 		@Nonnull LocalDate betreuungsgutscheineAb,
 		@Nonnull LocalDate betreuungsgutscheineBis) {
 		this.id = id;
@@ -113,7 +112,7 @@ public class InstitutionDTO implements Serializable {
 		if (this == o) {
 			return true;
 		}
-		if (o == null || getClass() != o.getClass()) {
+		if (o == null || getClass().equals(o.getClass())) {
 			return false;
 		}
 		InstitutionDTO that = (InstitutionDTO) o;
@@ -126,7 +125,7 @@ public class InstitutionDTO implements Serializable {
 			&& BIG_DECIMAL_COMPARATOR.compare(getAnzahlPlaetzeFirmen(), that.getAnzahlPlaetzeFirmen()) == 0
 			&& BIG_DECIMAL_COMPARATOR.compare(getAuslastungPct(), that.getAuslastungPct()) == 0
 			&& getBetreuungsgutscheineAb().equals(that.getBetreuungsgutscheineAb())
-			&& getBetreuungsgutscheineBis().equals(that.getBetreuungsgutscheineBis());
+			&& Objects.equals(getBetreuungsgutscheineBis(), that.getBetreuungsgutscheineBis());
 	}
 
 	@Override
@@ -145,6 +144,7 @@ public class InstitutionDTO implements Serializable {
 	}
 
 	@Override
+	@Nonnull
 	public String toString() {
 		return new StringJoiner(", ", InstitutionDTO.class.getSimpleName() + '[', "]")
 			.add("id=" + id)
@@ -161,23 +161,23 @@ public class InstitutionDTO implements Serializable {
 	}
 
 	@Nonnull
-	@JsonProperty(value= "id")
+	@JsonProperty("id")
 	public Long getId() {
 		return id;
 	}
 
-	@JsonProperty(value= "zusatzId")
+	@JsonProperty("zusatzId")
 	public void setId(@Nonnull Long id) {
 		this.id = id;
 	}
 
 	@Nonnull
-	@JsonProperty(value= "institutionId")
+	@JsonProperty("institutionId")
 	public String getInstitutionId() {
 		return institutionId;
 	}
 
-	@JsonProperty(value= "id")
+	@JsonProperty("id")
 	public void setInstitutionId(@Nonnull String institutionId) {
 		this.institutionId = institutionId;
 	}
@@ -201,12 +201,12 @@ public class InstitutionDTO implements Serializable {
 	}
 
 	@Nonnull
-	@JsonProperty(value= "adresse")
+	@JsonProperty("adresse")
 	public AdresseInstitutionDTO getAdresse() {
 		return adresse;
 	}
 
-	@JsonProperty(value= "kontaktAdresse")
+	@JsonProperty("kontaktAdresse")
 	public void setAdresse(@Nonnull AdresseInstitutionDTO adresse) {
 		this.adresse = adresse;
 	}
@@ -239,23 +239,23 @@ public class InstitutionDTO implements Serializable {
 	}
 
 	@Nonnull
-	@JsonProperty(value= "betreuungsgutscheineAb")
+	@JsonProperty("betreuungsgutscheineAb")
 	public LocalDate getBetreuungsgutscheineAb() {
 		return betreuungsgutscheineAb;
 	}
 
-	@JsonProperty(value= "betreuungsGutscheineAb")
+	@JsonProperty("betreuungsGutscheineAb")
 	public void setBetreuungsgutscheineAb(@Nonnull LocalDate betreuungsgutscheineAb) {
 		this.betreuungsgutscheineAb = betreuungsgutscheineAb;
 	}
 
 	@Nullable
-	@JsonProperty(value= "betreuungsgutscheineBis")
+	@JsonProperty("betreuungsgutscheineBis")
 	public LocalDate getBetreuungsgutscheineBis() {
 		return betreuungsgutscheineBis;
 	}
 
-	@JsonProperty(value= "betreuungsGutscheineBis")
+	@JsonProperty("betreuungsGutscheineBis")
 	public void setBetreuungsgutscheineBis(@Nullable LocalDate betreuungsgutscheineBis) {
 		this.betreuungsgutscheineBis = betreuungsgutscheineBis;
 	}
