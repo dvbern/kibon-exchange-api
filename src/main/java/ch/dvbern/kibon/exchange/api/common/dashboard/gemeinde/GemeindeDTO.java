@@ -34,7 +34,7 @@ public class GemeindeDTO implements Serializable {
 	@Schema(description = "Strikt monoton steigende ID\n\n"
 		+ "Kann für Filterung mit dem `after_id` Parameter verwendet werden.")
 	@Nonnull
-	private @NotNull Long id;
+	private @NotNull Long sequenceId;
 
 	@Nonnull
 	private @NotNull String name;
@@ -49,7 +49,7 @@ public class GemeindeDTO implements Serializable {
 	private @NotNull Long bfsNummer;
 
 	public GemeindeDTO() {
-		this.id = 0L;
+		this.sequenceId = 0L;
 		this.name = "";
 		this.betreuungsgutscheineAnbietenAb = LocalDate.MIN;
 		this.gueltigBis = LocalDate.MAX;
@@ -57,11 +57,11 @@ public class GemeindeDTO implements Serializable {
 	}
 
 	public GemeindeDTO(
-		@Nonnull @NotNull Long id,
+		@Nonnull @NotNull Long sequenceId,
 		@Nonnull @NotNull String name,
 		@Nonnull @NotNull LocalDate betreuungsgutscheineAnbietenAb,
 		@Nonnull @NotNull LocalDate gueltigBis, @Nonnull @NotNull Long bfsNummer) {
-		this.id = id;
+		this.sequenceId = sequenceId;
 		this.name = name;
 		this.betreuungsgutscheineAnbietenAb = betreuungsgutscheineAnbietenAb;
 		this.gueltigBis = gueltigBis;
@@ -77,7 +77,7 @@ public class GemeindeDTO implements Serializable {
 			return false;
 		}
 		GemeindeDTO that = (GemeindeDTO) o;
-		return getId().equals(that.getId())
+		return getSequenceId().equals(that.getSequenceId())
 			&& getName().equals(that.getName())
 			&& getBetreuungsgutscheineAnbietenAb().equals(that.getBetreuungsgutscheineAnbietenAb())
 			&& getGueltigBis().equals(that.getGueltigBis())
@@ -86,13 +86,13 @@ public class GemeindeDTO implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getId(), getName(), getBetreuungsgutscheineAnbietenAb(), getGueltigBis(), getBfsNummer());
+		return Objects.hash(getSequenceId(), getName(), getBetreuungsgutscheineAnbietenAb(), getGueltigBis(), getBfsNummer());
 	}
 
 	@Override
 	public String toString() {
 		return new StringJoiner(", ", GemeindeDTO.class.getSimpleName() + '[', "]")
-			.add("id=" + id)
+			.add("sequenceId=" + sequenceId)
 			.add("name=" + name)
 			.add("betreuungsgutscheineAnbietenAb=" + betreuungsgutscheineAnbietenAb)
 			.add("gueltigBis=" + gueltigBis)
@@ -101,12 +101,12 @@ public class GemeindeDTO implements Serializable {
 	}
 
 	@Nonnull
-	public Long getId() {
-		return id;
+	public Long getSequenceId() {
+		return sequenceId;
 	}
 
-	public void setId(@Nonnull Long id) {
-		this.id = id;
+	public void setSequenceId(@Nonnull Long sequenceId) {
+		this.sequenceId = sequenceId;
 	}
 
 	@Nonnull

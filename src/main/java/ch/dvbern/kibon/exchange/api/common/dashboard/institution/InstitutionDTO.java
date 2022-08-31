@@ -42,7 +42,7 @@ public class InstitutionDTO implements Serializable {
 	@Schema(description = "Strikt monoton steigende ID\n\n"
 		+ "Kann für Filterung mit dem `after_id` Parameter verwendet werden.")
 	@Nonnull
-	private @NotNull Long id;
+	private @NotNull Long sequenceId;
 
 	@Nonnull
 	private @NotNull String institutionId;
@@ -72,7 +72,7 @@ public class InstitutionDTO implements Serializable {
 	private BigDecimal auslastungPct;
 
 	public InstitutionDTO() {
-		this.id = 0L;
+		this.sequenceId = 0L;
 		this.institutionId = "";
 		this.name = "";
 		this.betreuungsArt = BetreuungsangebotTyp.KITA;
@@ -85,7 +85,7 @@ public class InstitutionDTO implements Serializable {
 	}
 
 	public InstitutionDTO(
-		@Nonnull @NotNull Long id,
+		@Nonnull @NotNull Long sequenceId,
 		@Nonnull @NotNull String institutionId,
 		@Nonnull @NotNull String name,
 		@Nonnull @NotNull
@@ -96,7 +96,7 @@ public class InstitutionDTO implements Serializable {
 		@Nullable BigDecimal anzahlPlaetzeFirmen, @Nullable BigDecimal auslastungPct,
 		@Nonnull LocalDate betreuungsgutscheineAb,
 		@Nonnull LocalDate betreuungsgutscheineBis) {
-		this.id = id;
+		this.sequenceId = sequenceId;
 		this.institutionId = institutionId;
 		this.name = name;
 		this.betreuungsArt = betreuungsArt;
@@ -117,7 +117,7 @@ public class InstitutionDTO implements Serializable {
 			return false;
 		}
 		InstitutionDTO that = (InstitutionDTO) o;
-		return getId().equals(that.getId())
+		return getSequenceId().equals(that.getSequenceId())
 			&& getInstitutionId().equals(that.getInstitutionId())
 			&& getName().equals(that.getName())
 			&& getBetreuungsArt() == that.getBetreuungsArt()
@@ -125,14 +125,13 @@ public class InstitutionDTO implements Serializable {
 			&& BIG_DECIMAL_COMPARATOR.compare(getAnzahlPlaetze(), that.getAnzahlPlaetze()) == 0
 			&& BIG_DECIMAL_COMPARATOR.compare(getAnzahlPlaetzeFirmen(), that.getAnzahlPlaetzeFirmen()) == 0
 			&& BIG_DECIMAL_COMPARATOR.compare(getAuslastungPct(), that.getAuslastungPct()) == 0
-			&& getBetreuungsgutscheineAb().equals(that.getBetreuungsgutscheineAb())
-			&& getBetreuungsgutscheineBis().equals(that.getBetreuungsgutscheineBis());
+			&& getBetreuungsgutscheineAb().equals(that.getBetreuungsgutscheineAb());
 	}
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(
-			getId(),
+			getSequenceId(),
 			getInstitutionId(),
 			getName(),
 			getBetreuungsArt(),
@@ -147,7 +146,7 @@ public class InstitutionDTO implements Serializable {
 	@Override
 	public String toString() {
 		return new StringJoiner(", ", InstitutionDTO.class.getSimpleName() + '[', "]")
-			.add("id=" + id)
+			.add("sequenceId=" + sequenceId)
 			.add("institutionId=" + institutionId)
 			.add("name=" + name)
 			.add("betreuungsArt=" + betreuungsArt)
@@ -161,14 +160,12 @@ public class InstitutionDTO implements Serializable {
 	}
 
 	@Nonnull
-	@JsonProperty(value= "id")
-	public Long getId() {
-		return id;
+	public Long getSequenceId() {
+		return sequenceId;
 	}
 
-	@JsonProperty(value= "zusatzId")
-	public void setId(@Nonnull Long id) {
-		this.id = id;
+	public void setSequenceId(@Nonnull Long sequenceId) {
+		this.sequenceId = sequenceId;
 	}
 
 	@Nonnull
