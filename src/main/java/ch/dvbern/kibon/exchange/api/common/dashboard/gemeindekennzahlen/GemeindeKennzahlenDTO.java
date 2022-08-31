@@ -41,7 +41,7 @@ public class GemeindeKennzahlenDTO implements Serializable {
 	@Schema(description = "Strikt monoton steigende ID\n\n"
 		+ "Kann für Filterung mit dem `after_id` Parameter verwendet werden.")
 	@Nonnull
-	private @NotNull Long id;
+	private @NotNull Long sequenceId;
 
 	@Nonnull
 	private @NotNull Long bfsNummer;
@@ -74,7 +74,7 @@ public class GemeindeKennzahlenDTO implements Serializable {
 	private BigDecimal erwerbspensumZuschlag;
 
 	public GemeindeKennzahlenDTO() {
-		this.id = 0L;
+		this.sequenceId = 0L;
 		this.bfsNummer = 0L;
 		this.gesuchsperiodeStart = LocalDate.MIN;
 		this.gesuchsperiodeStop = LocalDate.MAX;
@@ -88,7 +88,7 @@ public class GemeindeKennzahlenDTO implements Serializable {
 	}
 
 	public GemeindeKennzahlenDTO(
-		@Nonnull @NotNull Long id,
+		@Nonnull @NotNull Long sequenceId,
 		@Nonnull @NotNull Long bfsNummer,
 		@Nonnull @NotNull LocalDate gesuchsperiodeStart,
 		@Nonnull @NotNull LocalDate gesuchsperiodeStop,
@@ -98,7 +98,7 @@ public class GemeindeKennzahlenDTO implements Serializable {
 		@Nullable BigDecimal dauerWarteliste,
 		@Nullable EinschulungTyp limitierungTfo,
 		@Nullable EinschulungTyp limitierungKita, @Nullable BigDecimal erwerbspensumZuschlag) {
-		this.id = id;
+		this.sequenceId = sequenceId;
 		this.bfsNummer = bfsNummer;
 		this.gesuchsperiodeStart = gesuchsperiodeStart;
 		this.gesuchsperiodeStop = gesuchsperiodeStop;
@@ -120,7 +120,7 @@ public class GemeindeKennzahlenDTO implements Serializable {
 			return false;
 		}
 		GemeindeKennzahlenDTO that = (GemeindeKennzahlenDTO) o;
-		return getId().equals(that.getId())
+		return getSequenceId().equals(that.getSequenceId())
 			&& getBfsNummer().equals(that.getBfsNummer())
 			&& getGesuchsperiodeStart().equals(that.getGesuchsperiodeStart())
 			&& getGesuchsperiodeStop().equals(that.getGesuchsperiodeStop())
@@ -136,7 +136,7 @@ public class GemeindeKennzahlenDTO implements Serializable {
 	@Override
 	public int hashCode() {
 		return Objects.hash(
-			getId(),
+			getSequenceId(),
 			getBfsNummer(),
 			getGesuchsperiodeStart(),
 			getGesuchsperiodeStop(),
@@ -152,7 +152,7 @@ public class GemeindeKennzahlenDTO implements Serializable {
 	@Override
 	public String toString() {
 		return new StringJoiner(", ", GemeindeKennzahlenDTO.class.getSimpleName() + '[', "]")
-			.add("id=" + id)
+			.add("sequenceId=" + sequenceId)
 			.add("bfsNummer=" + bfsNummer)
 			.add("gesuchsperiodeStart=" + gesuchsperiodeStart)
 			.add("gesuchsperiodeStop=" + gesuchsperiodeStop)
@@ -167,12 +167,12 @@ public class GemeindeKennzahlenDTO implements Serializable {
 	}
 
 	@Nonnull
-	public Long getId() {
-		return id;
+	public Long getSequenceId() {
+		return sequenceId;
 	}
 
-	public void setId(@Nonnull Long id) {
-		this.id = id;
+	public void setSequenceId(@Nonnull Long sequenceId) {
+		this.sequenceId = sequenceId;
 	}
 
 	@Nonnull
