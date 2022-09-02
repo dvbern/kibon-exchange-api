@@ -50,6 +50,9 @@ public class KindDTO implements Serializable {
 	@Nonnull
 	private @NotNull boolean sprichtMuttersprache;
 
+	@Nonnull
+	private @NotNull boolean ausserordentlicherAnspruch;
+
 	public KindDTO() {
 		this.kindHash = "";
 		this.geburtsdatum = LocalDate.MIN;
@@ -57,6 +60,7 @@ public class KindDTO implements Serializable {
 		this.sozialeIndikation = false;
 		this.sprachlicheIndikation = false;
 		this.sprichtMuttersprache = true;
+		this.ausserordentlicherAnspruch = false;
 	}
 
 	public KindDTO(
@@ -65,13 +69,15 @@ public class KindDTO implements Serializable {
 		@Nonnull @NotNull
 			EinschulungTyp einschulungTyp,
 		@NotNull boolean sozialeIndikation,
-		@NotNull boolean sprachlicheIndikation, @NotNull boolean sprichtMuttersprache) {
+		@NotNull boolean sprachlicheIndikation, @NotNull boolean sprichtMuttersprache,
+		@NotNull boolean ausserordentlicherAnspruch) {
 		this.kindHash = kindHash;
 		this.geburtsdatum = geburtsdatum;
 		this.einschulungTyp = einschulungTyp;
 		this.sozialeIndikation = sozialeIndikation;
 		this.sprachlicheIndikation = sprachlicheIndikation;
 		this.sprichtMuttersprache = sprichtMuttersprache;
+		this.ausserordentlicherAnspruch = ausserordentlicherAnspruch;
 	}
 
 	@Override
@@ -88,7 +94,8 @@ public class KindDTO implements Serializable {
 			&& isSprichtMuttersprache() == kindDTO.isSprichtMuttersprache()
 			&& getKindHash().equals(kindDTO.getKindHash())
 			&& getGeburtsdatum().equals(kindDTO.getGeburtsdatum())
-			&& getEinschulungTyp() == kindDTO.getEinschulungTyp();
+			&& getEinschulungTyp() == kindDTO.getEinschulungTyp()
+			&& isAusserordentlicherAnspruch() == kindDTO.isAusserordentlicherAnspruch();
 	}
 
 	@Override
@@ -99,7 +106,8 @@ public class KindDTO implements Serializable {
 			getEinschulungTyp(),
 			isSozialeIndikation(),
 			isSprachlicheIndikation(),
-			isSprichtMuttersprache());
+			isSprichtMuttersprache(),
+			isAusserordentlicherAnspruch());
 	}
 
 	@Override
@@ -111,6 +119,7 @@ public class KindDTO implements Serializable {
 			.add("sozialeIndikation=" + sozialeIndikation)
 			.add("sprachlicheIndikation=" + sprachlicheIndikation)
 			.add("sprichtMuttersprache=" + sprichtMuttersprache)
+			.add("ausserordentlicherAnspruch=" + ausserordentlicherAnspruch)
 			.toString();
 	}
 
@@ -163,5 +172,13 @@ public class KindDTO implements Serializable {
 
 	public void setSprichtMuttersprache(boolean sprichtMuttersprache) {
 		this.sprichtMuttersprache = sprichtMuttersprache;
+	}
+
+	public boolean isAusserordentlicherAnspruch() {
+		return ausserordentlicherAnspruch;
+	}
+
+	public void setAusserordentlicherAnspruch(boolean ausserordentlicherAnspruch) {
+		this.ausserordentlicherAnspruch = ausserordentlicherAnspruch;
 	}
 }

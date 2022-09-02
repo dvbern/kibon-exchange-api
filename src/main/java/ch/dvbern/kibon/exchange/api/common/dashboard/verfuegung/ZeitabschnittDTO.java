@@ -42,9 +42,6 @@ public class ZeitabschnittDTO  implements Serializable {
 		Comparator.nullsLast(Comparator.naturalOrder());
 
 	@Nonnull
-	private @NotNull Long id;
-
-	@Nonnull
 	private @NotNull LocalDate von;
 
 	@Nonnull
@@ -123,13 +120,10 @@ public class ZeitabschnittDTO  implements Serializable {
 
 	@Schema(description = "Massgebendes Einkommen, mit abzug Familiengrösse, die wuerde als basis fuer die Berechnung von dieser Zeitabschnitt verwendet.")
 	@Nonnull
-	private @NotNull @DecimalMin("0") BigDecimal massgebendesEinkommen;
+	private @NotNull BigDecimal massgebendesEinkommen;
 
 	@Nonnull
-	private @NotNull BigDecimal ausserordentlicherAnspruch;
-
-	@Nonnull
-	private @NotNull boolean besondereBedurfnisse;
+	private @NotNull boolean besondereBeduerfnisse;
 
 	public ZeitabschnittDTO() {
 		this.von = LocalDate.MIN;
@@ -147,12 +141,10 @@ public class ZeitabschnittDTO  implements Serializable {
 		this.anspruchsberechtigteAnzahlZeiteinheiten = BigDecimal.ZERO;
 		this.zeiteinheit = Zeiteinheit.PERCENTAGE;
 		this.massgebendesEinkommen = BigDecimal.ZERO;
-		this.ausserordentlicherAnspruch = BigDecimal.ZERO;
-		this.besondereBedurfnisse = false;
+		this.besondereBeduerfnisse = false;
 	}
 
 	public ZeitabschnittDTO(
-		@Nonnull @NotNull Long id,
 		@Nonnull @NotNull LocalDate von,
 		@Nonnull @NotNull LocalDate bis,
 		@Nonnull @NotNull @DecimalMin("0")
@@ -174,11 +166,9 @@ public class ZeitabschnittDTO  implements Serializable {
 		@Nullable @DecimalMin("0")
 			BigDecimal anspruchsberechtigteAnzahlZeiteinheiten,
 		@Nullable Zeiteinheit zeiteinheit,
-		@Nonnull @NotNull @DecimalMin("0")
+		@Nonnull @NotNull
 			BigDecimal massgebendesEinkommen,
-		@NotNull BigDecimal ausserordentlicherAnspruch,
-		@NotNull boolean besondereBedurfnisse) {
-		this.id = id;
+		@NotNull boolean besondereBeduerfnisse) {
 		this.von = von;
 		this.bis = bis;
 		this.effektiveBetreuungPct = effektiveBetreuungPct;
@@ -194,8 +184,7 @@ public class ZeitabschnittDTO  implements Serializable {
 		this.anspruchsberechtigteAnzahlZeiteinheiten = anspruchsberechtigteAnzahlZeiteinheiten;
 		this.zeiteinheit = zeiteinheit;
 		this.massgebendesEinkommen = massgebendesEinkommen;
-		this.ausserordentlicherAnspruch = ausserordentlicherAnspruch;
-		this.besondereBedurfnisse = besondereBedurfnisse;
+		this.besondereBeduerfnisse = besondereBeduerfnisse;
 	}
 
 	@Override
@@ -207,8 +196,7 @@ public class ZeitabschnittDTO  implements Serializable {
 			return false;
 		}
 		ZeitabschnittDTO that = (ZeitabschnittDTO) o;
-		return getId().equals(that.getId())
-			&& getVon().equals(that.getVon())
+		return getVon().equals(that.getVon())
 			&& getBis().equals(that.getBis())
 			&& BIG_DECIMAL_COMPARATOR.compare(getEffektiveBetreuungPct(),that.getEffektiveBetreuungPct()) == 0
 			&& getAnspruchPct().equals(that.getAnspruchPct())
@@ -223,14 +211,12 @@ public class ZeitabschnittDTO  implements Serializable {
 			&& BIG_DECIMAL_COMPARATOR.compare(getAnspruchsberechtigteAnzahlZeiteinheiten(), that.getAnspruchsberechtigteAnzahlZeiteinheiten()) == 0
 			&& getZeiteinheit() == that.getZeiteinheit()
 			&& BIG_DECIMAL_COMPARATOR.compare(getMassgebendesEinkommen(), that.getMassgebendesEinkommen()) == 0
-			&& BIG_DECIMAL_COMPARATOR.compare(getAusserordentlicherAnspruch(), that.getAusserordentlicherAnspruch()) == 0
-			&& isBesondereBedurfnisse() == that.isBesondereBedurfnisse();
+			&& isBesondereBeduerfnisse() == that.isBesondereBeduerfnisse();
 	}
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(
-			getId(),
 			getVon(),
 			getBis(),
 			getEffektiveBetreuungPct(),
@@ -246,14 +232,12 @@ public class ZeitabschnittDTO  implements Serializable {
 			getAnspruchsberechtigteAnzahlZeiteinheiten(),
 			getZeiteinheit(),
 			getMassgebendesEinkommen(),
-			getAusserordentlicherAnspruch(),
-			isBesondereBedurfnisse());
+			isBesondereBeduerfnisse());
 	}
 
 	@Override
 	public String toString() {
 		return new StringJoiner(", ", ZeitabschnittDTO.class.getSimpleName() + '[', "]")
-			.add("id=" + id)
 			.add("von=" + von)
 			.add("bis=" + bis)
 			.add("effektiveBetreuungPct=" + effektiveBetreuungPct)
@@ -269,18 +253,8 @@ public class ZeitabschnittDTO  implements Serializable {
 			.add("anspruchsberechtigteAnzahlZeiteinheiten=" + anspruchsberechtigteAnzahlZeiteinheiten)
 			.add("zeiteinheit=" + zeiteinheit)
 			.add("massgebendesEinkommen=" + massgebendesEinkommen)
-			.add("ausserordentlicherAnspruch=" + ausserordentlicherAnspruch)
-			.add("besondereBedurfnisse=" + besondereBedurfnisse)
+			.add("besondereBeduerfnisse=" + besondereBeduerfnisse)
 			.toString();
-	}
-
-	@Nonnull
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(@Nonnull Long id) {
-		this.id = id;
 	}
 
 	@Nonnull
@@ -419,20 +393,11 @@ public class ZeitabschnittDTO  implements Serializable {
 		this.massgebendesEinkommen = massgebendesEinkommen;
 	}
 
-	@Nonnull
-	public BigDecimal getAusserordentlicherAnspruch() {
-		return ausserordentlicherAnspruch;
+	public boolean isBesondereBeduerfnisse() {
+		return besondereBeduerfnisse;
 	}
 
-	public void setAusserordentlicherAnspruch(@Nonnull BigDecimal ausserordentlicherAnspruch) {
-		this.ausserordentlicherAnspruch = ausserordentlicherAnspruch;
-	}
-
-	public boolean isBesondereBedurfnisse() {
-		return besondereBedurfnisse;
-	}
-
-	public void setBesondereBedurfnisse(boolean besondereBedurfnisse) {
-		this.besondereBedurfnisse = besondereBedurfnisse;
+	public void setBesondereBeduerfnisse(boolean besondereBeduerfnisse) {
+		this.besondereBeduerfnisse = besondereBeduerfnisse;
 	}
 }
