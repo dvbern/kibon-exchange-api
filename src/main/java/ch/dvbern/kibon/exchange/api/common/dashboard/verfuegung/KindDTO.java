@@ -53,6 +53,12 @@ public class KindDTO implements Serializable {
 	@Nonnull
 	private @NotNull boolean ausserordentlicherAnspruch;
 
+	@Nonnull
+	private @NotNull boolean kindAusAsylwesenAngabeElternGemeinde;
+
+	@Nonnull
+	private @NotNull boolean keinSelbstbehaltDurchGemeinde;
+
 	public KindDTO() {
 		this.kindHash = "";
 		this.geburtsdatum = LocalDate.MIN;
@@ -61,16 +67,20 @@ public class KindDTO implements Serializable {
 		this.sprachlicheIndikation = false;
 		this.sprichtMuttersprache = true;
 		this.ausserordentlicherAnspruch = false;
+		this.kindAusAsylwesenAngabeElternGemeinde = false;
+		this.keinSelbstbehaltDurchGemeinde = false;
 	}
 
 	public KindDTO(
 		@Nonnull @NotNull String kindHash,
 		@Nonnull @NotNull LocalDate geburtsdatum,
-		@Nonnull @NotNull
-			EinschulungTyp einschulungTyp,
+		@Nonnull @NotNull EinschulungTyp einschulungTyp,
 		@NotNull boolean sozialeIndikation,
-		@NotNull boolean sprachlicheIndikation, @NotNull boolean sprichtMuttersprache,
-		@NotNull boolean ausserordentlicherAnspruch) {
+		@NotNull boolean sprachlicheIndikation,
+		@NotNull boolean sprichtMuttersprache,
+		@NotNull boolean ausserordentlicherAnspruch,
+		@NotNull boolean kindAusAsylwesenAngabeElternGemeinde,
+		@NotNull boolean keinSelbstbehaltDurchGemeinde) {
 		this.kindHash = kindHash;
 		this.geburtsdatum = geburtsdatum;
 		this.einschulungTyp = einschulungTyp;
@@ -78,6 +88,8 @@ public class KindDTO implements Serializable {
 		this.sprachlicheIndikation = sprachlicheIndikation;
 		this.sprichtMuttersprache = sprichtMuttersprache;
 		this.ausserordentlicherAnspruch = ausserordentlicherAnspruch;
+		this.kindAusAsylwesenAngabeElternGemeinde = kindAusAsylwesenAngabeElternGemeinde;
+		this.keinSelbstbehaltDurchGemeinde = keinSelbstbehaltDurchGemeinde;
 	}
 
 	@Override
@@ -95,7 +107,9 @@ public class KindDTO implements Serializable {
 			&& getKindHash().equals(kindDTO.getKindHash())
 			&& getGeburtsdatum().equals(kindDTO.getGeburtsdatum())
 			&& getEinschulungTyp() == kindDTO.getEinschulungTyp()
-			&& isAusserordentlicherAnspruch() == kindDTO.isAusserordentlicherAnspruch();
+			&& isAusserordentlicherAnspruch() == kindDTO.isAusserordentlicherAnspruch()
+			&& isKindAusAsylwesenAngabeElternGemeinde() == kindDTO.isKindAusAsylwesenAngabeElternGemeinde()
+			&& isKeinSelbstbehaltDurchGemeinde() == kindDTO.isKeinSelbstbehaltDurchGemeinde();
 	}
 
 	@Override
@@ -107,7 +121,9 @@ public class KindDTO implements Serializable {
 			isSozialeIndikation(),
 			isSprachlicheIndikation(),
 			isSprichtMuttersprache(),
-			isAusserordentlicherAnspruch());
+			isAusserordentlicherAnspruch(),
+			isKindAusAsylwesenAngabeElternGemeinde(),
+			isKeinSelbstbehaltDurchGemeinde());
 	}
 
 	@Override
@@ -120,6 +136,8 @@ public class KindDTO implements Serializable {
 			.add("sprachlicheIndikation=" + sprachlicheIndikation)
 			.add("sprichtMuttersprache=" + sprichtMuttersprache)
 			.add("ausserordentlicherAnspruch=" + ausserordentlicherAnspruch)
+			.add("kindAusAsylwesenAngabeElternGemeinde=" + kindAusAsylwesenAngabeElternGemeinde)
+			.add("keinSelbstbehaltDurchGemeinde=" + keinSelbstbehaltDurchGemeinde)
 			.toString();
 	}
 
@@ -180,5 +198,21 @@ public class KindDTO implements Serializable {
 
 	public void setAusserordentlicherAnspruch(boolean ausserordentlicherAnspruch) {
 		this.ausserordentlicherAnspruch = ausserordentlicherAnspruch;
+	}
+
+	public boolean isKindAusAsylwesenAngabeElternGemeinde() {
+		return kindAusAsylwesenAngabeElternGemeinde;
+	}
+
+	public void setKindAusAsylwesenAngabeElternGemeinde(boolean kindAusAsylwesenAngabeElternGemeinde) {
+		this.kindAusAsylwesenAngabeElternGemeinde = kindAusAsylwesenAngabeElternGemeinde;
+	}
+
+	public boolean isKeinSelbstbehaltDurchGemeinde() {
+		return keinSelbstbehaltDurchGemeinde;
+	}
+
+	public void setKeinSelbstbehaltDurchGemeinde(boolean keinSelbstbehaltDurchGemeinde) {
+		this.keinSelbstbehaltDurchGemeinde = keinSelbstbehaltDurchGemeinde;
 	}
 }
