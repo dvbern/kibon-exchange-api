@@ -49,25 +49,29 @@ public class AdresseInstitutionDTO extends AdresseDTO implements Serializable {
 		@Nonnull String plz,
 		@Nonnull String ort,
 		@Nonnull String land,
-		@Nonnull @NotNull String standortGemeinde,
-		@Nonnull @NotNull String standortGemeindeBFSNummer) {
+		@Nonnull String standortGemeinde,
+		@Nonnull String standortGemeindeBFSNummer) {
 		super(strasse, hausnummer, adresszusatz, plz, ort, land);
 		this.standortGemeinde = standortGemeinde;
 		this.standortGemeindeBFSNummer = standortGemeindeBFSNummer;
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(@Nullable Object o) {
 		if (this == o) {
 			return true;
 		}
-		if (o == null || getClass() != o.getClass()) {
+
+		if (o == null || !getClass().equals(o.getClass())) {
 			return false;
 		}
+
 		if (!super.equals(o)) {
 			return false;
 		}
+
 		AdresseInstitutionDTO that = (AdresseInstitutionDTO) o;
+
 		return getStandortGemeinde().equals(that.getStandortGemeinde())
 			&& getStandortGemeindeBFSNummer().equals(that.getStandortGemeindeBFSNummer());
 	}
@@ -77,9 +81,14 @@ public class AdresseInstitutionDTO extends AdresseDTO implements Serializable {
 		return Objects.hash(super.hashCode(), getStandortGemeinde(), getStandortGemeindeBFSNummer());
 	}
 
+	@Nonnull
 	@Override
 	public String toString() {
 		return new StringJoiner(", ", AdresseInstitutionDTO.class.getSimpleName() + '[', "]")
+			.add("strasse='" + getStrasse() + '\'')
+			.add("hausnummer='" + getHausnummer() + '\'')
+			.add("plz='" + getPlz() + '\'')
+			.add("ort='" + getOrt() + '\'')
 			.add("standortGemeinde=" + standortGemeinde)
 			.add("standortGemeindeBFSNummer=" + standortGemeindeBFSNummer)
 			.toString();

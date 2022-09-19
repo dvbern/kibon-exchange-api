@@ -23,6 +23,7 @@ import java.util.Objects;
 import java.util.StringJoiner;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.validation.constraints.NotNull;
 
 import ch.dvbern.kibon.exchange.api.common.shared.EinschulungTyp;
@@ -37,27 +38,20 @@ public class KindDTO implements Serializable {
 	@Nonnull
 	private @NotNull LocalDate geburtsdatum;
 
-
 	@Nonnull
 	private @NotNull EinschulungTyp einschulungTyp;
 
-	@Nonnull
-	private @NotNull boolean sozialeIndikation;
+	private boolean sozialeIndikation;
 
-	@Nonnull
-	private @NotNull boolean sprachlicheIndikation;
+	private boolean sprachlicheIndikation;
 
-	@Nonnull
-	private @NotNull boolean sprichtMuttersprache;
+	private boolean sprichtMuttersprache;
 
-	@Nonnull
-	private @NotNull boolean ausserordentlicherAnspruch;
+	private boolean ausserordentlicherAnspruch;
 
-	@Nonnull
-	private @NotNull boolean kindAusAsylwesenAngabeElternGemeinde;
+	private boolean kindAusAsylwesenAngabeElternGemeinde;
 
-	@Nonnull
-	private @NotNull boolean keinSelbstbehaltDurchGemeinde;
+	private boolean keinSelbstbehaltDurchGemeinde;
 
 	public KindDTO() {
 		this.kindHash = "";
@@ -72,15 +66,15 @@ public class KindDTO implements Serializable {
 	}
 
 	public KindDTO(
-		@Nonnull @NotNull String kindHash,
-		@Nonnull @NotNull LocalDate geburtsdatum,
-		@Nonnull @NotNull EinschulungTyp einschulungTyp,
-		@NotNull boolean sozialeIndikation,
-		@NotNull boolean sprachlicheIndikation,
-		@NotNull boolean sprichtMuttersprache,
-		@NotNull boolean ausserordentlicherAnspruch,
-		@NotNull boolean kindAusAsylwesenAngabeElternGemeinde,
-		@NotNull boolean keinSelbstbehaltDurchGemeinde) {
+		@Nonnull String kindHash,
+		@Nonnull LocalDate geburtsdatum,
+		@Nonnull EinschulungTyp einschulungTyp,
+		boolean sozialeIndikation,
+		boolean sprachlicheIndikation,
+		boolean sprichtMuttersprache,
+		boolean ausserordentlicherAnspruch,
+		boolean kindAusAsylwesenAngabeElternGemeinde,
+		boolean keinSelbstbehaltDurchGemeinde) {
 		this.kindHash = kindHash;
 		this.geburtsdatum = geburtsdatum;
 		this.einschulungTyp = einschulungTyp;
@@ -93,14 +87,17 @@ public class KindDTO implements Serializable {
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(@Nullable Object o) {
 		if (this == o) {
 			return true;
 		}
-		if (o == null || getClass() != o.getClass()) {
+
+		if (o == null || !getClass().equals(o.getClass())) {
 			return false;
 		}
+
 		KindDTO kindDTO = (KindDTO) o;
+
 		return isSozialeIndikation() == kindDTO.isSozialeIndikation()
 			&& isSprachlicheIndikation() == kindDTO.isSprachlicheIndikation()
 			&& isSprichtMuttersprache() == kindDTO.isSprichtMuttersprache()

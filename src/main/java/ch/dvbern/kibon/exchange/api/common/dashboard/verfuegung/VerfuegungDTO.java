@@ -46,8 +46,7 @@ public class VerfuegungDTO implements Serializable {
 	@Nonnull
 	private @NotNull LocalDateTime verfuegtAm;
 
-	@Nonnull
-	private @NotNull boolean gueltig;
+	private boolean gueltig;
 
 	@Nonnull
 	private @NotNull Integer fallNummer;
@@ -83,7 +82,7 @@ public class VerfuegungDTO implements Serializable {
 		@Nonnull Long id,
 		@Nonnull String institutionId,
 		@Nonnull LocalDateTime verfuegtAm,
-		@NotNull boolean gueltig,
+		boolean gueltig,
 		@Nonnull Integer fallNummer,
 		@Nonnull BetreuungsAngebot betreuungsArt,
 		@Nonnull Long gemeindeBfsNr,
@@ -112,8 +111,7 @@ public class VerfuegungDTO implements Serializable {
 			return false;
 		}
 
-		VerfuegungDTO
-			that = (VerfuegungDTO) o;
+		VerfuegungDTO that = (VerfuegungDTO) o;
 
 		return getId().equals(that.getId()) &&
 			getInstitutionId().equals(that.getInstitutionId()) &&
@@ -143,6 +141,7 @@ public class VerfuegungDTO implements Serializable {
 	}
 
 	@Override
+	@Nonnull
 	public String toString() {
 		return new StringJoiner(", ", VerfuegungDTO.class.getSimpleName() + '[', "]")
 			.add("id=" + id)

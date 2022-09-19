@@ -32,7 +32,7 @@ public class VerfuegungenDTO implements Serializable {
 	@Nonnull
 	@NotNull
 	@Valid
-	private List<VerfuegungDTO> verfuegungen = new ArrayList();
+	private List<VerfuegungDTO> verfuegungen = new ArrayList<>();
 
 	public VerfuegungenDTO() {
 	}

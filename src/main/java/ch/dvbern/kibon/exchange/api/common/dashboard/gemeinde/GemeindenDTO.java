@@ -32,7 +32,7 @@ public class GemeindenDTO implements Serializable {
 	@Nonnull
 	@NotNull
 	@Valid
-	private List<GemeindeDTO> gemeinden = new ArrayList();
+	private List<GemeindeDTO> gemeinden = new ArrayList<>();
 
 	public GemeindenDTO() {
 	}

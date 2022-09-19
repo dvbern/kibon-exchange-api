@@ -19,7 +19,6 @@ package ch.dvbern.kibon.exchange.api.common.dashboard.institution;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Comparator;
 import java.util.Objects;
 import java.util.StringJoiner;
 
@@ -32,12 +31,11 @@ import ch.dvbern.kibon.exchange.api.common.shared.BetreuungsangebotTyp;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
+import static ch.dvbern.kibon.exchange.api.common.util.ComparatorUtil.comparesEqual;
+
 public class InstitutionDTO implements Serializable {
 
 	private static final long serialVersionUID = 2882496690468113564L;
-
-	private static final Comparator<BigDecimal> BIG_DECIMAL_COMPARATOR =
-		Comparator.nullsLast(Comparator.naturalOrder());
 
 	@Schema(description = "Strikt monoton steigende ID\n\n"
 		+ "Kann für Filterung mit dem `after_id` Parameter verwendet werden.")
@@ -85,15 +83,14 @@ public class InstitutionDTO implements Serializable {
 	}
 
 	public InstitutionDTO(
-		@Nonnull @NotNull Long sequenceId,
-		@Nonnull @NotNull String institutionId,
-		@Nonnull @NotNull String name,
-		@Nonnull @NotNull
-			BetreuungsangebotTyp betreuungsArt,
-		@Nonnull @NotNull @Valid
-			AdresseInstitutionDTO adresse,
+		@Nonnull Long sequenceId,
+		@Nonnull String institutionId,
+		@Nonnull String name,
+		@Nonnull BetreuungsangebotTyp betreuungsArt,
+		@Nonnull AdresseInstitutionDTO adresse,
 		@Nullable BigDecimal anzahlPlaetze,
-		@Nullable BigDecimal anzahlPlaetzeFirmen, @Nullable BigDecimal auslastungPct,
+		@Nullable BigDecimal anzahlPlaetzeFirmen,
+		@Nullable BigDecimal auslastungPct,
 		@Nonnull LocalDate betreuungsgutscheineAb,
 		@Nonnull LocalDate betreuungsgutscheineBis) {
 		this.sequenceId = sequenceId;
@@ -109,22 +106,25 @@ public class InstitutionDTO implements Serializable {
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(@Nullable Object o) {
 		if (this == o) {
 			return true;
 		}
-		if (o == null || getClass() != o.getClass()) {
+
+		if (o == null || !getClass().equals(o.getClass())) {
 			return false;
 		}
+
 		InstitutionDTO that = (InstitutionDTO) o;
+
 		return getSequenceId().equals(that.getSequenceId())
 			&& getInstitutionId().equals(that.getInstitutionId())
 			&& getName().equals(that.getName())
 			&& getBetreuungsArt() == that.getBetreuungsArt()
 			&& getAdresse().equals(that.getAdresse())
-			&& BIG_DECIMAL_COMPARATOR.compare(getAnzahlPlaetze(), that.getAnzahlPlaetze()) == 0
-			&& BIG_DECIMAL_COMPARATOR.compare(getAnzahlPlaetzeFirmen(), that.getAnzahlPlaetzeFirmen()) == 0
-			&& BIG_DECIMAL_COMPARATOR.compare(getAuslastungPct(), that.getAuslastungPct()) == 0
+			&& comparesEqual(getAnzahlPlaetze(), that.getAnzahlPlaetze())
+			&& comparesEqual(getAnzahlPlaetzeFirmen(), that.getAnzahlPlaetzeFirmen())
+			&& comparesEqual(getAuslastungPct(), that.getAuslastungPct())
 			&& getBetreuungsgutscheineAb().equals(that.getBetreuungsgutscheineAb());
 	}
 
@@ -144,6 +144,7 @@ public class InstitutionDTO implements Serializable {
 	}
 
 	@Override
+	@Nonnull
 	public String toString() {
 		return new StringJoiner(", ", InstitutionDTO.class.getSimpleName() + '[', "]")
 			.add("sequenceId=" + sequenceId)
@@ -169,12 +170,12 @@ public class InstitutionDTO implements Serializable {
 	}
 
 	@Nonnull
-	@JsonProperty(value= "institutionId")
+	@JsonProperty("institutionId")
 	public String getInstitutionId() {
 		return institutionId;
 	}
 
-	@JsonProperty(value= "id")
+	@JsonProperty("id")
 	public void setInstitutionId(@Nonnull String institutionId) {
 		this.institutionId = institutionId;
 	}
@@ -198,12 +199,12 @@ public class InstitutionDTO implements Serializable {
 	}
 
 	@Nonnull
-	@JsonProperty(value= "adresse")
+	@JsonProperty("adresse")
 	public AdresseInstitutionDTO getAdresse() {
 		return adresse;
 	}
 
-	@JsonProperty(value= "kontaktAdresse")
+	@JsonProperty("kontaktAdresse")
 	public void setAdresse(@Nonnull AdresseInstitutionDTO adresse) {
 		this.adresse = adresse;
 	}
@@ -236,23 +237,23 @@ public class InstitutionDTO implements Serializable {
 	}
 
 	@Nonnull
-	@JsonProperty(value= "betreuungsgutscheineAb")
+	@JsonProperty("betreuungsgutscheineAb")
 	public LocalDate getBetreuungsgutscheineAb() {
 		return betreuungsgutscheineAb;
 	}
 
-	@JsonProperty(value= "betreuungsGutscheineAb")
+	@JsonProperty("betreuungsGutscheineAb")
 	public void setBetreuungsgutscheineAb(@Nonnull LocalDate betreuungsgutscheineAb) {
 		this.betreuungsgutscheineAb = betreuungsgutscheineAb;
 	}
 
 	@Nullable
-	@JsonProperty(value= "betreuungsgutscheineBis")
+	@JsonProperty("betreuungsgutscheineBis")
 	public LocalDate getBetreuungsgutscheineBis() {
 		return betreuungsgutscheineBis;
 	}
 
-	@JsonProperty(value= "betreuungsGutscheineBis")
+	@JsonProperty("betreuungsGutscheineBis")
 	public void setBetreuungsgutscheineBis(@Nullable LocalDate betreuungsgutscheineBis) {
 		this.betreuungsgutscheineBis = betreuungsgutscheineBis;
 	}

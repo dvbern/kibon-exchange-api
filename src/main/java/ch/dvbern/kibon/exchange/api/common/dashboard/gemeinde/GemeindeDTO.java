@@ -23,6 +23,7 @@ import java.util.Objects;
 import java.util.StringJoiner;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.validation.constraints.NotNull;
 
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
@@ -57,10 +58,11 @@ public class GemeindeDTO implements Serializable {
 	}
 
 	public GemeindeDTO(
-		@Nonnull @NotNull Long sequenceId,
-		@Nonnull @NotNull String name,
-		@Nonnull @NotNull LocalDate betreuungsgutscheineAnbietenAb,
-		@Nonnull @NotNull LocalDate gueltigBis, @Nonnull @NotNull Long bfsNummer) {
+		@Nonnull Long sequenceId,
+		@Nonnull String name,
+		@Nonnull LocalDate betreuungsgutscheineAnbietenAb,
+		@Nonnull LocalDate gueltigBis,
+		@Nonnull Long bfsNummer) {
 		this.sequenceId = sequenceId;
 		this.name = name;
 		this.betreuungsgutscheineAnbietenAb = betreuungsgutscheineAnbietenAb;
@@ -69,14 +71,17 @@ public class GemeindeDTO implements Serializable {
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(@Nullable Object o) {
 		if (this == o) {
 			return true;
 		}
-		if (o == null || getClass() != o.getClass()) {
+
+		if (o == null || !getClass().equals(o.getClass())) {
 			return false;
 		}
+
 		GemeindeDTO that = (GemeindeDTO) o;
+
 		return getSequenceId().equals(that.getSequenceId())
 			&& getName().equals(that.getName())
 			&& getBetreuungsgutscheineAnbietenAb().equals(that.getBetreuungsgutscheineAnbietenAb())
@@ -86,7 +91,12 @@ public class GemeindeDTO implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getSequenceId(), getName(), getBetreuungsgutscheineAnbietenAb(), getGueltigBis(), getBfsNummer());
+		return Objects.hash(
+			getSequenceId(),
+			getName(),
+			getBetreuungsgutscheineAnbietenAb(),
+			getGueltigBis(),
+			getBfsNummer());
 	}
 
 	@Override

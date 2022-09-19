@@ -32,7 +32,7 @@ public class LastenausgleicheDTO implements Serializable {
 	@Nonnull
 	@NotNull
 	@Valid
-	private List<LastenausgleichDTO> lastenausgleiche = new ArrayList();
+	private List<LastenausgleichDTO> lastenausgleiche = new ArrayList<>();
 
 	public LastenausgleicheDTO() {
 	}

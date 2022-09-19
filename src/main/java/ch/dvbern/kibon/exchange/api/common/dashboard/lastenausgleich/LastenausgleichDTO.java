@@ -19,21 +19,20 @@ package ch.dvbern.kibon.exchange.api.common.dashboard.lastenausgleich;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Comparator;
 import java.util.Objects;
 import java.util.StringJoiner;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.validation.constraints.NotNull;
 
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
+import static ch.dvbern.kibon.exchange.api.common.util.ComparatorUtil.comparesEqual;
+
 public class LastenausgleichDTO implements Serializable {
 
 	private static final long serialVersionUID = -4392319486720638816L;
-
-	private static final Comparator<BigDecimal> BIG_DECIMAL_COMPARATOR =
-		Comparator.nullsLast(Comparator.naturalOrder());
 
 	@Schema(description = "Strikt monoton steigende ID\n\n"
 		+ "Kann für Filterung mit dem `after_id` Parameter verwendet werden.")
@@ -44,7 +43,7 @@ public class LastenausgleichDTO implements Serializable {
 	private @NotNull Long bfsNummer;
 
 	@Nonnull
-	private @NotNull int jahr;
+	private @NotNull Integer jahr;
 
 	@Nonnull
 	private @NotNull BigDecimal eingabeLastenausgleich;
@@ -61,11 +60,11 @@ public class LastenausgleichDTO implements Serializable {
 	}
 
 	public LastenausgleichDTO(
-		@Nonnull @NotNull Long id,
-		@Nonnull @NotNull Long bfsNummer,
-		@NotNull int jahr,
-		@Nonnull @NotNull BigDecimal eingabeLastenausgleich,
-		@Nonnull @NotNull BigDecimal totalGutscheine) {
+		@Nonnull Long id,
+		@Nonnull Long bfsNummer,
+		@Nonnull Integer jahr,
+		@Nonnull BigDecimal eingabeLastenausgleich,
+		@Nonnull BigDecimal totalGutscheine) {
 		this.id = id;
 		this.bfsNummer = bfsNummer;
 		this.jahr = jahr;
@@ -74,22 +73,26 @@ public class LastenausgleichDTO implements Serializable {
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(@Nullable Object o) {
 		if (this == o) {
 			return true;
 		}
-		if (o == null || getClass() != o.getClass()) {
+
+		if (o == null || !getClass().equals(o.getClass())) {
 			return false;
 		}
+
 		LastenausgleichDTO that = (LastenausgleichDTO) o;
+
 		return getId().equals(that.getId())
-			&& getJahr() == that.getJahr()
+			&& getJahr().equals(that.getJahr())
 			&& getBfsNummer().equals(that.getBfsNummer())
-			&& BIG_DECIMAL_COMPARATOR.compare(getEingabeLastenausgleich(), that.getEingabeLastenausgleich()) == 0
-			&& BIG_DECIMAL_COMPARATOR.compare(getTotalGutscheine(), that.getTotalGutscheine()) == 0;
+			&& comparesEqual(getEingabeLastenausgleich(), that.getEingabeLastenausgleich())
+			&& comparesEqual(getTotalGutscheine(), that.getTotalGutscheine());
 	}
 
 	@Override
+	@Nonnull
 	public String toString() {
 		return new StringJoiner(", ", LastenausgleichDTO.class.getSimpleName() + '[', "]")
 			.add("id=" + id)
@@ -123,11 +126,12 @@ public class LastenausgleichDTO implements Serializable {
 		this.bfsNummer = bfsNummer;
 	}
 
-	public int getJahr() {
+	@Nonnull
+	public Integer getJahr() {
 		return jahr;
 	}
 
-	public void setJahr(int jahr) {
+	public void setJahr(@Nonnull Integer jahr) {
 		this.jahr = jahr;
 	}
 
