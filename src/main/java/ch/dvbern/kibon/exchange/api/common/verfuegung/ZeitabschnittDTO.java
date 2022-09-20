@@ -19,7 +19,6 @@ package ch.dvbern.kibon.exchange.api.common.verfuegung;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Comparator;
 import java.util.Objects;
 import java.util.StringJoiner;
 
@@ -33,12 +32,11 @@ import javax.validation.constraints.NotNull;
 import ch.dvbern.kibon.exchange.api.common.shared.Zeiteinheit;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
+import static ch.dvbern.kibon.exchange.api.common.util.ComparatorUtil.comparesEqual;
+
 public class ZeitabschnittDTO implements Serializable, Zeitabschnitt {
 
 	private static final long serialVersionUID = -4604369503819718952L;
-
-	private static final Comparator<BigDecimal> BIG_DECIMAL_COMPARATOR =
-		Comparator.nullsLast(Comparator.naturalOrder());
 
 	@Nonnull
 	private @NotNull LocalDate von;
@@ -177,12 +175,11 @@ public class ZeitabschnittDTO implements Serializable, Zeitabschnitt {
 			getAnspruchPct().equals(that.getAnspruchPct()) &&
 			getVerguenstigtPct().compareTo(that.getVerguenstigtPct()) == 0 &&
 			getVollkosten().compareTo(that.getVollkosten()) == 0 &&
-			BIG_DECIMAL_COMPARATOR.compare(getBetreuungsgutschein(), that.getBetreuungsgutschein()) == 0 &&
-			BIG_DECIMAL_COMPARATOR.compare(getMinimalerElternbeitrag(), that.getMinimalerElternbeitrag()) == 0 &&
+			comparesEqual(getBetreuungsgutschein(), that.getBetreuungsgutschein()) &&
+			comparesEqual(getMinimalerElternbeitrag(), that.getMinimalerElternbeitrag()) &&
 			getVerguenstigung().compareTo(that.getVerguenstigung()) == 0 &&
 			isAuszahlungAnEltern() == that.isAuszahlungAnEltern() &&
-			BIG_DECIMAL_COMPARATOR.compare(getAnElternUeberwiesenerBetrag(), that.getAnElternUeberwiesenerBetrag())
-				== 0;
+			comparesEqual(getAnElternUeberwiesenerBetrag(), that.getAnElternUeberwiesenerBetrag());
 	}
 
 	@Override

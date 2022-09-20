@@ -20,7 +20,6 @@ package ch.dvbern.kibon.exchange.api.common.dashboard.gemeindekennzahlen;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Comparator;
 import java.util.Objects;
 import java.util.StringJoiner;
 
@@ -31,12 +30,11 @@ import javax.validation.constraints.NotNull;
 import ch.dvbern.kibon.exchange.api.common.shared.EinschulungTyp;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
+import static ch.dvbern.kibon.exchange.api.common.util.ComparatorUtil.comparesEqual;
+
 public class GemeindeKennzahlenDTO implements Serializable {
 
 	private static final long serialVersionUID = 7262604731097288786L;
-
-	private static final Comparator<BigDecimal> BIG_DECIMAL_COMPARATOR =
-		Comparator.nullsLast(Comparator.naturalOrder());
 
 	@Schema(description = "Strikt monoton steigende ID\n\n"
 		+ "Kann für Filterung mit dem `after_id` Parameter verwendet werden.")
@@ -88,16 +86,17 @@ public class GemeindeKennzahlenDTO implements Serializable {
 	}
 
 	public GemeindeKennzahlenDTO(
-		@Nonnull @NotNull Long sequenceId,
-		@Nonnull @NotNull Long bfsNummer,
-		@Nonnull @NotNull LocalDate gesuchsperiodeStart,
-		@Nonnull @NotNull LocalDate gesuchsperiodeStop,
+		@Nonnull Long sequenceId,
+		@Nonnull Long bfsNummer,
+		@Nonnull LocalDate gesuchsperiodeStart,
+		@Nonnull LocalDate gesuchsperiodeStop,
 		@Nullable Boolean kontingentierung,
 		@Nullable Boolean kontingentierungAusgeschoepft,
 		@Nullable BigDecimal anzahlKinderWarteliste,
 		@Nullable BigDecimal dauerWarteliste,
 		@Nullable EinschulungTyp limitierungTfo,
-		@Nullable EinschulungTyp limitierungKita, @Nullable BigDecimal erwerbspensumZuschlag) {
+		@Nullable EinschulungTyp limitierungKita,
+		@Nullable BigDecimal erwerbspensumZuschlag) {
 		this.sequenceId = sequenceId;
 		this.bfsNummer = bfsNummer;
 		this.gesuchsperiodeStart = gesuchsperiodeStart;
@@ -112,25 +111,28 @@ public class GemeindeKennzahlenDTO implements Serializable {
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(@Nullable Object o) {
 		if (this == o) {
 			return true;
 		}
-		if (o == null || getClass() != o.getClass()) {
+
+		if (o == null || !getClass().equals(o.getClass())) {
 			return false;
 		}
+
 		GemeindeKennzahlenDTO that = (GemeindeKennzahlenDTO) o;
+
 		return getSequenceId().equals(that.getSequenceId())
 			&& getBfsNummer().equals(that.getBfsNummer())
 			&& getGesuchsperiodeStart().equals(that.getGesuchsperiodeStart())
 			&& getGesuchsperiodeStop().equals(that.getGesuchsperiodeStop())
 			&& Objects.equals(getKontingentierung(), that.getKontingentierung())
 			&& Objects.equals(getKontingentierungAusgeschoepft(), that.getKontingentierungAusgeschoepft())
-			&& BIG_DECIMAL_COMPARATOR.compare(getAnzahlKinderWarteliste(), that.getAnzahlKinderWarteliste()) == 0
-			&& BIG_DECIMAL_COMPARATOR.compare(getDauerWarteliste(), that.getDauerWarteliste()) == 0
+			&& comparesEqual(getAnzahlKinderWarteliste(), that.getAnzahlKinderWarteliste())
+			&& comparesEqual(getDauerWarteliste(), that.getDauerWarteliste())
 			&& getLimitierungTfo() == that.getLimitierungTfo()
 			&& getLimitierungKita() == that.getLimitierungKita()
-			&& BIG_DECIMAL_COMPARATOR.compare(getErwerbspensumZuschlag(), that.getErwerbspensumZuschlag()) == 0;
+			&& comparesEqual(getErwerbspensumZuschlag(), that.getErwerbspensumZuschlag());
 	}
 
 	@Override
@@ -150,6 +152,7 @@ public class GemeindeKennzahlenDTO implements Serializable {
 	}
 
 	@Override
+	@Nonnull
 	public String toString() {
 		return new StringJoiner(", ", GemeindeKennzahlenDTO.class.getSimpleName() + '[', "]")
 			.add("sequenceId=" + sequenceId)
