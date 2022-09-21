@@ -20,7 +20,6 @@ package ch.dvbern.kibon.exchange.api.common.dashboard.verfuegung;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Comparator;
 import java.util.Objects;
 import java.util.StringJoiner;
 
@@ -34,15 +33,11 @@ import javax.validation.constraints.NotNull;
 import ch.dvbern.kibon.exchange.api.common.shared.Zeiteinheit;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
-public class ZeitabschnittDTO  implements Serializable {
+import static ch.dvbern.kibon.exchange.api.common.util.ComparatorUtil.comparesEqual;
+
+public class ZeitabschnittDTO implements Serializable {
 
 	private static final long serialVersionUID = -5532221922594405154L;
-
-	private static final Comparator<BigDecimal> BIG_DECIMAL_COMPARATOR =
-		Comparator.nullsLast(Comparator.naturalOrder());
-
-	@Nonnull
-	private @NotNull Long id;
 
 	@Nonnull
 	private @NotNull LocalDate von;
@@ -78,8 +73,10 @@ public class ZeitabschnittDTO  implements Serializable {
 	@Nullable
 	private @DecimalMin("0") BigDecimal betreuungsgutschein;
 
-	@Schema(description = "Der berechnete Gutschein in CHF fuer der Gemeinde,  bezeichnet die Vergünstigung, welche aufgrund des "
-		+ "vergünstigten Pensums, die Gemeinde extra Gutschein Regeln und des für die Berechnung des Gutscheins massgebenden Einkommens resultiert.")
+	@Schema(description =
+		"Der berechnete Gutschein in CHF fuer der Gemeinde,  bezeichnet die Vergünstigung, welche aufgrund des "
+			+ "vergünstigten Pensums, die Gemeinde extra Gutschein Regeln und des für die Berechnung des Gutscheins "
+			+ "massgebenden Einkommens resultiert.")
 	@Nullable
 	private @DecimalMin("0") BigDecimal betreuungsgutscheinGemeinde;
 
@@ -121,15 +118,12 @@ public class ZeitabschnittDTO  implements Serializable {
 	@Nullable
 	private Zeiteinheit zeiteinheit;
 
-	@Schema(description = "Massgebendes Einkommen, mit abzug Familiengrösse, die wuerde als basis fuer die Berechnung von dieser Zeitabschnitt verwendet.")
+	@Schema(description = "Massgebendes Einkommen, mit abzug Familiengrösse, die wuerde als basis fuer die Berechnung "
+		+ "von dieser Zeitabschnitt verwendet.")
 	@Nonnull
-	private @NotNull @DecimalMin("0") BigDecimal massgebendesEinkommen;
+	private @NotNull BigDecimal massgebendesEinkommen;
 
-	@Nonnull
-	private @NotNull BigDecimal ausserordentlicherAnspruch;
-
-	@Nonnull
-	private @NotNull boolean besondereBedurfnisse;
+	private boolean besondereBeduerfnisse;
 
 	public ZeitabschnittDTO() {
 		this.von = LocalDate.MIN;
@@ -147,38 +141,26 @@ public class ZeitabschnittDTO  implements Serializable {
 		this.anspruchsberechtigteAnzahlZeiteinheiten = BigDecimal.ZERO;
 		this.zeiteinheit = Zeiteinheit.PERCENTAGE;
 		this.massgebendesEinkommen = BigDecimal.ZERO;
-		this.ausserordentlicherAnspruch = BigDecimal.ZERO;
-		this.besondereBedurfnisse = false;
+		this.besondereBeduerfnisse = false;
 	}
 
 	public ZeitabschnittDTO(
-		@Nonnull @NotNull Long id,
-		@Nonnull @NotNull LocalDate von,
-		@Nonnull @NotNull LocalDate bis,
-		@Nonnull @NotNull @DecimalMin("0")
-			BigDecimal effektiveBetreuungPct,
-		@Nonnull @NotNull @Min(0) @Max(
-			100)
-			Integer anspruchPct,
-		@Nonnull @NotNull @DecimalMin("0")
-			BigDecimal verguenstigtPct,
-		@Nonnull @NotNull @DecimalMin("0")
-			BigDecimal vollkosten,
-		@Nullable @DecimalMin("0") BigDecimal betreuungsgutschein,
-		@Nullable @DecimalMin("0") BigDecimal betreuungsgutscheinGemeinde,
-		@Nullable @DecimalMin("0") BigDecimal betreuungsgutscheinKanton,
-		@Nullable @DecimalMin("0") BigDecimal minimalerElternbeitrag,
-		@Nonnull @NotNull @DecimalMin("0")
-			BigDecimal verguenstigung,
-		@Nullable @DecimalMin("0") BigDecimal verfuegteAnzahlZeiteinheiten,
-		@Nullable @DecimalMin("0")
-			BigDecimal anspruchsberechtigteAnzahlZeiteinheiten,
+		@Nonnull LocalDate von,
+		@Nonnull LocalDate bis,
+		@Nonnull BigDecimal effektiveBetreuungPct,
+		@Nonnull Integer anspruchPct,
+		@Nonnull BigDecimal verguenstigtPct,
+		@Nonnull BigDecimal vollkosten,
+		@Nullable BigDecimal betreuungsgutschein,
+		@Nullable BigDecimal betreuungsgutscheinGemeinde,
+		@Nullable BigDecimal betreuungsgutscheinKanton,
+		@Nullable BigDecimal minimalerElternbeitrag,
+		@Nonnull BigDecimal verguenstigung,
+		@Nullable BigDecimal verfuegteAnzahlZeiteinheiten,
+		@Nullable BigDecimal anspruchsberechtigteAnzahlZeiteinheiten,
 		@Nullable Zeiteinheit zeiteinheit,
-		@Nonnull @NotNull @DecimalMin("0")
-			BigDecimal massgebendesEinkommen,
-		@NotNull BigDecimal ausserordentlicherAnspruch,
-		@NotNull boolean besondereBedurfnisse) {
-		this.id = id;
+		@Nonnull BigDecimal massgebendesEinkommen,
+		boolean besondereBeduerfnisse) {
 		this.von = von;
 		this.bis = bis;
 		this.effektiveBetreuungPct = effektiveBetreuungPct;
@@ -194,43 +176,43 @@ public class ZeitabschnittDTO  implements Serializable {
 		this.anspruchsberechtigteAnzahlZeiteinheiten = anspruchsberechtigteAnzahlZeiteinheiten;
 		this.zeiteinheit = zeiteinheit;
 		this.massgebendesEinkommen = massgebendesEinkommen;
-		this.ausserordentlicherAnspruch = ausserordentlicherAnspruch;
-		this.besondereBedurfnisse = besondereBedurfnisse;
+		this.besondereBeduerfnisse = besondereBeduerfnisse;
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(@Nullable Object o) {
 		if (this == o) {
 			return true;
 		}
-		if (o == null || getClass() != o.getClass()) {
+
+		if (o == null || !getClass().equals(o.getClass())) {
 			return false;
 		}
+
 		ZeitabschnittDTO that = (ZeitabschnittDTO) o;
-		return getId().equals(that.getId())
-			&& getVon().equals(that.getVon())
+
+		return getVon().equals(that.getVon())
 			&& getBis().equals(that.getBis())
-			&& BIG_DECIMAL_COMPARATOR.compare(getEffektiveBetreuungPct(),that.getEffektiveBetreuungPct()) == 0
+			&& comparesEqual(getEffektiveBetreuungPct(), that.getEffektiveBetreuungPct())
 			&& getAnspruchPct().equals(that.getAnspruchPct())
-			&& BIG_DECIMAL_COMPARATOR.compare(getVerguenstigung(),that.getVerguenstigung()) == 0
-			&& BIG_DECIMAL_COMPARATOR.compare(getVollkosten(),that.getVollkosten()) == 0
-			&& BIG_DECIMAL_COMPARATOR.compare(getBetreuungsgutschein(), that.getBetreuungsgutschein()) == 0
-			&& BIG_DECIMAL_COMPARATOR.compare(getBetreuungsgutscheinGemeinde(), that.getBetreuungsgutscheinGemeinde()) == 0
-			&& BIG_DECIMAL_COMPARATOR.compare(getBetreuungsgutscheinKanton(), that.getBetreuungsgutscheinKanton()) == 0
-			&& BIG_DECIMAL_COMPARATOR.compare(getMinimalerElternbeitrag(), that.getMinimalerElternbeitrag()) == 0
-			&& BIG_DECIMAL_COMPARATOR.compare(getVerguenstigung(),that.getVerguenstigung()) == 0
-			&& BIG_DECIMAL_COMPARATOR.compare(getVerfuegteAnzahlZeiteinheiten(), that.getVerfuegteAnzahlZeiteinheiten()) == 0
-			&& BIG_DECIMAL_COMPARATOR.compare(getAnspruchsberechtigteAnzahlZeiteinheiten(), that.getAnspruchsberechtigteAnzahlZeiteinheiten()) == 0
+			&& comparesEqual(getVerguenstigung(), that.getVerguenstigung())
+			&& comparesEqual(getVollkosten(), that.getVollkosten())
+			&& comparesEqual(getBetreuungsgutschein(), that.getBetreuungsgutschein())
+			&& comparesEqual(getBetreuungsgutscheinGemeinde(), that.getBetreuungsgutscheinGemeinde())
+			&& comparesEqual(getBetreuungsgutscheinKanton(), that.getBetreuungsgutscheinKanton())
+			&& comparesEqual(getMinimalerElternbeitrag(), that.getMinimalerElternbeitrag())
+			&& comparesEqual(getVerfuegteAnzahlZeiteinheiten(), that.getVerfuegteAnzahlZeiteinheiten())
+			&& comparesEqual(
+			getAnspruchsberechtigteAnzahlZeiteinheiten(),
+			that.getAnspruchsberechtigteAnzahlZeiteinheiten())
 			&& getZeiteinheit() == that.getZeiteinheit()
-			&& BIG_DECIMAL_COMPARATOR.compare(getMassgebendesEinkommen(), that.getMassgebendesEinkommen()) == 0
-			&& BIG_DECIMAL_COMPARATOR.compare(getAusserordentlicherAnspruch(), that.getAusserordentlicherAnspruch()) == 0
-			&& isBesondereBedurfnisse() == that.isBesondereBedurfnisse();
+			&& comparesEqual(getMassgebendesEinkommen(), that.getMassgebendesEinkommen())
+			&& isBesondereBeduerfnisse() == that.isBesondereBeduerfnisse();
 	}
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(
-			getId(),
 			getVon(),
 			getBis(),
 			getEffektiveBetreuungPct(),
@@ -246,14 +228,13 @@ public class ZeitabschnittDTO  implements Serializable {
 			getAnspruchsberechtigteAnzahlZeiteinheiten(),
 			getZeiteinheit(),
 			getMassgebendesEinkommen(),
-			getAusserordentlicherAnspruch(),
-			isBesondereBedurfnisse());
+			isBesondereBeduerfnisse());
 	}
 
 	@Override
+	@Nonnull
 	public String toString() {
 		return new StringJoiner(", ", ZeitabschnittDTO.class.getSimpleName() + '[', "]")
-			.add("id=" + id)
 			.add("von=" + von)
 			.add("bis=" + bis)
 			.add("effektiveBetreuungPct=" + effektiveBetreuungPct)
@@ -269,18 +250,8 @@ public class ZeitabschnittDTO  implements Serializable {
 			.add("anspruchsberechtigteAnzahlZeiteinheiten=" + anspruchsberechtigteAnzahlZeiteinheiten)
 			.add("zeiteinheit=" + zeiteinheit)
 			.add("massgebendesEinkommen=" + massgebendesEinkommen)
-			.add("ausserordentlicherAnspruch=" + ausserordentlicherAnspruch)
-			.add("besondereBedurfnisse=" + besondereBedurfnisse)
+			.add("besondereBeduerfnisse=" + besondereBeduerfnisse)
 			.toString();
-	}
-
-	@Nonnull
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(@Nonnull Long id) {
-		this.id = id;
 	}
 
 	@Nonnull
@@ -419,20 +390,11 @@ public class ZeitabschnittDTO  implements Serializable {
 		this.massgebendesEinkommen = massgebendesEinkommen;
 	}
 
-	@Nonnull
-	public BigDecimal getAusserordentlicherAnspruch() {
-		return ausserordentlicherAnspruch;
+	public boolean isBesondereBeduerfnisse() {
+		return besondereBeduerfnisse;
 	}
 
-	public void setAusserordentlicherAnspruch(@Nonnull BigDecimal ausserordentlicherAnspruch) {
-		this.ausserordentlicherAnspruch = ausserordentlicherAnspruch;
-	}
-
-	public boolean isBesondereBedurfnisse() {
-		return besondereBedurfnisse;
-	}
-
-	public void setBesondereBedurfnisse(boolean besondereBedurfnisse) {
-		this.besondereBedurfnisse = besondereBedurfnisse;
+	public void setBesondereBeduerfnisse(boolean besondereBeduerfnisse) {
+		this.besondereBeduerfnisse = besondereBeduerfnisse;
 	}
 }
