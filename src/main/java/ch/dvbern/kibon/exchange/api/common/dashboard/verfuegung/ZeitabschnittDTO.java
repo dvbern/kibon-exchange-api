@@ -1,18 +1,17 @@
 /*
  * Copyright (C) 2022 DV Bern AG, Switzerland
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package ch.dvbern.kibon.exchange.api.common.dashboard.verfuegung;
@@ -71,21 +70,21 @@ public class ZeitabschnittDTO implements Serializable {
 		+ "Falls der berechnete Gutschein höher ist als die Betreuungskosten, wird der berechnete Gutschein gekürzt, "
 		+ "so dass der Gutschein die betreuungskosten nicht übersteigt.")
 	@Nullable
-	private @DecimalMin("0") BigDecimal betreuungsgutschein;
+	private BigDecimal betreuungsgutschein;
 
 	@Schema(description =
 		"Der berechnete Gutschein in CHF fuer der Gemeinde,  bezeichnet die Vergünstigung, welche aufgrund des "
 			+ "vergünstigten Pensums, die Gemeinde extra Gutschein Regeln und des für die Berechnung des Gutscheins "
 			+ "massgebenden Einkommens resultiert.")
 	@Nullable
-	private @DecimalMin("0") BigDecimal betreuungsgutscheinGemeinde;
+	private BigDecimal betreuungsgutscheinGemeinde;
 
 	@Schema(description = "Der berechnete Gutschein in CHF bezeichnet die Vergünstigung, welche aufgrund des "
 		+ "vergünstigten Pensums und des für die Berechnung des Gutscheins massgebenden Einkommens resultiert.\n\n"
 		+ "Falls der berechnete Gutschein höher ist als die Betreuungskosten, wird der berechnete Gutschein gekürzt, "
 		+ "so dass der Gutschein die betreuungskosten nicht übersteigt.")
 	@Nullable
-	private @DecimalMin("0") BigDecimal betreuungsgutscheinKanton;
+	private BigDecimal betreuungsgutscheinKanton;
 
 	@Schema(description = "Die Eltern müssen einen minimalen Elternbeitrag leisten. Falls dies noch nicht der Fall "
 		+ "ist, weil die Kosten vollständig oder fast vollständig durch den Betreuungsgutschein gedeckt werden, muss "
@@ -100,7 +99,7 @@ public class ZeitabschnittDTO implements Serializable {
 		+ "dem Betreuungsgutschein abzüglich eines allfälligen minimalen Elternbeitrags (den die Kita bzw. die "
 		+ "Tagesfamilienorganisation  den Eltern in Rechnung stellen würde).")
 	@Nonnull
-	private @NotNull @DecimalMin("0") BigDecimal verguenstigung;
+	private @NotNull BigDecimal verguenstigung;
 
 	@Schema(description = "Die Anzahl der Zeiteinheiten, die innerhalb der Periode dieses Zeitabschnitts belegt werden"
 		+ " dürfen.")
