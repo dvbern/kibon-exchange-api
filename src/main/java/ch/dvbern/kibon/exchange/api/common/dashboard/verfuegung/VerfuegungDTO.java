@@ -50,7 +50,7 @@ public class VerfuegungDTO implements Serializable {
 	private boolean gueltig;
 
 	@Nonnull
-	private @NotNull Integer fallNummer;
+	private @NotNull String refnr;
 
 	@Nonnull
 	private @NotNull BetreuungsAngebot betreuungsArt;
@@ -75,7 +75,7 @@ public class VerfuegungDTO implements Serializable {
 		this.gemeindeBfsNr = -1L;
 		this.gemeindeName = "";
 		this.kind = new KindDTO();
-		this.fallNummer = 0;
+		this.refnr = "";
 		this.gueltig = true;
 	}
 
@@ -84,7 +84,7 @@ public class VerfuegungDTO implements Serializable {
 		@Nonnull String institutionId,
 		@Nonnull LocalDateTime verfuegtAm,
 		boolean gueltig,
-		@Nonnull Integer fallNummer,
+		@Nonnull String refnr,
 		@Nonnull BetreuungsAngebot betreuungsArt,
 		@Nonnull Long gemeindeBfsNr,
 		@Nonnull String gemeindeName,
@@ -94,7 +94,7 @@ public class VerfuegungDTO implements Serializable {
 		this.institutionId = institutionId;
 		this.verfuegtAm = verfuegtAm;
 		this.gueltig = gueltig;
-		this.fallNummer = fallNummer;
+		this.refnr = refnr;
 		this.betreuungsArt = betreuungsArt;
 		this.gemeindeBfsNr = gemeindeBfsNr;
 		this.gemeindeName = gemeindeName;
@@ -116,7 +116,7 @@ public class VerfuegungDTO implements Serializable {
 
 		return getSequenceId().equals(that.getSequenceId()) &&
 			getInstitutionId().equals(that.getInstitutionId()) &&
-			getFallNummer().equals(that.getFallNummer()) &&
+			getRefnr().equals(that.getRefnr()) &&
 			getVerfuegtAm().equals(that.getVerfuegtAm()) &&
 			isGueltig() == that.isGueltig() &&
 			getBetreuungsArt() == that.getBetreuungsArt() &&
@@ -131,7 +131,7 @@ public class VerfuegungDTO implements Serializable {
 		return Objects.hash(
 			getSequenceId(),
 			getInstitutionId(),
-			getFallNummer(),
+			getRefnr(),
 			isGueltig(),
 			getVerfuegtAm(),
 			getBetreuungsArt(),
@@ -149,7 +149,7 @@ public class VerfuegungDTO implements Serializable {
 			.add("institutionId=" + institutionId)
 			.add("verfuegtAm=" + verfuegtAm)
 			.add("gueltig=" + gueltig)
-			.add("fallNummer=" + fallNummer)
+			.add("refnr=" + refnr)
 			.add("betreuungsArt=" + betreuungsArt)
 			.add("gemeindeBfsNr=" + gemeindeBfsNr)
 			.add("gemeindeName=" + gemeindeName)
@@ -229,12 +229,12 @@ public class VerfuegungDTO implements Serializable {
 	}
 
 	@Nonnull
-	public Integer getFallNummer() {
-		return fallNummer;
+	public String getRefnr() {
+		return refnr;
 	}
 
-	public void setFallNummer(@Nonnull Integer fallNummer) {
-		this.fallNummer = fallNummer;
+	public void setRefnr(@Nonnull String refnr) {
+		this.refnr = refnr;
 	}
 
 	@Nonnull
