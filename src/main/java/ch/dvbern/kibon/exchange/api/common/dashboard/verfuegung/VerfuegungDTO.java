@@ -39,7 +39,7 @@ public class VerfuegungDTO implements Serializable {
 	@Schema(description = "Strikt monoton steigende ID\n\n"
 		+ "Kann für Filterung mit dem `after_id` Parameter verwendet werden.")
 	@Nonnull
-	private @NotNull Long id;
+	private @NotNull Long sequenceId;
 
 	@Nonnull
 	private @NotNull String institutionId;
@@ -68,7 +68,7 @@ public class VerfuegungDTO implements Serializable {
 	private @NotNull @Valid List<ZeitabschnittDTO> zeitabschnitte = new ArrayList<>();
 
 	public VerfuegungDTO() {
-		this.id = -1L;
+		this.sequenceId = -1L;
 		this.institutionId = "";
 		this.verfuegtAm = LocalDateTime.MIN;
 		this.betreuungsArt = BetreuungsAngebot.KITA;
@@ -80,7 +80,7 @@ public class VerfuegungDTO implements Serializable {
 	}
 
 	public VerfuegungDTO(
-		@Nonnull Long id,
+		@Nonnull Long sequenceId,
 		@Nonnull String institutionId,
 		@Nonnull LocalDateTime verfuegtAm,
 		boolean gueltig,
@@ -90,7 +90,7 @@ public class VerfuegungDTO implements Serializable {
 		@Nonnull String gemeindeName,
 		@Nonnull KindDTO kind,
 		@Nonnull List<ZeitabschnittDTO> zeitabschnitte) {
-		this.id = id;
+		this.sequenceId = sequenceId;
 		this.institutionId = institutionId;
 		this.verfuegtAm = verfuegtAm;
 		this.gueltig = gueltig;
@@ -114,7 +114,7 @@ public class VerfuegungDTO implements Serializable {
 
 		VerfuegungDTO that = (VerfuegungDTO) o;
 
-		return getId().equals(that.getId()) &&
+		return getSequenceId().equals(that.getSequenceId()) &&
 			getInstitutionId().equals(that.getInstitutionId()) &&
 			getFallNummer().equals(that.getFallNummer()) &&
 			getVerfuegtAm().equals(that.getVerfuegtAm()) &&
@@ -129,7 +129,7 @@ public class VerfuegungDTO implements Serializable {
 	@Override
 	public int hashCode() {
 		return Objects.hash(
-			getId(),
+			getSequenceId(),
 			getInstitutionId(),
 			getFallNummer(),
 			isGueltig(),
@@ -145,7 +145,7 @@ public class VerfuegungDTO implements Serializable {
 	@Nonnull
 	public String toString() {
 		return new StringJoiner(", ", VerfuegungDTO.class.getSimpleName() + '[', "]")
-			.add("id=" + id)
+			.add("sequenceId=" + sequenceId)
 			.add("institutionId=" + institutionId)
 			.add("verfuegtAm=" + verfuegtAm)
 			.add("gueltig=" + gueltig)
@@ -157,13 +157,13 @@ public class VerfuegungDTO implements Serializable {
 	}
 
 	@Nonnull
-	@JsonProperty("sequenceId")
-	public Long getId() {
-		return id;
+	public Long getSequenceId() {
+		return sequenceId;
 	}
 
-	public void setId(@Nonnull Long id) {
-		this.id = id;
+	@JsonProperty("id")
+	public void setSequenceId(@Nonnull Long sequenceId) {
+		this.sequenceId = sequenceId;
 	}
 
 	@Nonnull
