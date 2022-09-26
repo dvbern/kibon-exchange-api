@@ -29,6 +29,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import ch.dvbern.kibon.exchange.api.common.betreuung.BetreuungsAngebot;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 public class VerfuegungDTO implements Serializable {
@@ -156,6 +157,7 @@ public class VerfuegungDTO implements Serializable {
 	}
 
 	@Nonnull
+	@JsonProperty("sequenceId")
 	public Long getId() {
 		return id;
 	}
