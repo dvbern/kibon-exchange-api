@@ -157,6 +157,7 @@ public class VerfuegungDTO implements Serializable {
 	}
 
 	@Nonnull
+	@JsonProperty("sequenceId")
 	public Long getSequenceId() {
 		return sequenceId;
 	}
