@@ -124,6 +124,8 @@ public class ZeitabschnittDTO implements Serializable {
 
 	private boolean besondereBeduerfnisse;
 
+	private boolean babyTarif;
+
 	public ZeitabschnittDTO() {
 		this.von = LocalDate.MIN;
 		this.bis = LocalDate.MIN;
@@ -141,6 +143,7 @@ public class ZeitabschnittDTO implements Serializable {
 		this.zeiteinheit = Zeiteinheit.PERCENTAGE;
 		this.massgebendesEinkommen = BigDecimal.ZERO;
 		this.besondereBeduerfnisse = false;
+		this.babyTarif = false;
 	}
 
 	public ZeitabschnittDTO(
@@ -159,7 +162,8 @@ public class ZeitabschnittDTO implements Serializable {
 		@Nullable BigDecimal anspruchsberechtigteAnzahlZeiteinheiten,
 		@Nullable Zeiteinheit zeiteinheit,
 		@Nonnull BigDecimal massgebendesEinkommen,
-		boolean besondereBeduerfnisse) {
+		boolean besondereBeduerfnisse,
+		boolean babyTarif) {
 		this.von = von;
 		this.bis = bis;
 		this.effektiveBetreuungPct = effektiveBetreuungPct;
@@ -176,6 +180,7 @@ public class ZeitabschnittDTO implements Serializable {
 		this.zeiteinheit = zeiteinheit;
 		this.massgebendesEinkommen = massgebendesEinkommen;
 		this.besondereBeduerfnisse = besondereBeduerfnisse;
+		this.babyTarif = babyTarif;
 	}
 
 	@Override
@@ -206,7 +211,8 @@ public class ZeitabschnittDTO implements Serializable {
 			that.getAnspruchsberechtigteAnzahlZeiteinheiten())
 			&& getZeiteinheit() == that.getZeiteinheit()
 			&& comparesEqual(getMassgebendesEinkommen(), that.getMassgebendesEinkommen())
-			&& isBesondereBeduerfnisse() == that.isBesondereBeduerfnisse();
+			&& isBesondereBeduerfnisse() == that.isBesondereBeduerfnisse()
+			&& isBabyTarif() == that.isBabyTarif();
 	}
 
 	@Override
@@ -227,7 +233,8 @@ public class ZeitabschnittDTO implements Serializable {
 			getAnspruchsberechtigteAnzahlZeiteinheiten(),
 			getZeiteinheit(),
 			getMassgebendesEinkommen(),
-			isBesondereBeduerfnisse());
+			isBesondereBeduerfnisse(),
+			isBabyTarif());
 	}
 
 	@Override
@@ -250,6 +257,7 @@ public class ZeitabschnittDTO implements Serializable {
 			.add("zeiteinheit=" + zeiteinheit)
 			.add("massgebendesEinkommen=" + massgebendesEinkommen)
 			.add("besondereBeduerfnisse=" + besondereBeduerfnisse)
+			.add("babyTarif=" + babyTarif)
 			.toString();
 	}
 
@@ -395,5 +403,13 @@ public class ZeitabschnittDTO implements Serializable {
 
 	public void setBesondereBeduerfnisse(boolean besondereBeduerfnisse) {
 		this.besondereBeduerfnisse = besondereBeduerfnisse;
+	}
+
+	public boolean isBabyTarif() {
+		return babyTarif;
+	}
+
+	public void setBabyTarif(boolean babyTarif) {
+		this.babyTarif = babyTarif;
 	}
 }

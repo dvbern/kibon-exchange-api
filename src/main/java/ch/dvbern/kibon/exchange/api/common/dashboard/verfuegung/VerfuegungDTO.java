@@ -29,6 +29,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import ch.dvbern.kibon.exchange.api.common.betreuung.BetreuungsAngebot;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 public class VerfuegungDTO implements Serializable {
@@ -38,7 +39,7 @@ public class VerfuegungDTO implements Serializable {
 	@Schema(description = "Strikt monoton steigende ID\n\n"
 		+ "Kann für Filterung mit dem `after_id` Parameter verwendet werden.")
 	@Nonnull
-	private @NotNull Long id;
+	private @NotNull Long sequenceId;
 
 	@Nonnull
 	private @NotNull String institutionId;
@@ -49,7 +50,7 @@ public class VerfuegungDTO implements Serializable {
 	private boolean gueltig;
 
 	@Nonnull
-	private @NotNull Integer fallNummer;
+	private @NotNull String refnr;
 
 	@Nonnull
 	private @NotNull BetreuungsAngebot betreuungsArt;
@@ -67,33 +68,33 @@ public class VerfuegungDTO implements Serializable {
 	private @NotNull @Valid List<ZeitabschnittDTO> zeitabschnitte = new ArrayList<>();
 
 	public VerfuegungDTO() {
-		this.id = -1L;
+		this.sequenceId = -1L;
 		this.institutionId = "";
 		this.verfuegtAm = LocalDateTime.MIN;
 		this.betreuungsArt = BetreuungsAngebot.KITA;
 		this.gemeindeBfsNr = -1L;
 		this.gemeindeName = "";
 		this.kind = new KindDTO();
-		this.fallNummer = 0;
+		this.refnr = "";
 		this.gueltig = true;
 	}
 
 	public VerfuegungDTO(
-		@Nonnull Long id,
+		@Nonnull Long sequenceId,
 		@Nonnull String institutionId,
 		@Nonnull LocalDateTime verfuegtAm,
 		boolean gueltig,
-		@Nonnull Integer fallNummer,
+		@Nonnull String refnr,
 		@Nonnull BetreuungsAngebot betreuungsArt,
 		@Nonnull Long gemeindeBfsNr,
 		@Nonnull String gemeindeName,
 		@Nonnull KindDTO kind,
 		@Nonnull List<ZeitabschnittDTO> zeitabschnitte) {
-		this.id = id;
+		this.sequenceId = sequenceId;
 		this.institutionId = institutionId;
 		this.verfuegtAm = verfuegtAm;
 		this.gueltig = gueltig;
-		this.fallNummer = fallNummer;
+		this.refnr = refnr;
 		this.betreuungsArt = betreuungsArt;
 		this.gemeindeBfsNr = gemeindeBfsNr;
 		this.gemeindeName = gemeindeName;
@@ -113,9 +114,9 @@ public class VerfuegungDTO implements Serializable {
 
 		VerfuegungDTO that = (VerfuegungDTO) o;
 
-		return getId().equals(that.getId()) &&
+		return getSequenceId().equals(that.getSequenceId()) &&
 			getInstitutionId().equals(that.getInstitutionId()) &&
-			getFallNummer().equals(that.getFallNummer()) &&
+			getRefnr().equals(that.getRefnr()) &&
 			getVerfuegtAm().equals(that.getVerfuegtAm()) &&
 			isGueltig() == that.isGueltig() &&
 			getBetreuungsArt() == that.getBetreuungsArt() &&
@@ -128,9 +129,9 @@ public class VerfuegungDTO implements Serializable {
 	@Override
 	public int hashCode() {
 		return Objects.hash(
-			getId(),
+			getSequenceId(),
 			getInstitutionId(),
-			getFallNummer(),
+			getRefnr(),
 			isGueltig(),
 			getVerfuegtAm(),
 			getBetreuungsArt(),
@@ -144,11 +145,11 @@ public class VerfuegungDTO implements Serializable {
 	@Nonnull
 	public String toString() {
 		return new StringJoiner(", ", VerfuegungDTO.class.getSimpleName() + '[', "]")
-			.add("id=" + id)
+			.add("sequenceId=" + sequenceId)
 			.add("institutionId=" + institutionId)
 			.add("verfuegtAm=" + verfuegtAm)
 			.add("gueltig=" + gueltig)
-			.add("fallNummer=" + fallNummer)
+			.add("refnr=" + refnr)
 			.add("betreuungsArt=" + betreuungsArt)
 			.add("gemeindeBfsNr=" + gemeindeBfsNr)
 			.add("gemeindeName=" + gemeindeName)
@@ -156,12 +157,14 @@ public class VerfuegungDTO implements Serializable {
 	}
 
 	@Nonnull
-	public Long getId() {
-		return id;
+	@JsonProperty("sequenceId")
+	public Long getSequenceId() {
+		return sequenceId;
 	}
 
-	public void setId(@Nonnull Long id) {
-		this.id = id;
+	@JsonProperty("id")
+	public void setSequenceId(@Nonnull Long sequenceId) {
+		this.sequenceId = sequenceId;
 	}
 
 	@Nonnull
@@ -227,12 +230,12 @@ public class VerfuegungDTO implements Serializable {
 	}
 
 	@Nonnull
-	public Integer getFallNummer() {
-		return fallNummer;
+	public String getRefnr() {
+		return refnr;
 	}
 
-	public void setFallNummer(@Nonnull Integer fallNummer) {
-		this.fallNummer = fallNummer;
+	public void setRefnr(@Nonnull String refnr) {
+		this.refnr = refnr;
 	}
 
 	@Nonnull
