@@ -31,6 +31,8 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import ch.dvbern.kibon.exchange.api.common.tagesschule.tarife.TagesschuleTarifeDTO;
+import ch.dvbern.kibon.exchange.api.common.tagesschule.tarife.TarifDTO;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 @Schema(description = "Entspricht einer Anmeldung bei einer Tagesschule")
@@ -132,6 +134,13 @@ public class TagesschuleAnmeldungDTO implements Serializable {
 	@NotNull
 	@Nonnull
 	private List<ModulAuswahlDTO> module = new ArrayList<>();
+
+	@Schema(description = "Tarife der Tagesschul-Betreuung.\n\n"
+		+ "Noch nicht bestätigte TagesschulAnmeldungen enthalten noch keine Tarife.\n\n"
+		+ "Die Tarife sind abhängig von der finanziellen Situation der Familie und müssen durch die Gemeinde verfügt "
+		+ "werden.")
+	@Nullable
+	private TagesschuleTarifeDTO tarife = null;
 
 	@Schema(description = "In einzelfällen kann eine Anmledung widerrufen werden. `true`, falls eine Anmeldung nicht "
 		+ "mehr gilt.\n"
@@ -342,6 +351,15 @@ public class TagesschuleAnmeldungDTO implements Serializable {
 
 	public void setModule(@Nonnull List<ModulAuswahlDTO> module) {
 		this.module = module;
+	}
+
+	@Nullable
+	public TagesschuleTarifeDTO getTarife() {
+		return tarife;
+	}
+
+	public void setTarife(@Nullable TagesschuleTarifeDTO tarife) {
+		this.tarife = tarife;
 	}
 
 	public boolean isAnmeldungZurueckgezogen() {
