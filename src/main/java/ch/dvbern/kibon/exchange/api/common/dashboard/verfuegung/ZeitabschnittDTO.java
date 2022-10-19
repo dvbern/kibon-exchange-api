@@ -126,6 +126,14 @@ public class ZeitabschnittDTO implements Serializable {
 
 	private boolean babyTarif;
 
+	@Schema(description = "Anzahl von betreute Tage oder Stunde in der Monat")
+	@Nonnull
+	private @NotNull BigDecimal betreuungspensumZeiteinheit;
+
+	@Schema(description = "Elternbeitrag, bezeichnet das Unterschied zwischen die Vollkosten und die Vergünstigung")
+	@Nonnull
+	private @NotNull BigDecimal elternbeitrag;
+
 	public ZeitabschnittDTO() {
 		this.von = LocalDate.MIN;
 		this.bis = LocalDate.MIN;
@@ -144,6 +152,8 @@ public class ZeitabschnittDTO implements Serializable {
 		this.massgebendesEinkommen = BigDecimal.ZERO;
 		this.besondereBeduerfnisse = false;
 		this.babyTarif = false;
+		this.betreuungspensumZeiteinheit = BigDecimal.ZERO;
+		this.elternbeitrag = BigDecimal.ZERO;
 	}
 
 	public ZeitabschnittDTO(
@@ -163,7 +173,9 @@ public class ZeitabschnittDTO implements Serializable {
 		@Nullable Zeiteinheit zeiteinheit,
 		@Nonnull BigDecimal massgebendesEinkommen,
 		boolean besondereBeduerfnisse,
-		boolean babyTarif) {
+		boolean babyTarif,
+		@Nonnull BigDecimal betreuungspensumZeiteinheit,
+		@Nonnull BigDecimal elternbeitrag) {
 		this.von = von;
 		this.bis = bis;
 		this.effektiveBetreuungPct = effektiveBetreuungPct;
@@ -181,6 +193,8 @@ public class ZeitabschnittDTO implements Serializable {
 		this.massgebendesEinkommen = massgebendesEinkommen;
 		this.besondereBeduerfnisse = besondereBeduerfnisse;
 		this.babyTarif = babyTarif;
+		this.betreuungspensumZeiteinheit = betreuungspensumZeiteinheit;
+		this.elternbeitrag = elternbeitrag;
 	}
 
 	@Override
@@ -212,7 +226,9 @@ public class ZeitabschnittDTO implements Serializable {
 			&& getZeiteinheit() == that.getZeiteinheit()
 			&& comparesEqual(getMassgebendesEinkommen(), that.getMassgebendesEinkommen())
 			&& isBesondereBeduerfnisse() == that.isBesondereBeduerfnisse()
-			&& isBabyTarif() == that.isBabyTarif();
+			&& isBabyTarif() == that.isBabyTarif()
+			&& comparesEqual(getBetreuungspensumZeiteinheit(), that.getBetreuungspensumZeiteinheit())
+			&& comparesEqual(getElternbeitrag(), that.getElternbeitrag());
 	}
 
 	@Override
@@ -234,7 +250,9 @@ public class ZeitabschnittDTO implements Serializable {
 			getZeiteinheit(),
 			getMassgebendesEinkommen(),
 			isBesondereBeduerfnisse(),
-			isBabyTarif());
+			isBabyTarif(),
+			getBetreuungspensumZeiteinheit(),
+			getElternbeitrag());
 	}
 
 	@Override
@@ -258,6 +276,8 @@ public class ZeitabschnittDTO implements Serializable {
 			.add("massgebendesEinkommen=" + massgebendesEinkommen)
 			.add("besondereBeduerfnisse=" + besondereBeduerfnisse)
 			.add("babyTarif=" + babyTarif)
+			.add("betreuungspensumZeiteinheit=" + betreuungspensumZeiteinheit)
+			.add("elternbeitrag=" + elternbeitrag)
 			.toString();
 	}
 
@@ -411,5 +431,23 @@ public class ZeitabschnittDTO implements Serializable {
 
 	public void setBabyTarif(boolean babyTarif) {
 		this.babyTarif = babyTarif;
+	}
+
+	@Nonnull
+	public BigDecimal getBetreuungspensumZeiteinheit() {
+		return betreuungspensumZeiteinheit;
+	}
+
+	public void setBetreuungspensumZeiteinheit(@Nonnull BigDecimal betreuungspensumZeiteinheit) {
+		this.betreuungspensumZeiteinheit = betreuungspensumZeiteinheit;
+	}
+
+	@Nonnull
+	public BigDecimal getElternbeitrag() {
+		return elternbeitrag;
+	}
+
+	public void setElternbeitrag(@Nonnull BigDecimal elternbeitrag) {
+		this.elternbeitrag = elternbeitrag;
 	}
 }
