@@ -44,21 +44,27 @@ public class InstitutionDTO implements Serializable {
 	@Nonnull
 	private @NotNull @Valid AdresseDTO adresse;
 
+	@Nonnull
+	private @NotNull @Valid KibonMandant mandant;
+
 	public InstitutionDTO() {
 		this.id = "";
 		this.name = "";
 		this.adresse = new AdresseDTO();
+		this.mandant = KibonMandant.BERN;
 	}
 
 	public InstitutionDTO(
 		@Nonnull String id,
 		@Nonnull String name,
 		@Nonnull String traegerschaft,
-		@Nonnull AdresseDTO adresse) {
+		@Nonnull AdresseDTO adresse,
+		@Nonnull KibonMandant mandant) {
 		this.id = id;
 		this.name = name;
 		this.traegerschaft = traegerschaft;
 		this.adresse = adresse;
+		this.mandant = mandant;
 	}
 
 		public InstitutionDTO(
@@ -70,11 +76,13 @@ public class InstitutionDTO implements Serializable {
 		@Nullable String adresszusatz,
 		@Nonnull String plz,
 		@Nonnull String ort,
-		@Nonnull String land) {
+		@Nonnull String land,
+		@Nonnull KibonMandant mandant) {
 		this.id = id;
 		this.name = name;
 		this.traegerschaft = traegerschaft;
 		this.adresse = new AdresseDTO(strasse, hausnummer, adresszusatz, plz, ort, land);
+		this.mandant = mandant;
 	}
 
 	@Override
@@ -92,12 +100,13 @@ public class InstitutionDTO implements Serializable {
 		return getId().equals(that.getId()) &&
 			getName().equals(that.getName()) &&
 			Objects.equals(getTraegerschaft(), that.getTraegerschaft()) &&
-			getAdresse().equals(that.getAdresse());
+			getAdresse().equals(that.getAdresse()) &&
+			getMandant() == that.getMandant();
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getId(), getName(), getTraegerschaft(), getAdresse());
+		return Objects.hash(getId(), getName(), getTraegerschaft(), getAdresse(), getMandant());
 	}
 
 	@Override
@@ -107,6 +116,7 @@ public class InstitutionDTO implements Serializable {
 			.add("id='" + id + '\'')
 			.add("name='" + name + '\'')
 			.add("traegerschaft='" + traegerschaft + '\'')
+			.add("mandant='" + mandant + '\'')
 			.toString();
 	}
 
@@ -144,5 +154,14 @@ public class InstitutionDTO implements Serializable {
 
 	public void setAdresse(@Nonnull AdresseDTO adresse) {
 		this.adresse = adresse;
+	}
+
+	@Nonnull
+	public KibonMandant getMandant() {
+		return mandant;
+	}
+
+	public void setMandant(@Nonnull KibonMandant mandant) {
+		this.mandant = mandant;
 	}
 }

@@ -57,8 +57,9 @@ public class ClientInstitutionDTO extends InstitutionDTO {
 		@Nullable String adresszusatz,
 		@Nonnull String plz,
 		@Nonnull String ort,
-		@Nonnull String land) {
-		super(id, name, traegerschaft, strasse, hausnummer, adresszusatz, plz, ort, land);
+		@Nonnull String land,
+		@Nonnull KibonMandant mandant) {
+		super(id, name, traegerschaft, strasse, hausnummer, adresszusatz, plz, ort, land, mandant);
 	}
 
 	public ClientInstitutionDTO(
@@ -72,8 +73,9 @@ public class ClientInstitutionDTO extends InstitutionDTO {
 		@Nonnull String ort,
 		@Nonnull String land,
 		@Nullable LocalDate berechtigtVon,
-		@Nullable LocalDate berechtigtBis) {
-		super(id, name, traegerschaft, strasse, hausnummer, adresszusatz, plz, ort, land);
+		@Nullable LocalDate berechtigtBis,
+		@Nonnull KibonMandant mandant) {
+		super(id, name, traegerschaft, strasse, hausnummer, adresszusatz, plz, ort, land, mandant);
 		this.clientBerechtigung.setVon(berechtigtVon);
 		this.clientBerechtigung.setBis(berechtigtBis);
 	}
