@@ -88,7 +88,7 @@ public class ZeitabschnittDTO implements Serializable, Zeitabschnitt {
 
 	@Schema(description = "Bezeichnet den Betrag in CHF, der an die Institution überwiesen wird. Dieser entspricht "
 		+ "dem Betreuungsgutschein abzüglich eines allfälligen minimalen Elternbeitrags (den die Kita bzw. die "
-		+ "Tagesfamilienorganisation  den Eltern in Rechnung stellen würde).")
+		+ "Tagesfamilienorganisation den Eltern in Rechnung stellen würde).")
 	@Nonnull
 	private @NotNull @DecimalMin("0") BigDecimal verguenstigung;
 

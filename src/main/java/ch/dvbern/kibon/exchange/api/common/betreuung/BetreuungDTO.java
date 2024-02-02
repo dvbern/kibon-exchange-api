@@ -65,6 +65,10 @@ public class BetreuungDTO implements Serializable {
 		"`true`, falls für das Kind eine Eingewöhnung bei der Institution stattfindet.\n")
 	private boolean eingewoehnungInPeriode;
 
+	@Schema(description =
+		"`true`, falls für das Kind eine Eingewöhnung bei der Institution stattfindet.\n")
+	private boolean sprachfoerderungBestaetigt;
+
 	public BetreuungDTO() {
 		institutionId = "";
 		refnr = "";
@@ -73,6 +77,7 @@ public class BetreuungDTO implements Serializable {
 		gemeindeName = null;
 		ausserordentlicherBetreuungsaufwand = false;
 		eingewoehnungInPeriode = false;
+		sprachfoerderungBestaetigt = false;
 	}
 
 	public BetreuungDTO(
@@ -82,7 +87,8 @@ public class BetreuungDTO implements Serializable {
 		@Nullable Long gemeindeBfsNr,
 		@Nullable String gemeindeName,
 		boolean ausserordentlicherBetreuungsaufwand,
-		boolean eingewoehnungInPeriode) {
+		boolean eingewoehnungInPeriode,
+		boolean sprachfoerderungBestaetigt) {
 		this.institutionId = institutionId;
 		this.refnr = refnr;
 		this.zeitabschnitte = zeitabschnitte;
@@ -90,6 +96,7 @@ public class BetreuungDTO implements Serializable {
 		this.gemeindeName = gemeindeName;
 		this.ausserordentlicherBetreuungsaufwand = ausserordentlicherBetreuungsaufwand;
 		this.eingewoehnungInPeriode = eingewoehnungInPeriode;
+		this.sprachfoerderungBestaetigt = sprachfoerderungBestaetigt;
 	}
 
 	@Override
@@ -110,7 +117,8 @@ public class BetreuungDTO implements Serializable {
 			Objects.equals(getGemeindeBfsNr(), that.getGemeindeBfsNr()) &&
 			Objects.equals(getGemeindeName(), that.getGemeindeName()) &&
 			isAusserordentlicherBetreuungsaufwand() == that.isAusserordentlicherBetreuungsaufwand() &&
-			isEingewoehnungInPeriode() == that.isEingewoehnungInPeriode();
+			isEingewoehnungInPeriode() == that.isEingewoehnungInPeriode() &&
+			isSprachfoerderungBestaetigt() == that.isSprachfoerderungBestaetigt();
 	}
 
 	@Override
@@ -123,7 +131,8 @@ public class BetreuungDTO implements Serializable {
 			getGemeindeName(),
 			getInstitutionId(),
 			isAusserordentlicherBetreuungsaufwand(),
-			isEingewoehnungInPeriode());
+			isEingewoehnungInPeriode(),
+			isSprachfoerderungBestaetigt());
 	}
 
 	@Override
@@ -194,5 +203,13 @@ public class BetreuungDTO implements Serializable {
 
 	public void setEingewoehnungInPeriode(boolean eingewoehnungInPeriode) {
 		this.eingewoehnungInPeriode = eingewoehnungInPeriode;
+	}
+
+	public boolean isSprachfoerderungBestaetigt() {
+		return sprachfoerderungBestaetigt;
+	}
+
+	public void setSprachfoerderungBestaetigt(boolean sprachfoerderungBestaetigt) {
+		this.sprachfoerderungBestaetigt = sprachfoerderungBestaetigt;
 	}
 }

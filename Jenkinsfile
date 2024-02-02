@@ -28,7 +28,6 @@ properties([
 		])
 ])
 
-def mvnVersion = "Maven_3.6.3"
 def jdkVersion = "OpenJDK_1.8_222"
 // comma separated list of email addresses of all team members (for notification)
 def recipients = "fabio.heer@dvbern.ch"
@@ -87,8 +86,8 @@ if (params.performRelease) {
 			}
 
 			try {
-				withMaven(jdk: jdkVersion, maven: mvnVersion) {
-					dvbUtil.genericSh 'mvn -U -Pdvbern.oss -Dmaven.test.failure.ignore=true clean ' + verifyOrDeploy()
+				withMaven(jdk: jdkVersion) {
+					dvbUtil.genericSh './mvnw -U -Pdvbern.oss -Dmaven.test.failure.ignore=true clean ' + verifyOrDeploy()
 				}
 				if (currentBuild.result == "UNSTABLE") {
 					handleFailures("build is unstable")
