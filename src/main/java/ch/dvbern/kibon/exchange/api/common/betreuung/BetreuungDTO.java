@@ -65,6 +65,11 @@ public class BetreuungDTO implements Serializable {
 		"`true`, falls für das Kind eine Eingewöhnung bei der Institution stattfindet.\n")
 	private boolean eingewoehnungInPeriode;
 
+	@Schema(description = "Details zu den Eingewöhnungen, welche innerhalb oder unmittelbar vor der Gutscheinperiode "
+		+ "stattgefunden haben.")
+	@Nullable
+	private @Valid List<EingewoehnungZeitabschnittDTO> eingewoehnungen;
+
 	@Schema(description =
 		"`true`, falls für das Kind eine Eingewöhnung bei der Institution stattfindet.\n")
 	private Boolean sprachfoerderungBestaetigt;
@@ -77,6 +82,8 @@ public class BetreuungDTO implements Serializable {
 		gemeindeName = null;
 		ausserordentlicherBetreuungsaufwand = false;
 		eingewoehnungInPeriode = false;
+		sprachfoerderungBestaetigt = false;
+		eingewoehnungen = new ArrayList<>();
 	}
 
 	public BetreuungDTO(
