@@ -90,6 +90,9 @@ public class BetreuungZeitabschnittDTO implements Serializable {
 	@Nullable
 	private BigDecimal tarifProNebenmahlzeiten;
 
+	@Schema(description = "Betrift dieser Betreuungszeitabschnitt die Schulferien?")
+	private boolean betreuungInFerienzeit;
+
 	public BetreuungZeitabschnittDTO() {
 		this.betreuungskosten = BigDecimal.ZERO;
 		this.betreuungspensum = BigDecimal.ZERO;
@@ -140,8 +143,9 @@ public class BetreuungZeitabschnittDTO implements Serializable {
 			getPensumUnit() == that.getPensumUnit() &&
 			getBetreuungskosten().compareTo(that.getBetreuungskosten()) == 0 &&
 			getBetreuungspensum().compareTo(that.getBetreuungspensum()) == 0 &&
-			getAnzahlHauptmahlzeiten().equals(that.getAnzahlHauptmahlzeiten()) &&
-			getAnzahlNebenmahlzeiten().equals(that.getAnzahlNebenmahlzeiten());
+			getAnzahlHauptmahlzeiten().compareTo(that.getAnzahlHauptmahlzeiten()) == 0 &&
+			getAnzahlNebenmahlzeiten().compareTo(that.getAnzahlNebenmahlzeiten()) == 0 &&
+			isBetreuungInFerienzeit() == that.isBetreuungInFerienzeit();
 	}
 
 	@Override
@@ -153,7 +157,8 @@ public class BetreuungZeitabschnittDTO implements Serializable {
 			getBetreuungskosten(),
 			getBetreuungspensum(),
 			getAnzahlHauptmahlzeiten(),
-			getAnzahlNebenmahlzeiten());
+			getAnzahlNebenmahlzeiten(),
+			isBetreuungInFerienzeit());
 	}
 
 	@Nonnull
@@ -235,5 +240,13 @@ public class BetreuungZeitabschnittDTO implements Serializable {
 
 	public void setTarifProNebenmahlzeiten(@Nullable BigDecimal tarifProNebenmahlzeiten) {
 		this.tarifProNebenmahlzeiten = tarifProNebenmahlzeiten;
+	}
+
+	public boolean isBetreuungInFerienzeit() {
+		return betreuungInFerienzeit;
+	}
+
+	public void setBetreuungInFerienzeit(boolean betreuungInFerienzeit) {
+		this.betreuungInFerienzeit = betreuungInFerienzeit;
 	}
 }
