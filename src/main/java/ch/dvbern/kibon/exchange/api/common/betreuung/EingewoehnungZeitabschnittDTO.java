@@ -52,9 +52,9 @@ public class EingewoehnungZeitabschnittDTO implements Serializable {
 			return false;
 		}
 		EingewoehnungZeitabschnittDTO that = (EingewoehnungZeitabschnittDTO) o;
-		return getPauschale().compareTo(that.getPauschale()) == 0 && Objects.equals(
-			getVon(),
-			that.getVon()) && Objects.equals(getBis(), that.getBis());
+		return getPauschale().compareTo(that.getPauschale()) == 0 &&
+			Objects.equals(getVon(), that.getVon()) &&
+			Objects.equals(getBis(), that.getBis());
 	}
 
 	@Override
