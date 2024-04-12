@@ -66,7 +66,7 @@ public class BetreuungDTO implements Serializable {
 	private boolean eingewoehnungInPeriode = false;
 
 	@Schema(description =
-		"`true`, falls für das Kind eine Eingewöhnung bei der Institution stattfindet.\n")
+		"`true`, falls das Kind durch die Betreuung eine sprachliche Förderung einer Amtssprache erhält.\n")
 	@Nullable
 	private Boolean sprachfoerderungBestaetigt = null;
 
@@ -80,8 +80,7 @@ public class BetreuungDTO implements Serializable {
 		@Nullable Long gemeindeBfsNr,
 		@Nullable String gemeindeName,
 		boolean ausserordentlicherBetreuungsaufwand,
-		boolean eingewoehnungInPeriode,
-		boolean sprachfoerderungBestaetigt) {
+		boolean eingewoehnungInPeriode) {
 		this.institutionId = institutionId;
 		this.refnr = refnr;
 		this.zeitabschnitte = zeitabschnitte;
@@ -89,7 +88,6 @@ public class BetreuungDTO implements Serializable {
 		this.gemeindeName = gemeindeName;
 		this.ausserordentlicherBetreuungsaufwand = ausserordentlicherBetreuungsaufwand;
 		this.eingewoehnungInPeriode = eingewoehnungInPeriode;
-		this.sprachfoerderungBestaetigt = sprachfoerderungBestaetigt;
 	}
 
 	@Override
