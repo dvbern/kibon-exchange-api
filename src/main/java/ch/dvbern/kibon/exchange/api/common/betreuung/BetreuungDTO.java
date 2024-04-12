@@ -77,6 +77,7 @@ public class BetreuungDTO implements Serializable {
 		gemeindeName = null;
 		ausserordentlicherBetreuungsaufwand = false;
 		eingewoehnungInPeriode = false;
+		sprachfoerderungBestaetigt = false;
 	}
 
 	public BetreuungDTO(
@@ -117,7 +118,7 @@ public class BetreuungDTO implements Serializable {
 			Objects.equals(getGemeindeName(), that.getGemeindeName()) &&
 			isAusserordentlicherBetreuungsaufwand() == that.isAusserordentlicherBetreuungsaufwand() &&
 			isEingewoehnungInPeriode() == that.isEingewoehnungInPeriode() &&
-			isSprachfoerderungBestaetigt() == that.isSprachfoerderungBestaetigt();
+			Objects.equals(isSprachfoerderungBestaetigt(), that.isSprachfoerderungBestaetigt());
 	}
 
 	@Override
