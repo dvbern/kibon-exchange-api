@@ -23,6 +23,8 @@ public enum BetreuungsAngebot {
 
 	TAGESSCHULE,
 
+	MITTAGSTISCH,
+
 	/**
 	 * @deprecated only in schema &lt; 2.0
 	 */
