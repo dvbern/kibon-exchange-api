@@ -38,46 +38,39 @@ public class BetreuungDTO implements Serializable {
 
 	@Schema(description = "kiBon ID der Institution, in welcher das Kind eine Betreuung hat.")
 	@Nonnull
-	private @Size(min = 1) @NotNull String institutionId;
+	private @Size(min = 1) @NotNull String institutionId = "";
 
 	@Schema(description = "Eindeutige kiBon Referenz Nummmer\n\nSetzt sich zusammen aus JAHR.FALL.GEMEINDE.KIND.BETREUUNG")
 	@Nonnull
-	private @Size(min = 1) @NotNull String refnr;
+	private @Size(min = 1) @NotNull String refnr = "";
 
 	@Schema(description = "Sollte alle Betreuungszeiträume innerhalb der Gesuchs-Periode beinhalten.")
 	@Nonnull
-	private @NotNull @Valid List<BetreuungZeitabschnittDTO> zeitabschnitte;
+	private @NotNull @Valid List<BetreuungZeitabschnittDTO> zeitabschnitte = new ArrayList<>();
 
 	@Schema(description = "Entspricht der Gemeinde BFS Nummer, in welcher das Kind betreuut wird.")
 	@Nullable
-	private Long gemeindeBfsNr;
+	private Long gemeindeBfsNr = null;
 
 	@Schema(description = "Entspricht dem Gemeinde Namen, in welcher das Kind betreuut wird.")
 	@Nullable
-	private String gemeindeName;
+	private String gemeindeName = null;
 
 	@Schema(description =
 		"`true`, falls für das Kind einen ausserordentlichen Betreuungsaufwand gemäss BGSDV, Artikel 11 - 15 "
 			+ "in Rechnung gestellt wird.\n")
-	private boolean ausserordentlicherBetreuungsaufwand;
+	private boolean ausserordentlicherBetreuungsaufwand = false;
 
 	@Schema(description =
 		"`true`, falls für das Kind eine Eingewöhnung bei der Institution stattfindet.\n")
-	private boolean eingewoehnungInPeriode;
+	private boolean eingewoehnungInPeriode = false;
 
 	@Schema(description =
 		"`true`, falls für das Kind eine Eingewöhnung bei der Institution stattfindet.\n")
-	private Boolean sprachfoerderungBestaetigt;
+	@Nullable
+	private Boolean sprachfoerderungBestaetigt = null;
 
 	public BetreuungDTO() {
-		institutionId = "";
-		refnr = "";
-		zeitabschnitte = new ArrayList<>();
-		gemeindeBfsNr = null;
-		gemeindeName = null;
-		ausserordentlicherBetreuungsaufwand = false;
-		eingewoehnungInPeriode = false;
-		sprachfoerderungBestaetigt = false;
 	}
 
 	public BetreuungDTO(
@@ -118,7 +111,7 @@ public class BetreuungDTO implements Serializable {
 			Objects.equals(getGemeindeName(), that.getGemeindeName()) &&
 			isAusserordentlicherBetreuungsaufwand() == that.isAusserordentlicherBetreuungsaufwand() &&
 			isEingewoehnungInPeriode() == that.isEingewoehnungInPeriode() &&
-			Objects.equals(isSprachfoerderungBestaetigt(), that.isSprachfoerderungBestaetigt());
+			Objects.equals(getSprachfoerderungBestaetigt(), that.getSprachfoerderungBestaetigt());
 	}
 
 	@Override
@@ -132,7 +125,7 @@ public class BetreuungDTO implements Serializable {
 			getInstitutionId(),
 			isAusserordentlicherBetreuungsaufwand(),
 			isEingewoehnungInPeriode(),
-			isSprachfoerderungBestaetigt());
+			getSprachfoerderungBestaetigt());
 	}
 
 	@Override
@@ -205,11 +198,12 @@ public class BetreuungDTO implements Serializable {
 		this.eingewoehnungInPeriode = eingewoehnungInPeriode;
 	}
 
-	public Boolean isSprachfoerderungBestaetigt() {
+	@Nullable
+	public Boolean getSprachfoerderungBestaetigt() {
 		return sprachfoerderungBestaetigt;
 	}
 
-	public void setSprachfoerderungBestaetigt(Boolean sprachfoerderungBestaetigt) {
+	public void setSprachfoerderungBestaetigt(@Nullable Boolean sprachfoerderungBestaetigt) {
 		this.sprachfoerderungBestaetigt = sprachfoerderungBestaetigt;
 	}
 }
