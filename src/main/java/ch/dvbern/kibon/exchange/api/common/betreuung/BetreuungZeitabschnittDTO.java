@@ -23,6 +23,7 @@ import java.util.Objects;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.validation.Valid;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -90,6 +91,13 @@ public class BetreuungZeitabschnittDTO implements Serializable {
 	@Nullable
 	private BigDecimal tarifProNebenmahlzeiten;
 
+	@Schema(description = "Betrift dieser Betreuungszeitabschnitt die Schulferien?")
+	private boolean betreuungInFerienzeit;
+
+	@Schema(description = "Eingewöhnungskosten, welche den Eltern in Rechnung gestellt wurden")
+	@Nullable
+	private @Valid EingewoehnungZeitabschnittDTO eingewoehnung;
+
 	public BetreuungZeitabschnittDTO() {
 		this.betreuungskosten = BigDecimal.ZERO;
 		this.betreuungspensum = BigDecimal.ZERO;
@@ -140,8 +148,10 @@ public class BetreuungZeitabschnittDTO implements Serializable {
 			getPensumUnit() == that.getPensumUnit() &&
 			getBetreuungskosten().compareTo(that.getBetreuungskosten()) == 0 &&
 			getBetreuungspensum().compareTo(that.getBetreuungspensum()) == 0 &&
-			getAnzahlHauptmahlzeiten().equals(that.getAnzahlHauptmahlzeiten()) &&
-			getAnzahlNebenmahlzeiten().equals(that.getAnzahlNebenmahlzeiten());
+			getAnzahlHauptmahlzeiten().compareTo(that.getAnzahlHauptmahlzeiten()) == 0 &&
+			getAnzahlNebenmahlzeiten().compareTo(that.getAnzahlNebenmahlzeiten()) == 0 &&
+			isBetreuungInFerienzeit() == that.isBetreuungInFerienzeit() &&
+			Objects.equals(getEingewoehnung(), that.getEingewoehnung());
 	}
 
 	@Override
@@ -153,7 +163,9 @@ public class BetreuungZeitabschnittDTO implements Serializable {
 			getBetreuungskosten(),
 			getBetreuungspensum(),
 			getAnzahlHauptmahlzeiten(),
-			getAnzahlNebenmahlzeiten());
+			getAnzahlNebenmahlzeiten(),
+			isBetreuungInFerienzeit(),
+			getEingewoehnung());
 	}
 
 	@Nonnull
@@ -235,5 +247,22 @@ public class BetreuungZeitabschnittDTO implements Serializable {
 
 	public void setTarifProNebenmahlzeiten(@Nullable BigDecimal tarifProNebenmahlzeiten) {
 		this.tarifProNebenmahlzeiten = tarifProNebenmahlzeiten;
+	}
+
+	public boolean isBetreuungInFerienzeit() {
+		return betreuungInFerienzeit;
+	}
+
+	public void setBetreuungInFerienzeit(boolean betreuungInFerienzeit) {
+		this.betreuungInFerienzeit = betreuungInFerienzeit;
+	}
+
+	@Nullable
+	public EingewoehnungZeitabschnittDTO getEingewoehnung() {
+		return eingewoehnung;
+	}
+
+	public void setEingewoehnung(@Nullable EingewoehnungZeitabschnittDTO eingewoehnung) {
+		this.eingewoehnung = eingewoehnung;
 	}
 }
