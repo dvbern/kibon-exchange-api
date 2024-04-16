@@ -31,6 +31,8 @@ import javax.validation.constraints.NotNull;
 import ch.dvbern.kibon.exchange.api.common.shared.Zeiteinheit;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
+import static ch.dvbern.kibon.exchange.api.common.util.ComparatorUtil.comparesEqual;
+
 @Schema(description = "Beschreibt die monatlichen Betreuungsangaben\n\n."
 	+ "Falls sich eine der Angaben innerhalb eines Monats ändern, soll dafür ein neuer Zeitabschnitt übermittelt "
 	+ "werden.")
@@ -98,6 +100,10 @@ public class BetreuungZeitabschnittDTO implements Serializable {
 	@Nullable
 	private @Valid EingewoehnungZeitabschnittDTO eingewoehnung;
 
+	@Schema(description = "") // TODO
+	@Nullable
+	private @Min(0) BigDecimal betreuuteTage = null;
+
 	public BetreuungZeitabschnittDTO() {
 		this.betreuungskosten = BigDecimal.ZERO;
 		this.betreuungspensum = BigDecimal.ZERO;
@@ -150,8 +156,12 @@ public class BetreuungZeitabschnittDTO implements Serializable {
 			getBetreuungspensum().compareTo(that.getBetreuungspensum()) == 0 &&
 			getAnzahlHauptmahlzeiten().compareTo(that.getAnzahlHauptmahlzeiten()) == 0 &&
 			getAnzahlNebenmahlzeiten().compareTo(that.getAnzahlNebenmahlzeiten()) == 0 &&
+			comparesEqual(getTarifProHauptmahlzeiten(), that.getTarifProHauptmahlzeiten()) &&
+			comparesEqual(getTarifProNebenmahlzeiten(), that.getTarifProHauptmahlzeiten()) &&
 			isBetreuungInFerienzeit() == that.isBetreuungInFerienzeit() &&
-			Objects.equals(getEingewoehnung(), that.getEingewoehnung());
+			Objects.equals(getEingewoehnung(), that.getEingewoehnung()) &&
+			comparesEqual(getBetreuuteTage(), that.getBetreuuteTage())
+			;
 	}
 
 	@Override
@@ -164,8 +174,11 @@ public class BetreuungZeitabschnittDTO implements Serializable {
 			getBetreuungspensum(),
 			getAnzahlHauptmahlzeiten(),
 			getAnzahlNebenmahlzeiten(),
+			getTarifProHauptmahlzeiten(),
+			getTarifProNebenmahlzeiten(),
 			isBetreuungInFerienzeit(),
-			getEingewoehnung());
+			getEingewoehnung(),
+			getBetreuuteTage());
 	}
 
 	@Nonnull
@@ -264,5 +277,14 @@ public class BetreuungZeitabschnittDTO implements Serializable {
 
 	public void setEingewoehnung(@Nullable EingewoehnungZeitabschnittDTO eingewoehnung) {
 		this.eingewoehnung = eingewoehnung;
+	}
+
+	@Nullable
+	public BigDecimal getBetreuuteTage() {
+		return betreuuteTage;
+	}
+
+	public void setBetreuuteTage(@Nullable BigDecimal betreuuteTage) {
+		this.betreuuteTage = betreuuteTage;
 	}
 }
