@@ -17,15 +17,15 @@
 @Library('dvbern-ci') _
 
 properties([
-		[$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', numToKeepStr: '10']],
-		parameters([
-				booleanParam(defaultValue: false, description: 'Do you want to perform a Release?', name:
-						'performRelease'),
-				string(defaultValue: '', description: 'This release version', name: 'releaseversion', trim:
-						true),
-				string(defaultValue: '', description: 'The next release version', name: 'nextreleaseversion',
-						trim: true)
-		])
+	[$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', numToKeepStr: '10']],
+	parameters([
+		booleanParam(defaultValue: false, description: 'Do you want to perform a Release?', name:
+			'performRelease'),
+		string(defaultValue: '', description: 'This release version', name: 'releaseversion', trim:
+			true),
+		string(defaultValue: '', description: 'The next release version', name: 'nextreleaseversion',
+			trim: true)
+	])
 ])
 
 def jdkVersion = "OpenJDK_1.8_222"
@@ -54,10 +54,10 @@ if (params.performRelease) {
 	node {
 		stage('Checkout') {
 			checkout([
-					$class           : 'GitSCM',
-					branches         : scm.branches,
-					extensions       : scm.extensions + [[$class: 'LocalBranch', localBranch: '']],
-					userRemoteConfigs: scm.userRemoteConfigs
+				$class           : 'GitSCM',
+				branches         : scm.branches,
+				extensions       : scm.extensions + [[$class: 'LocalBranch', localBranch: '']],
+				userRemoteConfigs: scm.userRemoteConfigs
 			])
 		}
 
@@ -69,10 +69,10 @@ if (params.performRelease) {
 				if (branch.startsWith(featureBranchPrefix)) {
 					// feature branche failures should only notify the feature owner
 					step([
-							$class                  : 'Mailer',
-							notifyEveryUnstableBuild: true,
-							recipients              : emailextrecipients([[$class: 'RequesterRecipientProvider']]),
-							sendToIndividuals       : true])
+						$class                  : 'Mailer',
+						notifyEveryUnstableBuild: true,
+						recipients              : emailextrecipients([[$class: 'RequesterRecipientProvider']]),
+						sendToIndividuals       : true])
 
 				} else {
 					dvbErrorHandling.sendMail(recipients, currentBuild, error)
@@ -81,13 +81,15 @@ if (params.performRelease) {
 
 			// in develop and master branches attempt to deploy the artifacts, otherwise only run to the verify phase.
 			def verifyOrDeploy = {
-				return (branch.startsWith(masterBranchName) || branch.startsWith(developBranchName)) ? "deploy" :
-						"verify"
+				return (branch.startsWith(masterBranchName) || branch.startsWith(developBranchName)) ?
+					"deploy" :
+					"verify"
 			}
 
 			try {
 				withMaven(jdk: jdkVersion) {
-					dvbUtil.genericSh './mvnw -U -Pdvbern.oss -Dmaven.test.failure.ignore=true clean ' + verifyOrDeploy()
+					dvbUtil.genericSh './mvnw -U -Pdvbern.oss -Dmaven.test.failure.ignore=true clean ' +
+						verifyOrDeploy()
 				}
 				if (currentBuild.result == "UNSTABLE") {
 					handleFailures("build is unstable")
