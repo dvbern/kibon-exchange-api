@@ -20,5 +20,6 @@ public enum BetreuungsangebotTyp {
 	KITA,
 	TAGESSCHULE,
 	TAGESFAMILIEN,
-	FERIENINSEL
+	FERIENINSEL,
+	MITTAGSTISCH
 }
