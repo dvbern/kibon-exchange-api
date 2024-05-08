@@ -25,7 +25,7 @@
 
     <groupId>ch.dvbern.kibon</groupId>
     <artifactId>kibon-exchange-api</artifactId>
-    <version>6.1.0</version>
+    <version>6.2.0</version>
     <packaging>jar</packaging>
 
     <dependencies>
