@@ -100,9 +100,9 @@ public class BetreuungZeitabschnittDTO implements Serializable {
 	@Nullable
 	private @Valid EingewoehnungZeitabschnittDTO eingewoehnung;
 
-	@Schema(description = "") // TODO
+	@Schema(description = "BetreuuteTage, anzahl Tagen wo der Kind Betreuut ist")
 	@Nullable
-	private @Min(0) BigDecimal betreuuteTage = null;
+	private @Min(0) BigDecimal betreuuteTage;
 
 	public BetreuungZeitabschnittDTO() {
 		this.betreuungskosten = BigDecimal.ZERO;
@@ -114,6 +114,7 @@ public class BetreuungZeitabschnittDTO implements Serializable {
 		this.anzahlNebenmahlzeiten = BigDecimal.ZERO;
 		this.tarifProHauptmahlzeiten = null;
 		this.tarifProNebenmahlzeiten = null;
+		this.betreuuteTage = null;
 	}
 
 	public BetreuungZeitabschnittDTO(
@@ -125,7 +126,8 @@ public class BetreuungZeitabschnittDTO implements Serializable {
 		@Nonnull BigDecimal anzahlHauptmahlzeiten,
 		@Nonnull BigDecimal anzahlMonatlicheNebenmahlzeiten,
 		@Nullable BigDecimal tarifProHauptmahlzeiten,
-		@Nullable BigDecimal tarifProNebenmahlzeiten) {
+		@Nullable BigDecimal tarifProNebenmahlzeiten,
+		@Nullable BigDecimal betreuuteTage) {
 		this.betreuungskosten = betreuungskosten;
 		this.betreuungspensum = betreuungspensum;
 		this.von = von;
@@ -135,6 +137,7 @@ public class BetreuungZeitabschnittDTO implements Serializable {
 		this.anzahlNebenmahlzeiten = anzahlMonatlicheNebenmahlzeiten;
 		this.tarifProHauptmahlzeiten = tarifProHauptmahlzeiten;
 		this.tarifProNebenmahlzeiten = tarifProNebenmahlzeiten;
+		this.betreuuteTage = betreuuteTage;
 	}
 
 	@Override
