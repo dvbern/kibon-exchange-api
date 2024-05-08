@@ -31,15 +31,15 @@ public class EingewoehnungZeitabschnittDTO implements Serializable {
 
 	private static final long serialVersionUID = 5237990963578524998L;
 
-	@Schema(description = "Verrechnete Eingewöhnungspauschale in CHF")
+	@Schema(description = "Verrechnete Eingewöhnungskosten in CHF")
 	@Nonnull
-	private @NotNull @DecimalMin("0") BigDecimal pauschale = BigDecimal.ZERO;
+	private @NotNull @DecimalMin("0") BigDecimal kosten = BigDecimal.ZERO;
 
 	@Schema(description = "Beginn der Eingewöhnungsphase")
 	@Nonnull
 	private @NotNull LocalDate von = LocalDate.MIN;
 
-	@Schema(description = "Ende der Eingewöhnung")
+	@Schema(description = "Ende der Eingewöhnungsphase")
 	@Nonnull
 	private @NotNull LocalDate bis = LocalDate.MIN;
 
@@ -52,23 +52,23 @@ public class EingewoehnungZeitabschnittDTO implements Serializable {
 			return false;
 		}
 		EingewoehnungZeitabschnittDTO that = (EingewoehnungZeitabschnittDTO) o;
-		return getPauschale().compareTo(that.getPauschale()) == 0 &&
+		return getKosten().compareTo(that.getKosten()) == 0 &&
 			Objects.equals(getVon(), that.getVon()) &&
 			Objects.equals(getBis(), that.getBis());
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getPauschale(), getVon(), getBis());
+		return Objects.hash(getKosten(), getVon(), getBis());
 	}
 
 	@Nonnull
-	public BigDecimal getPauschale() {
-		return pauschale;
+	public BigDecimal getKosten() {
+		return kosten;
 	}
 
-	public void setPauschale(@Nonnull BigDecimal pauschale) {
-		this.pauschale = pauschale;
+	public void setKosten(@Nonnull BigDecimal kosten) {
+		this.kosten = kosten;
 	}
 
 	@Nonnull
