@@ -100,9 +100,9 @@ public class BetreuungZeitabschnittDTO implements Serializable {
 	@Nullable
 	private @Valid EingewoehnungZeitabschnittDTO eingewoehnung;
 
-	@Schema(description = "BetreuuteTage, anzahl Tagen wo der Kind Betreuut ist")
+	@Schema(description = "Anzahl Tage, an welchen das Kind betreut wird")
 	@Nullable
-	private @Min(0) BigDecimal betreuuteTage;
+	private @Min(0) BigDecimal betreuteTage;
 
 	public BetreuungZeitabschnittDTO() {
 		this.betreuungskosten = BigDecimal.ZERO;
@@ -114,7 +114,7 @@ public class BetreuungZeitabschnittDTO implements Serializable {
 		this.anzahlNebenmahlzeiten = BigDecimal.ZERO;
 		this.tarifProHauptmahlzeiten = null;
 		this.tarifProNebenmahlzeiten = null;
-		this.betreuuteTage = null;
+		this.betreuteTage = null;
 	}
 
 	public BetreuungZeitabschnittDTO(
@@ -126,8 +126,7 @@ public class BetreuungZeitabschnittDTO implements Serializable {
 		@Nonnull BigDecimal anzahlHauptmahlzeiten,
 		@Nonnull BigDecimal anzahlMonatlicheNebenmahlzeiten,
 		@Nullable BigDecimal tarifProHauptmahlzeiten,
-		@Nullable BigDecimal tarifProNebenmahlzeiten,
-		@Nullable BigDecimal betreuuteTage) {
+		@Nullable BigDecimal tarifProNebenmahlzeiten) {
 		this.betreuungskosten = betreuungskosten;
 		this.betreuungspensum = betreuungspensum;
 		this.von = von;
@@ -137,7 +136,6 @@ public class BetreuungZeitabschnittDTO implements Serializable {
 		this.anzahlNebenmahlzeiten = anzahlMonatlicheNebenmahlzeiten;
 		this.tarifProHauptmahlzeiten = tarifProHauptmahlzeiten;
 		this.tarifProNebenmahlzeiten = tarifProNebenmahlzeiten;
-		this.betreuuteTage = betreuuteTage;
 	}
 
 	@Override
@@ -163,7 +161,7 @@ public class BetreuungZeitabschnittDTO implements Serializable {
 			comparesEqual(getTarifProNebenmahlzeiten(), that.getTarifProHauptmahlzeiten()) &&
 			isBetreuungInFerienzeit() == that.isBetreuungInFerienzeit() &&
 			Objects.equals(getEingewoehnung(), that.getEingewoehnung()) &&
-			comparesEqual(getBetreuuteTage(), that.getBetreuuteTage())
+			comparesEqual(getBetreuteTage(), that.getBetreuteTage())
 			;
 	}
 
@@ -181,7 +179,7 @@ public class BetreuungZeitabschnittDTO implements Serializable {
 			getTarifProNebenmahlzeiten(),
 			isBetreuungInFerienzeit(),
 			getEingewoehnung(),
-			getBetreuuteTage());
+			getBetreuteTage());
 	}
 
 	@Nonnull
@@ -283,11 +281,11 @@ public class BetreuungZeitabschnittDTO implements Serializable {
 	}
 
 	@Nullable
-	public BigDecimal getBetreuuteTage() {
-		return betreuuteTage;
+	public BigDecimal getBetreuteTage() {
+		return betreuteTage;
 	}
 
-	public void setBetreuuteTage(@Nullable BigDecimal betreuuteTage) {
-		this.betreuuteTage = betreuuteTage;
+	public void setBetreuteTage(@Nullable BigDecimal betreuteTage) {
+		this.betreuteTage = betreuteTage;
 	}
 }
